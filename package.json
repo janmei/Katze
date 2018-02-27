@@ -1,0 +1,19 @@
+{
+  "name": "katze",
+  "version": "1.0.0",
+  "description": "Krasse Animationen & Transitionen Zerstörer Experiment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janmei/Katze.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janmei/Katze/issues"
+  },
+  "homepage": "https://github.com/janmei/Katze#readme"
+}
