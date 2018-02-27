@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/janmei/Katze/issues"
   },
-  "homepage": "https://github.com/janmei/Katze#readme"
+  "homepage": "https://github.com/janmei/Katze#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
