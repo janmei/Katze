@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/janmei/Katze#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "socket.io": "^2.0.4"
   }
 }
