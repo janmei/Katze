@@ -1,0 +1,30 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  display: block;
+}
+.container{
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.top, .bot{
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.block{
+  display: flex;
+  flex-direction: row;
+  height: 95%;
+  width: 47%;
+  border: 1px solid #777;
+  border-radius: 12px;
+  padding: 10px;
+}

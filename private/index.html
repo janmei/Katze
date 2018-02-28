@@ -7,13 +7,28 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="reset.css">
 </head>
 
 <body>
-  <form action="">
-    <input type="text" id="inputText">
-    <button type="submit">Send</button>
-  </form>
+  <div class="container">
+    <div class="top">
+      <div class="block">
+          <form action="">
+              <input type="text" id="inputText">
+              <button type="submit">Send</button>
+            </form>
+      </div>
+      <div class="block"></div>
+    </div>
+
+    <div class="bot">
+      <div class="block"></div>
+      <div class="block"></div>
+    </div>
+
+  </div>
+
 
   <script src="socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
