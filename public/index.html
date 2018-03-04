@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Interactive Future 2018</title>  
+  <title>Interactive Future 2018</title>
 
   <!-- p5 -->
   <script language="javascript" type="text/javascript" src="p5.js"></script>
@@ -21,18 +21,49 @@
 <body>
   <!-- <h1 class="text">Hello World Public</h1> -->
 
-  <p class="text" id="outputText"></p>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <h1 class="headline" id="outHead"></h1>
+  <p class="text" id="outSub"></p>
   <script src="socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
+
+    var time; 
     $(function () {
       var socket = io();
-      socket.on('chat message', function (msg) {
-        console.log(msg);
-        
-        $('#outputText').append($('<li>').text(msg));
+      socket.on('head text', function (msg) {
+        $('#outHead').text(msg);
       });
+      socket.on('sub text', function (msg) {
+        $('#outSub').text(msg);
+      });
+
+      socket.on('countdown', function (msg) {
+        clearTimeout(time);
+        countdown(msg)
+      })
+
+
+      function countdown(minutes) {
+
+          var seconds = 60;
+          var mins = minutes
+          
+          function tick() {
+
+            var current_minutes = mins - 1
+            seconds--;
+
+            $('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
+            if (seconds > 0) {
+              time = setTimeout(tick, 1000);
+            } else {
+              if (mins > 1) {
+                countdown(mins - 1);
+              }
+            }
+          }
+          tick();
+        }
     });
   </script>
 </body>

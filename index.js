@@ -14,10 +14,20 @@ app.get('/admin', function(req, res){
 
 
 io.on('connection', function (socket) {
-  socket.on('chat message', function (msg) {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
+  socket.on('head text', function (msg) {
+    console.log('text: ' + msg);
+    io.emit('head text', msg);
   });
+
+  socket.on('sub text', function (msg) {
+    console.log('text: ' + msg);
+    io.emit('sub text', msg);
+  });
+
+  socket.on('countdown', function (msg) {
+    console.log('countdown: ' + msg);
+    io.emit('countdown', msg);
+  })
 });
 
 http.listen(3000, function(){

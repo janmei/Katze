@@ -6,40 +6,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="reset.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="top">
-      <div class="block">
-          <form action="">
-              <input type="text" id="inputText">
-              <button type="submit">Send</button>
+  <div class="content">
+    <div class="block">
+      <div class="settings live">
+        <div class="row">
+          <div class="set-content col-6">
+            <h1>Text Eingabe</h1>
+            <form id="text-input">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Überschrift</label>
+                <input type="text" class="form-control" id="inHead" placeholder="Enter Headline">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Subline</label>
+                <input type="text" class="form-control" id="inSub" placeholder="Enter Subline">
+              </div>
+              <button type="submit" class="btn btn-danger">Senden</button>
             </form>
+          </div>
+          <div class="set-content col-6">
+            <h1>Voreinstellungen</h1>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+              <label class="form-check-label" for="exampleRadios2">
+                interactive future
+              </label>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="block"></div>
-    </div>
+      <div class="settings">
+        <div class="set-content col-6">
+          <h1>Countdown</h1>
+          <form id="countdown">
 
-    <div class="bot">
-      <div class="block"></div>
-      <div class="block"></div>
-    </div>
+            <div class="form-group">
+              <input type="number" id="inCount" class="form-control" placeholder="Time" value="10">
+            </div>
+            <button type="submit" class="btn btn-primary">Senden</button>
 
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="settings">
+        <div class="set-cont">
+          <h1>Zeitplan</h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Uhrzeit</th>
+                <th scope="col">Semster</th>
+                <th scope="col">Gruppe</th>
+                <th scope="col">Team</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
 
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script>
     $(function () {
       var socket = io();
-      $('form').submit(function () {
-        socket.emit('chat message', $('#inputText').val());
-        $('#inputText').val('');
+      $('#text-input').submit(function () {
+        if ($('#inHead').val() != "" ){
+          socket.emit('head text', $('#inHead').val());
+        }
+        if ($('#inSub').val() != ""){
+          socket.emit('sub text', $('#inSub').val());
+        }
+        $('#inHead').val('');
+        $('#inSub').val('');
         return false;
       });
+
+    $('#countdown').submit(function(){
+      socket.emit('countdown', $('#inCount').val());
+
+      $('#inCount').val('10');
+      return false;
+    })
+
     });
   </script>
 </body>
