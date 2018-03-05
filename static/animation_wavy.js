@@ -1,18 +1,33 @@
-var x
-var triangles
-var colors
-var a
+// ------------------------------------------------
+// BACKGROUND ANIMATION FOR INTERACTIVE FUTURE 2018
+// ------------------------------------------------
 
+// Variables //
+
+// Global
+var x
+var triangles // array with all triangles
+var colors // main colors
+var a // agent
+var e // ellipse for transition
+var sliders // slider
 var bg_c
 var e_size
 var transition
 
+// to start transition use 
+// e.active = true
+// e.active = false
+
+
+// SETUP
 var setup = function(){
     createCanvas(window.innerWidth, window.innerHeight)
 
     colors = [color(239, 128, 29), color(254, 202, 25), color(246, 163, 29)]
 
     triangles = []
+    sliders = []
     x = 60
 
     bg_c = [254, 202, 25]
@@ -20,6 +35,11 @@ var setup = function(){
     transition = false
 
     a = new agent()
+    e = new trans()
+
+    sliders.push(new slider(100, colors[0]))
+    sliders.push(new slider(600, colors[1]))
+    sliders.push(new slider(800, colors[2]))
 
     for(var i = 0; i < width / 50 + 1; i++){
         for(var j = 0; j < height / 50 + 1; j++){
@@ -28,37 +48,60 @@ var setup = function(){
     }
 }
 
+// MAIN
 var draw = function(){
     // background(63, 115, 115)
     background(254, 202, 25)
 
-
-    // Transition Ellipse
-    if(a.position.x < width / 2){        
-        fill(254, 202, 25)
-    } else {
-        fill(239, 128, 29)
-        if(e_size <= 1){
-            transition = true
-        }
-        if(transition && e_size < width){
-            e_size+=20
-        } else {
-            transition = false
-            e_size -=20
-        }
-    }
-
-    ellipse(width / 2, height / 2, e_size, e_size)
+    e.draw();
 
     fill(200)   
     noStroke()
     for(var i = 0; i < triangles.length; i++){
         triangles[i].draw()
     }
-    a.move()    
+    a.move() 
+    
+    /*
+    for(var i = sliders.length - 1; i >= 0; i--){
+        sliders[i].draw()
+    }
+    */
+   
+    for(var i = 0; i < sliders.length; i++){
+        sliders[i].draw()
+    }
 }
 
+// TRANSITION
+var trans = function(){
+    this.position = createVector(width / 2, height / 2)
+    this.size = 0
+
+    this.active = false
+
+    this.draw = function(){    
+        fill(239, 128, 29)      
+        // Transition Ellipse
+        if(this.active){
+            if(this.size <= 1){
+                transition = true
+            }
+            if(transition && this.size < width * 2){
+                this.size+=20
+            }
+        } else {
+            if(this.size >= 0){
+                this.size-= 20;
+            }
+        }
+        // Draw the ellipse
+        ellipse(width / 2, height / 2, this.size, this.size)
+    }
+}
+
+// AGENT
+// Moves around randomly to influence the triangles
 var agent = function(){
     this.position = createVector(width / 2, height / 2)
     this.speed = 5
@@ -98,6 +141,7 @@ var agent = function(){
     }
 }
 
+// TRIANGLE
 var tri = function(x,y,r,target){
     this.position = createVector(x,y)
     this.row = r
@@ -123,36 +167,6 @@ var tri = function(x,y,r,target){
         
         fill(this.c)
 
-        /*        
-        if(dist(mouseX, mouseY, this.position.x, this.position.y) < 200){
-            for(var i = 0; i < 3; i++){ 
-                if(mouseX < this.position.x + this.positionsX[i]){
-                    this.positionsX[i] -= this.speed
-                } else {
-                    this.positionsX[i] += this.speed
-                }
-                if(mouseY < this.position.y + this.positionsY[i]){
-                    this.positionsY[i] -= this.speed
-                } else {
-                    this.positionsY[i] += this.speed
-                }
-            }
-        } else {
-            for(var i = 0; i < 3; i++){
-                if(this.positionsX[i] < this.oPositionsX[i]){
-                    this.positionsX[i]+=this.speed;
-                } else {
-                    this.positionsX[i]-=this.speed;
-                }
-                if(this.positionsY[i] < this.oPositionsY[i]){
-                    this.positionsY[i]+=this.speed;
-                } else {
-                    this.positionsY[i]-=this.speed;
-                }
-            }            
-        }
-        */
-
         if(dist(a.position.x, a.position.y, this.position.x, this.position.y) < 200){
             if(this.positionsX[0] + this.position.x < a.position.x){                
                 this.positionsX[0]+=this.speed
@@ -176,5 +190,28 @@ var tri = function(x,y,r,target){
             vertex(this.positionsX[i] + this.position.x, this.positionsY[i] + this.position.y)
         }
         endShape(CLOSE)
+    }
+}
+
+// Slider
+var slider = function(endPos, c){
+    this.position = createVector(width, 0)
+    this.c = c
+    this.endPos = endPos
+
+    this.draw = function(){
+        fill(this.c)
+        beginShape()
+        vertex(this.position.x, height)
+        vertex(this.position.x + width / 2, 0)
+        vertex(width, 0)
+        vertex(width, height)
+        endShape(CLOSE)
+
+        /*
+        if(this.position.x > this.endPos){            
+            this.position.x-= 60
+        }
+        */
     }
 }
