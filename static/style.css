@@ -60,9 +60,9 @@ body{
 .headline {
   display: block;
   margin: auto;
-  margin-top: 45vh;
+  margin-top: 40vh;
   font-family: 'Montserrat';
-  font-size: 6em;
+  font-size: 12em;
   position: absolute;
   width: 100%;
   text-align: center;

@@ -12,8 +12,11 @@
 
 // Global
 var colors // main colors
-var sliders // slider
 var bg_c
+
+// Transitions
+var sliders
+var slidersActive
 var transition
 
 // ANIMATION
@@ -47,6 +50,7 @@ var setup = function(){
 
     triangles = []
     sliders = []
+    slidersActive = false
     x = 60
 
     // ANIMATION 04 TIMETABLE
@@ -70,9 +74,11 @@ var setup = function(){
     a = new agent()
     e = new trans()
 
+    // Set Sliders for Transition    
+    sliders.push(new slider(-width, colors[3]))
     sliders.push(new slider(100, colors[0]))
     sliders.push(new slider(600, colors[1]))
-    sliders.push(new slider(800, colors[2]))
+    sliders.push(new slider(800, colors[2]))    
 
     for(var i = 0; i < width / 50 + 1; i++){
         for(var j = 0; j < height / 50 + 1; j++){
@@ -91,7 +97,14 @@ var draw = function(){
     // ANIMATION 04 TIMETABLE
     if(currentAnimation == 4){
         timeTable()
-    }        
+    }       
+    
+    // Slider Transition
+    if(slidersActive){
+        for(var i = 0; i < sliders.length; i++){
+            sliders[i].draw()
+        }
+    }
 }
 
 // Slider
@@ -99,9 +112,13 @@ var slider = function(endPos, c){
     this.position = createVector(width, 0)
     this.c = c
     this.endPos = endPos
+    this.a = 0
+    this.speed = Math.random() * 10
 
     this.draw = function(){
         fill(this.c)
+        stroke(0,0,0,20)
+        strokeWeight(20)
         beginShape()
         vertex(this.position.x, height)
         vertex(this.position.x + width / 2, 0)
@@ -109,10 +126,13 @@ var slider = function(endPos, c){
         vertex(width, height)
         endShape(CLOSE)
 
-        /*
         if(this.position.x > this.endPos){            
             this.position.x-= 60
+        }        
+        if(this.position.x <= this.endPos){            
+            var s = (sin(this.a) * width/2) + width / 2
+            this.position.x -= s * 0.001
+            this.a += this.speed * 0.01
         }
-        */
     }
 }
