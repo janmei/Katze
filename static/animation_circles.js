@@ -1,36 +1,4 @@
-var colors
-
-var circles
-
-var trans
-var trans_circle
-
-var setup = function(){    
-    createCanvas(window.innerWidth, window.innerHeight)
-
-    circles = []
-    trans = false
-
-    for(var i = 0; i < width / 100; i++){
-        for(var j = 0; j < height / 100; j++)
-        circles.push(new e(i * 100 + 25, j * 100 + 25))
-    }
-
-    trans_circle = circles[round(random(0, circles.length))]
-
-    // Main colors
-    colors = [
-        color(239, 128, 29),    // Yellow
-        color(254, 202, 25),    // Yellow Variation
-        color(246, 163, 29),    // Orange
-        color(96, 45, 58),      // Red
-        color(63, 115, 115),    // Turquoise
-        color(247, 180, 170),   // Light Red
-        color(226, 237, 201)    // Light Green
-    ]
-}
-
-var draw = function(){
+var circle_animation = function(){
     background(colors[5])
     
     fill(colors[0])
@@ -54,7 +22,7 @@ var draw = function(){
     trans_circle.draw()
 }
 
-var e = function(x, y){
+var o = function(x, y){
     this.position = createVector(x, y)
     this.scale = random(20, 80)
     this.a = 0

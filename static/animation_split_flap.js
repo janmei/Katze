@@ -1,51 +1,23 @@
-var triangles
-
-var flippingAll
-var fAIndex
-var randomMode
-
-var setup = function(){
-    createCanvas(window.innerWidth, window.innerHeight)
-
-    colors = [color(239, 128, 29), color(254, 202, 25), color(246, 163, 29)]
-
-    triangles = []
-
-    randomMode = true
-    flippingAll = false
-    fAIndex = 0
-
-    var scale = 50
-
-    for(var i = 0; i < width / scale + 1; i++){
-        for(var j = 0; j < height / scale + 1; j++){
-            triangles.push(new t(-scale + i * scale, -scale + j * scale, i))
-        }
-    }
-}
-
-// MAIN
-var draw = function(){   
+var split_flap = function(){
     background(254, 202, 25)
 
-    for(var i = 0; i < triangles.length; i++){
-        triangles[i].draw()
+    for(var i = 0; i < triangles_split_flap.length; i++){
+        triangles_split_flap[i].draw()
     }
 
     // Flip random triangle
     if(randomMode){
-        var r = round(Math.random() * (triangles.length))
-        if(triangles[r] != null){
-            triangles[r].flipping = true;
+        var r = round(Math.random() * (triangles_split_flap.length))
+        if(triangles_split_flap[r] != null){
+            triangles_split_flap[r].flipping = true;
         }        
     }
 
     // Flip All
-
     if(flippingAll){        
-        if(fAIndex < triangles.length){
-            triangles[fAIndex].flipping = true
-            triangles[fAIndex].cc = true
+        if(fAIndex < triangles_split_flap.length){
+            triangles_split_flap[fAIndex].flipping = true
+            triangles_split_flap[fAIndex].cc = true
             fAIndex++
         }
     }
@@ -149,6 +121,6 @@ var flipAll = function(){
 }
 
 var reset = function(){
-    this.triangles = []
+    this.triangles_split_flap = []
     noLoop
 }

@@ -1,33 +1,4 @@
-var colors
-
-var polys
-
-var grid
-
-var setup = function(){    
-    createCanvas(window.innerWidth, window.innerHeight)
-
-    polys = []    
-    grid = new grid()
-
-    // Main colors
-    colors = [
-        color(239, 128, 29),    // Yellow
-        color(254, 202, 25),    // Yellow Variation
-        color(246, 163, 29),    // Orange
-        color(96, 45, 58),      // Red
-        color(63, 115, 115),    // Turquoise
-        color(247, 180, 170),   // Light Red
-        color(226, 237, 201)    // Light Green
-    ]
-
-    for(var i = 0; i < 100; i++){        
-        // var p = polys.push(new poly(random(width / 8, width - width / 8), random(height / 8, height - height / 8), colors[floor(random(0, colors.length))]))
-        polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
-    }    
-}
-
-var draw = function(){
+var poly_animation = function(){
     background(0)
 
     grid.draw()

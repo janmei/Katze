@@ -9,17 +9,7 @@ var wavy = function(){
     for(var i = 0; i < triangles.length; i++){
         triangles[i].draw()
     }
-    a.move() 
-    
-    /*
-    for(var i = sliders.length - 1; i >= 0; i--){
-        sliders[i].draw()
-    }
-    */
-   
-    for(var i = 0; i < sliders.length; i++){
-        sliders[i].draw()
-    }
+    a.move()
 }
 
 // TRANSITION
@@ -139,28 +129,5 @@ var tri = function(x,y,r,target){
             vertex(this.positionsX[i] + this.position.x, this.positionsY[i] + this.position.y)
         }
         endShape(CLOSE)
-    }
-}
-
-// Slider
-var slider = function(endPos, c){
-    this.position = createVector(width, 0)
-    this.c = c
-    this.endPos = endPos
-
-    this.draw = function(){
-        fill(this.c)
-        beginShape()
-        vertex(this.position.x, height)
-        vertex(this.position.x + width / 2, 0)
-        vertex(width, 0)
-        vertex(width, height)
-        endShape(CLOSE)
-
-        /*
-        if(this.position.x > this.endPos){            
-            this.position.x-= 60
-        }
-        */
     }
 }
