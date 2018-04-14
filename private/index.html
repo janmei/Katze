@@ -47,7 +47,7 @@
           <form id="countdown">
 
             <div class="form-group">
-              <input type="number" id="inCount" class="form-control" placeholder="Time" value="10">
+              <input type="number" id="inCount" class="form-control" placeholder="Time">
             </div>
             <button type="submit" class="btn btn-primary">Senden</button>
 
@@ -62,31 +62,12 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Uhrzeit</th>
                 <th scope="col">Semster</th>
                 <th scope="col">Gruppe</th>
                 <th scope="col">Team</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="timeBody">
             </tbody>
           </table>
         </div>
@@ -100,12 +81,25 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(function () {
+      $.getJSON("group.json", function (data) {
+
+        $.each(data.groups, function (key, val) {
+          var rowId = '#' + key;
+          $('#timeBody').append('<tr id=' + key + '>')
+          $(rowId).append('<th scope="row">' + val.semester + '</th>').attr('id', key);
+          $(rowId).append('<td>' + val.teamName + '</td>');
+          $(rowId).append('<td>' + val.members + '</td>');
+        });
+
+
+      });
+
       var socket = io();
       $('#text-input').submit(function () {
-        if ($('#inHead').val() != "" ){
+        if ($('#inHead').val() != "") {
           socket.emit('head text', $('#inHead').val());
         }
-        if ($('#inSub').val() != ""){
+        if ($('#inSub').val() != "") {
           socket.emit('sub text', $('#inSub').val());
         }
         $('#inHead').val('');
@@ -113,12 +107,12 @@
         return false;
       });
 
-    $('#countdown').submit(function(){
-      socket.emit('countdown', $('#inCount').val());
+      $('#countdown').submit(function () {
+        socket.emit('countdown', $('#inCount').val());
 
-      $('#inCount').val('10');
-      return false;
-    })
+        $('#inCount').val('');
+        return false;
+      })
 
     });
   </script>

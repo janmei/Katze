@@ -8,7 +8,7 @@ app.use(express.static('static'));
 app.use(express.static('public'));
 
 
-app.get('/admin', function(req, res){
+app.get('/admin', function (req, res) {
   res.sendFile(__dirname + '/private/index.html');
 });
 
@@ -30,6 +30,6 @@ io.on('connection', function (socket) {
   })
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(3000, function () {
+  console.log('listening on http://localhost:3000');
 });

@@ -1,0 +1,33 @@
+{
+  "groups": [{
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 1",
+    "members": "Elina Faber, Elena Feuerstein, Lauritz Kramberger, Anne Thomas"
+  }, {
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 2",
+    "members": "Nadine Edler, Sarah Lerch, Janett Herdt, Len Harms"
+  }, {
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 3",
+    "members": "Alessa Klinger, Jessica Hammer, Silvio Lepszy, Philipp Kaltofen"
+  }, {
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 4",
+    "members": "Jasmin Falk, Julia Metzmaier, Chris Brembach, Davide Becker"
+  }, {
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 5",
+    "members": "Hannah Ackermann, Saine Reitmaier, Marco Frumento, Jan Meininghaus"
+  }, {
+    "time": "09:15",
+    "semester": 4,
+    "teamName": "Team 6",
+    "members": "Domenika Tomasovic, Sabina Mujcinovic, Maximilian Brandl"
+  }]
+}
