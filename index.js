@@ -8,9 +8,18 @@ app.use(express.static('static'));
 app.use(express.static('public'));
 
 
-app.get('/admin', function (req, res) {
-  res.sendFile(__dirname + '/private/index.html');
+app.get('/admin/text', function (req, res) {
+  res.sendFile(__dirname + '/private/text.html');
 });
+
+app.get('/admin/time', function (req, res) {
+  res.sendFile(__dirname + '/private/time.html');
+});
+
+app.get('/admin', function (req, res) {
+  res.redirect('/admin/text');
+});
+
 
 io.on('connection', function (socket) {
   socket.on('head text', function (msg) {

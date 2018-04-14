@@ -16,7 +16,7 @@ body {
 .content {
   display: flex;
   height: 100vh;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
 }
 
@@ -24,14 +24,14 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 50%;
+  width: 100%;
   border-radius: 12px;
 }
 
 .settings {
   margin: 64px;
   width: 100%;
-  height: 50%;
+  height: 100%;
   padding: 32px;
   margin: 0 auto;
   border-radius: 12px;
@@ -58,6 +58,32 @@ body {
 .live-icon .live-image:hover {
   background-image: url('live.png');
   cursor: pointer;
+}
+
+nav {
+  width: 100%;
+  height: 75px;
+  background-color: rgb(218, 218, 218);
+}
+
+nav ul {
+  list-style: none;
+}
+
+nav ul li {
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  line-height: 75px;
+}
+
+nav ul li.active {
+  background-color: #fff;
+}
+
+nav li a {
+  color: #000;
 }
 
 /* 

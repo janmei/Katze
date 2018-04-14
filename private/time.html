@@ -6,60 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
+  <nav>
+    <ul>
+      <li>
+        <a href="/admin/text">Text</a>
+      </li>
+      <li class="active">
+        <a href="/admin/time">Zeitplan</a>
+      </li>
+    </ul>
+  </nav>
   <div class="content">
-    <div class="block">
-      <div class="settings">
-        <div class="row">
-          <div class="set-content col-6">
-            <h1>Text Eingabe</h1>
-            <form id="text-input">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Überschrift</label>
-                <input type="text" class="form-control" id="inHead" placeholder="Enter Headline">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Subline</label>
-                <input type="text" class="form-control" id="inSub" placeholder="Enter Subline">
-              </div>
-              <button type="submit" class="btn btn-danger">Senden</button>
-            </form>
-          </div>
-          <div class="set-content col-6">
-            <h1>Voreinstellungen</h1>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="preset" id="if-preset" value="if">
-              <label class="form-check-label" for="if-preset">
-                interactive future
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="preset" id="break-preset" value="if">
-              <label class="form-check-label" for="break-preset">
-                Pause
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="settings">
-        <div class="set-content col-6">
-          <h1>Countdown</h1>
-          <form id="countdown">
-
-            <div class="form-group">
-              <input type="number" id="inCount" class="form-control" placeholder="Time">
-            </div>
-            <button type="submit" class="btn btn-primary">Senden</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
     <div class="block">
       <div class="settings">
         <div class="set-cont">
@@ -76,20 +38,30 @@
             <tbody id="timeBody">
             </tbody>
           </table>
+          <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
         </div>
-        <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
+      </div>
+      <div class="settings">
+        <div class="set-content col-6">
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="settings">
+        <div class="set-cont">
+        </div>
       </div>
     </div>
   </div>
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="socket.io.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="../socket.io.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
   <script>
     // gets teams from group.json 
     $(function () {
-      $.getJSON("group.json", function (data) {
+      $.getJSON("../group.json", function (data) {
 
         $.each(data.groups, function (key, val) {
           var rowId = '#' + key;
