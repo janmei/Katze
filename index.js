@@ -27,6 +27,17 @@ io.on('connection', function (socket) {
     console.log('countdown: ' + msg);
     io.emit('countdown', msg);
   })
+
+  socket.on('timeTable', function () {
+    console.log('timeTable');
+    io.emit('timeTable');
+  })
+
+  socket.on('team', function (msg) {
+    console.log('team: ' + msg);
+    io.emit('team', msg)
+
+  })
 });
 
 http.listen(3000, function () {

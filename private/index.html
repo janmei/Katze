@@ -13,7 +13,7 @@
 <body>
   <div class="content">
     <div class="block">
-      <div class="settings live">
+      <div class="settings">
         <div class="row">
           <div class="set-content col-6">
             <h1>Text Eingabe</h1>
@@ -45,9 +45,6 @@
             </div>
           </div>
         </div>
-        <div class="live-icon">
-          <div class="live-image"></div>
-        </div>
       </div>
       <div class="settings">
         <div class="set-content col-6">
@@ -73,12 +70,14 @@
                 <th scope="col">Semster</th>
                 <th scope="col">Gruppe</th>
                 <th scope="col">Team</th>
+                <th scope="col">Team anzeigen</th>
               </tr>
             </thead>
             <tbody id="timeBody">
             </tbody>
           </table>
         </div>
+        <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
       </div>
     </div>
   </div>
@@ -88,6 +87,7 @@
   <script src="socket.io.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script>
+    // gets teams from group.json 
     $(function () {
       $.getJSON("group.json", function (data) {
 
@@ -97,6 +97,10 @@
           $(rowId).append('<th scope="row">' + val.semester + '</th>').attr('id', key);
           $(rowId).append('<td>' + val.teamName + '</td>');
           $(rowId).append('<td>' + val.members + '</td>');
+          $(
+            '<td><button type="submit" class="btn btn-danger" id="team" data-team="' + key +
+            '">Team anzeigen</button></td>'
+          ).appendTo(rowId);
         });
 
 
@@ -117,16 +121,27 @@
 
       $('#countdown').submit(function () {
         socket.emit('countdown', $('#inCount').val());
-
-        $('#inCount').val('10');
         return false;
       })
+
+      $('#timeTable').click(function () {
+        socket.emit('timeTable');
+        return false;
+      })
+
+      $('body').on('click', '#team', function () {
+        socket.emit('team', $(this).data('team'));
+        return false;
+      })
+
+
 
       $('input[name="preset"]').click(function () {
         if ($('#if-preset').prop('checked') === true) {
           $('#inHead').val('interactive future');
         } else if ($('#break-preset').prop('checked') === true) {
           $('#inHead').val('Pause');
+          $('#inSub').val('Gleich geht’s weiter!');
         }
       })
 

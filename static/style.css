@@ -2,24 +2,25 @@
   Back End   
 */
 
-*{
+* {
   box-sizing: border-box;
 }
 
-body{
-  display: block;  
+body {
+  display: block;
   padding: 0;
   margin: 0;
   overflow: hidden;
 }
-.content{
+
+.content {
   display: flex;
   height: 100vh;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.block{
+.block {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -27,7 +28,7 @@ body{
   border-radius: 12px;
 }
 
-.settings{
+.settings {
   margin: 64px;
   width: 100%;
   height: 50%;
@@ -36,30 +37,28 @@ body{
   border-radius: 12px;
 }
 
-.live{
+.live {
   box-shadow: inset 0 0 20px red;
 }
 
-.live-icon{
+.live-icon {
   float: right;
   position: relative;
   bottom: 0;
 }
 
-.live-icon .live-image{
+.live-icon .live-image {
   width: 70px;
   height: 28px;
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url('live-disabled.png');
 }
+
 .live-icon .live-image:hover {
   background-image: url('live.png');
   cursor: pointer;
 }
-
-
-
 
 /* 
   Front End   
@@ -68,7 +67,7 @@ body{
 .text {
   display: block;
   margin: auto;
-  margin-top: 57vh;
+  margin-top: 63vh;
   font-family: 'Montserrat';
   font-size: 2em;
   position: absolute;
@@ -89,4 +88,15 @@ body{
   text-align: center;
   color: white;
   text-shadow: 0px 0px 5px rgb(63, 115, 115);
+}
+
+.table-content {
+  width: 50%;
+  position: absolute;
+  color: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  font-size: 22px;
 }

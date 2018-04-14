@@ -16,30 +16,53 @@
   <script language="javascript" src="animation_wavy.js"></script>
   <script language="javascript" src="animation_polys.js"></script>
   <script language="javascript" src="animation_timetable.js"></script>
-  <script language="javascript" src="animation_split_flap.js"></script>  
-  <script language="javascript" src="animation_circles.js"></script>  
+  <script language="javascript" src="animation_split_flap.js"></script>
+  <script language="javascript" src="animation_circles.js"></script>
   <script language="javascript" src="animation_main.js"></script>
   <!-- css -->
   <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <!-- <h1 class="text">Hello World Public</h1> -->
+  <div class="textContainer">
+    <h1 class="headline" id="outHead">interactive future</h1>
+    <p class="text" id="outSub"></p>
+  </div>
 
-  <h1 class="headline" id="outHead"></h1>
-  <p class="text" id="outSub"></p>
+  <div class="table-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Semster</th>
+          <th scope="col">Gruppe</th>
+          <th scope="col">Team</th>
+        </tr>
+      </thead>
+      <tbody id="timeBody">
+      </tbody>
+    </table>
+  </div>
+
   <script src="socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
-
-    var time; 
+    var time;
     $(function () {
+
+
       var socket = io();
       socket.on('head text', function (msg) {
+        clearTimeout(time);
+        $('.table-content').hide();
         $('#outHead').text(msg);
+
       });
       socket.on('sub text', function (msg) {
+        $('.table-content').hide();
         $('#outSub').text(msg);
       });
 
@@ -52,28 +75,68 @@
         countdown(msg)
       })
 
+      socket.on('team', function (msg) {
+        currentAnimation = 4;
+        $('#outHead').text('');
+        $('#outSub').text('');
+        $('.table-content').hide()
+        getTeam(msg);
+      })
+
+      socket.on('timeTable', function () {
+        currentAnimation = 4;
+        $('#outHead').text('');
+        $('#outSub').text('');
+        $('.table-content').show();
+
+      })
+
+      function getTeam(team) {
+        $.getJSON("group.json", function (data) {
+          var set = data.groups
+          $('#outHead').text(set[team].teamName);
+          $('#outSub').text(set[team].members);
+        });
+      }
+
+      function getTimeTable() {
+        $.getJSON("group.json", function (data) {
+
+          $.each(data.groups, function (key, val) {
+            var rowId = '#' + key;
+            $('#timeBody').append('<tr id=' + key + '>')
+            $(rowId).append('<th scope="row">' + val.semester + '</th>').attr('id', key);
+            $(rowId).append('<td>' + val.teamName + '</td>');
+            $(rowId).append('<td>' + val.members + '</td>');
+          });
+
+
+        });
+      }
+
+      getTimeTable();
 
       function countdown(minutes) {
 
-          var seconds = 60;
-          var mins = minutes
-          
-          function tick() {
+        var seconds = 60;
+        var mins = minutes
 
-            var current_minutes = mins - 1
-            seconds--;
+        function tick() {
 
-            $('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
-            if (seconds > 0) {
-              time = setTimeout(tick, 1000);
-            } else {
-              if (mins > 1) {
-                countdown(mins - 1);
-              }
+          var current_minutes = mins - 1
+          seconds--;
+
+          $('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
+          if (seconds > 0) {
+            time = setTimeout(tick, 1000);
+          } else {
+            if (mins > 1) {
+              countdown(mins - 1);
             }
           }
-          tick();
         }
+        tick();
+      }
     });
   </script>
 </body>
