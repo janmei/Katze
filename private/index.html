@@ -32,14 +32,22 @@
           <div class="set-content col-6">
             <h1>Voreinstellungen</h1>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-              <label class="form-check-label" for="exampleRadios2">
+              <input class="form-check-input" type="radio" name="preset" id="if-preset" value="if">
+              <label class="form-check-label" for="if-preset">
                 interactive future
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="preset" id="break-preset" value="if">
+              <label class="form-check-label" for="break-preset">
+                Pause
               </label>
             </div>
           </div>
         </div>
-
+        <div class="live-icon">
+          <div class="live-image"></div>
+        </div>
       </div>
       <div class="settings">
         <div class="set-content col-6">
@@ -110,9 +118,18 @@
       $('#countdown').submit(function () {
         socket.emit('countdown', $('#inCount').val());
 
-        $('#inCount').val('');
+        $('#inCount').val('10');
         return false;
       })
+
+      $('input[name="preset"]').click(function () {
+        if ($('#if-preset').prop('checked') === true) {
+          $('#inHead').val('interactive future');
+        } else if ($('#break-preset').prop('checked') === true) {
+          $('#inHead').val('Pause');
+        }
+      })
+
 
     });
   </script>

@@ -40,6 +40,27 @@ body{
   box-shadow: inset 0 0 20px red;
 }
 
+.live-icon{
+  float: right;
+  position: relative;
+  bottom: 0;
+}
+
+.live-icon .live-image{
+  width: 70px;
+  height: 28px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('live-disabled.png');
+}
+.live-icon .live-image:hover {
+  background-image: url('live.png');
+  cursor: pointer;
+}
+
+
+
+
 /* 
   Front End   
 */

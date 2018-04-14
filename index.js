@@ -12,7 +12,6 @@ app.get('/admin', function (req, res) {
   res.sendFile(__dirname + '/private/index.html');
 });
 
-
 io.on('connection', function (socket) {
   socket.on('head text', function (msg) {
     console.log('text: ' + msg);
