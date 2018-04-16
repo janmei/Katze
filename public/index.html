@@ -17,7 +17,8 @@
   <script language="javascript" src="animation_polys.js"></script>
   <script language="javascript" src="animation_timetable.js"></script>
   <script language="javascript" src="animation_split_flap.js"></script>
-  <script language="javascript" src="animation_circles.js"></script>
+  <script language="javascript" src="animation_circles.js"></script>  
+  <script language="javascript" src="transition_polys.js"></script>
   <script language="javascript" src="animation_main.js"></script>
   <!-- css -->
   <title>Document</title>
@@ -31,6 +32,11 @@
   <div class="textContainer">
     <h1 class="headline" id="outHead">interactive future</h1>
     <p class="text" id="outSub"></p>
+  </div>
+
+  <div class="countdownContainer">
+    <div id="minutes"></div>
+    <div id="seconds"></div>
   </div>
 
   <div class="table-content">
@@ -76,12 +82,17 @@
       })
 
       socket.on('team', function (msg) {
-        currentAnimation = 4;
+        currentAnimation = 0;
+        currentTransition = 1;
+        setInterval(showTeam(msg), 2)
+      })
+
+      function showTeam(msg){
         $('#outHead').text('');
         $('#outSub').text('');
         $('.table-content').hide()
         getTeam(msg);
-      })
+      }
 
       socket.on('timeTable', function () {
         currentAnimation = 4;
@@ -126,7 +137,11 @@
           var current_minutes = mins - 1
           seconds--;
 
-          $('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
+          //$('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
+
+          $('#minutes').html(current_minutes.toString())
+          $('#seconds').html((seconds < 10 ? "0" : "") + String(seconds))
+
           if (seconds > 0) {
             time = setTimeout(tick, 1000);
           } else {

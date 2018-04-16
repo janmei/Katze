@@ -18,6 +18,7 @@ var bg_c
 var sliders
 var slidersActive
 var transition
+var currentTransition
 
 // ANIMATION
 var currentAnimation
@@ -104,6 +105,7 @@ var setup = function () {
     }
 
     // ANIMATION 04 TIMETABLE
+    /*
     rows = []
     rows.push(new row(0, 0, 1, 6, 50))
     rows.push(new row(0, 50, -1, 2, 30))
@@ -114,6 +116,7 @@ var setup = function () {
     rows.push(new row(0, height - 60, -1, 8, 40))
     rows.push(new row(0, height - 100, 1, 6, 15))
     rows.push(new row(0, height - 150, -1, 4, 10))
+    */
 
     currentAnimation = 3
 
@@ -145,6 +148,16 @@ var setup = function () {
         for (var j = 0; j < height / 50 + 1; j++) {
             triangles.push(new tri(-50 + i * 50, -50 + j * 50, i))
         }
+    }
+
+    // Transition
+    currentTransition = 0
+
+    // TRANSITION 01 POLYS
+    trans_polys = []
+
+    for (var i = 0; i < 200; i++) {        
+        trans_polys.push(new trans_poly(random(0, -width/2), random(0, height), colors[floor(random(0, 2))]))
     }
 }
 
@@ -180,6 +193,10 @@ var draw = function () {
         for (var i = 0; i < sliders.length; i++) {
             sliders[i].draw()
         }
+    }
+
+    if (currentTransition == 1){
+        transition_polys()
     }
 
     // Change Animations
