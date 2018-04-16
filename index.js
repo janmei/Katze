@@ -27,14 +27,29 @@ io.on('connection', function (socket) {
     io.emit('head text', msg);
   });
 
+  socket.on('head res', function (msg) {
+    console.log('res: ' + msg);
+    io.emit('head res', msg);
+  });
+
   socket.on('sub text', function (msg) {
     console.log('text: ' + msg);
     io.emit('sub text', msg);
   });
 
+  socket.on('sub res', function (msg) {
+    console.log('res: ' + msg);
+    io.emit('sub res', msg);
+  });
+
   socket.on('countdown', function (msg) {
     console.log('countdown: ' + msg);
     io.emit('countdown', msg);
+  })
+
+  socket.on('countdown res', function (msg) {
+    console.log('countdown res: ' + msg);
+    io.emit('countdown res', msg);
   })
 
   socket.on('timeTable', function () {

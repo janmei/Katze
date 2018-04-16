@@ -59,11 +59,13 @@
         clearTimeout(time);
         $('.table-content').hide();
         $('#outHead').text(msg);
+        socket.emit('head res', msg)
 
       });
       socket.on('sub text', function (msg) {
         $('.table-content').hide();
         $('#outSub').text(msg);
+        socket.emit('sub res', msg)
       });
 
       socket.on('func test', function (msg) {
@@ -73,6 +75,8 @@
       socket.on('countdown', function (msg) {
         clearTimeout(time);
         countdown(msg)
+        socket.emit('countdown res', msg)
+
       })
 
       socket.on('team', function (msg) {
