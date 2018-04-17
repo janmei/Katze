@@ -85,6 +85,7 @@ nav ul li {
   height: 75px;
   text-align: center;
   line-height: 75px;
+  cursor: pointer;
 }
 
 nav ul li.active {
@@ -119,7 +120,7 @@ nav li a {
 }
 
 #delete-all {
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 /* 

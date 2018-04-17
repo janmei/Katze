@@ -28,9 +28,17 @@
           <div class="set-content col-4">
             <h1>Text Eingabe</h1>
             <form id="text-input">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Überschrift</label>
-                <input type="text" class="form-control" id="inHead" placeholder="Enter Headline">
+
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="exampleInputEmail1">Überschrift</label>
+                  <input type="text" class="form-control mb-2 mr-sm-2" id="inHead" placeholder="Enter Headline">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="exampleInputEmail1">Countdown</label>
+                  <input type="number" id="inCount" class="form-control mb-2 mr-sm-2" placeholder="Time">
+                </div>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Subline</label>
@@ -40,7 +48,7 @@
             </form>
           </div>
           <div class="set-content col-4">
-            <h1>Voreinstellungen</h1>
+            <h1>Presets</h1>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="preset" id="if-preset" value="if">
               <label class="form-check-label" for="if-preset">
@@ -55,15 +63,25 @@
             </div>
           </div>
           <div class="set-content col-4">
-            <h1>Countdown</h1>
-            <form id="countdown">
-
-              <div class="form-group">
-                <input type="number" id="inCount" class="form-control" placeholder="Time">
-              </div>
-              <button type="submit" class="btn btn-primary">Senden</button>
-
-            </form>
+            <h1>Einstellungen</h1>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="social" checked>
+              <label class="form-check-label" for="exampleRadios1">
+                Social Media
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="sponsors">
+              <label class="form-check-label" for="exampleRadios2">
+                Sponsoren
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="loop">
+              <label class="form-check-label" for="exampleRadios3">
+                Alles in Schleife
+              </label>
+            </div>
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ app.get('/admin', function (req, res) {
 
 
 io.on('connection', function (socket) {
+
   socket.on('head text', function (msg) {
     console.log('text: ' + msg);
     io.emit('head text', msg);

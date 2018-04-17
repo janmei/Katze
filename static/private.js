@@ -31,9 +31,29 @@ $(function () {
     if ($('#inSub').val() != "") {
       socket.emit('sub text', $('#inSub').val());
     }
+    if ($('#inCount').val() != "") {
+      socket.emit('countdown', $('#inCount').val());
+    }
     $('#inHead').val('');
     $('#inSub').val('');
+    $('#inCount').attr('disabled', false)
+    $('#inHead').attr('disabled', false)
+
     return false;
+  });
+
+  $('#inHead').bind('input', function () {
+    $('#inCount').attr('disabled', true)
+    if ($('#inHead').val() === "") {
+      $('#inCount').attr('disabled', false)
+    }
+  });
+
+  $('#inCount').bind('input', function () {
+    $('#inHead').attr('disabled', true)
+    if ($('#inCount').val() === "") {
+      $('#inHead').attr('disabled', false)
+    }
   });
 
   $('#countdown').submit(function () {
@@ -56,7 +76,6 @@ $(function () {
     socket.emit('sub text', '');
     $('#delete-head').hide();
     $('#delete-sub').hide();
-
   })
 
   $('input[name="preset"]').click(function () {
@@ -90,13 +109,9 @@ $(function () {
     countdown(msg)
   })
 
-
-
   function isEmpty(el) {
     return !$.trim(el.html())
   }
-
-
 
   $('#delete-head').click(function () {
     socket.emit('head text', '');
@@ -106,6 +121,20 @@ $(function () {
   $('#delete-sub').click(function () {
     socket.emit('sub text', '');
     $('#delete-sub').hide();
+  })
+
+  $('#linkTime').click(function () {
+    $('#time').show();
+    $('#text').hide();
+    $('#linkText').removeClass('active')
+    $(this).addClass('active')
+  })
+
+  $('#linkText').click(function () {
+    $('#text').show();
+    $('#time').hide();
+    $('#linkTime').removeClass('active')
+    $(this).addClass('active')
   })
 
   function countdown(minutes) {
@@ -130,18 +159,6 @@ $(function () {
     tick();
   }
 
-  $('#linkTime').click(function () {
-    $('#time').show();
-    $('#text').hide();
-    $('#linkText').removeClass('active')
-    $(this).addClass('active')
-  })
 
-  $('#linkText').click(function () {
-    $('#text').show();
-    $('#time').hide();
-    $('#linkTime').removeClass('active')
-    $(this).addClass('active')
-  })
 
 });
