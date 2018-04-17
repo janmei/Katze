@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li id="linkText" class="active">
+        <p>Text</a>
+      </li>
+      <li id="linkTime">
+        <p>Zeitplan</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="content" id="text">
+    <div class="block">
+      <div class="settings">
+        <div class="row">
+          <div class="set-content col-4">
+            <h1>Text Eingabe</h1>
+            <form id="text-input">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Überschrift</label>
+                <input type="text" class="form-control" id="inHead" placeholder="Enter Headline">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Subline</label>
+                <input type="text" class="form-control" id="inSub" placeholder="Enter Subline">
+              </div>
+              <button type="submit" class="btn btn-danger">Senden</button>
+            </form>
+          </div>
+          <div class="set-content col-4">
+            <h1>Voreinstellungen</h1>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="preset" id="if-preset" value="if">
+              <label class="form-check-label" for="if-preset">
+                interactive future
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="preset" id="break-preset" value="if">
+              <label class="form-check-label" for="break-preset">
+                Pause
+              </label>
+            </div>
+          </div>
+          <div class="set-content col-4">
+            <h1>Countdown</h1>
+            <form id="countdown">
+
+              <div class="form-group">
+                <input type="number" id="inCount" class="form-control" placeholder="Time">
+              </div>
+              <button type="submit" class="btn btn-primary">Senden</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="settings">
+
+      </div>
+    </div>
+    <div class="block">
+      <div class="settings">
+        <h1>Aktuell</h1>
+        <div class="slide">
+          <div class="head-res">
+            <h2 class="head"></h2>
+            <button type="button" class="close" id="delete-head" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="sub-res">
+            <p class="sub"></p>
+            <button type="button" class="close" id="delete-sub" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <button type="submit" class="btn btn-danger" id="delete-all">Alles löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" id="time">
+    <div class="block">
+      <div class="settings">
+        <div class="set-cont">
+          <h1>Zeitplan</h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Semster</th>
+                <th scope="col">Gruppe</th>
+                <th scope="col">Team</th>
+                <th scope="col">Team anzeigen</th>
+              </tr>
+            </thead>
+            <tbody id="timeBody">
+            </tbody>
+          </table>
+          <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
+        </div>
+      </div>
+      <div class="settings">
+        <div class="set-content col-6">
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="settings">
+        <div class="set-cont">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="../socket.io.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../private.js"></script>
+</body>
+
+</html>

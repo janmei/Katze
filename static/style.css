@@ -18,6 +18,15 @@ body {
   height: 100vh;
   flex-direction: column;
   justify-content: space-around;
+  padding-top: 20px;
+}
+
+#time {
+  display: none;
+}
+
+#text {
+  display: flex;
 }
 
 .block {
