@@ -19,8 +19,8 @@ var currentAnimation
 var polys
 var grid
 
-// ANIMATION 02 TIMETABLE
-var rows
+// ANIMATION 02 TITLE
+var honeyPolys
 
 // ANIMATION 03 PROGRAM
 
@@ -28,6 +28,8 @@ var rows
 var setup = function () {
     // Create canvas on whole page
     createCanvas(window.innerWidth, window.innerHeight)
+
+    noStroke()
 
     // Main colors
     colors = [
@@ -44,7 +46,7 @@ var setup = function () {
 
     // ANIMATIONS
 
-    currentAnimation = 1
+    currentAnimation = 2
         
     // ANIMATION 01 POLYS
 
@@ -52,11 +54,16 @@ var setup = function () {
     grid = new grid()
 
     for (var i = 0; i < 100; i++) {
-        // var p = polys.push(new poly(random(width / 8, width - width / 8), random(height / 8, height - height / 8), colors[floor(random(0, colors.length))]))
         polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
     }
 
-    // ANIMATION 02 TIMETABLE
+    // ANIMATION 02 TITLE
+    honeyPolys = []
+    for (var i = 0; i < 21; i++) { 
+        for(var j = 0; j < 11; j++){
+            honeyPolys.push(new honeyPoly(i * width / 20, 15 +  j * width / 20))
+        }        
+    }
 
     // ANIMATION 03 PROGRAM
 
@@ -78,7 +85,7 @@ var draw = function () {
 
     // ANIMATION 02 / TITLE - INTERACTIVE FUTURE / HONEYCOMB
     if(currentAnimation == 2){
-        timeTable(currentColor)
+        title()
     }
 
     // ANIMATION 03 / PROGRAM / SPINNING
