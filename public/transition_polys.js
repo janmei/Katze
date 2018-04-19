@@ -1,5 +1,4 @@
 var transition_polys = function(){
-    background(0)
 
     fill(colors[0])
     rect(trans_polys[trans_polys.length-1].position.x - width * 2, 0, width * 2, height)

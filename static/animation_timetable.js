@@ -1,4 +1,4 @@
-var timeTable = function(){
-    background(colors[6])
+var timeTable = function(color){
+    background(color)
 }
 
