@@ -39,7 +39,10 @@ io.on('connection', function (socket) {
     console.log('countdown: ' + msg);
     io.emit('countdown', msg);
   })
-
+  socket.on('clear countdown', function (msg) {
+    console.log('clear countdown: ' + msg);
+    io.emit('clear countdown', msg);
+  })
   socket.on('countdown res', function (msg) {
     console.log('countdown res: ' + msg);
     io.emit('countdown res', msg);

@@ -74,8 +74,10 @@ $(function () {
   $('#delete-all').click(function () {
     socket.emit('head text', '');
     socket.emit('sub text', '');
+    socket.emit('clear countdown');
     $('#delete-head').hide();
     $('#delete-sub').hide();
+    $('#delete-count').hide();
   })
 
   $('input[name="preset"]').click(function () {
@@ -89,7 +91,6 @@ $(function () {
   })
 
   socket.on('head res', function (msg) {
-    clearTimeout(time);
     $('.head').text(msg)
 
     if (!isEmpty($('.head'))) {
@@ -107,6 +108,10 @@ $(function () {
   socket.on('countdown res', function (msg) {
     clearTimeout(time);
     countdown(msg)
+    $('.count').text(msg)
+    if (!isEmpty($('.count'))) {
+      $('#delete-count').show();
+    }
   })
 
   function isEmpty(el) {
@@ -121,6 +126,11 @@ $(function () {
   $('#delete-sub').click(function () {
     socket.emit('sub text', '');
     $('#delete-sub').hide();
+  })
+
+  $('#delete-count').click(function () {
+    socket.emit('clear countdown', '');
+    $('#delete-count').hide();
   })
 
   $('#linkTime').click(function () {
@@ -147,7 +157,7 @@ $(function () {
       var current_minutes = mins - 1
       seconds--;
 
-      $('.head').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
+      $('.count').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
       if (seconds > 0) {
         time = setTimeout(tick, 1000);
       } else {

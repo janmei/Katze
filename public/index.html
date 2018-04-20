@@ -15,6 +15,7 @@
   <script language="javascript" src="animation_title.js"></script>
   <script language="javascript" src="animation_program.js"></script>
   <script language="javascript" src="animation_main.js"></script>
+  <script language="javascript" src="anime.min.js"></script>
   <!-- css -->
   <title>Document</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -27,6 +28,11 @@
   <div class="textContainer">
     <h1 class="headline" id="outHead">interactive future</h1>
     <p class="text" id="outSub"></p>
+  </div>
+
+  <!-- Nur für die letzten 10 Sekunden notwendig -->
+  <div class="count10Container">
+    <h1 class="headline" id="count10">10</h1>
   </div>
 
   <div class="countdownContainer">
@@ -77,7 +83,10 @@
         clearTimeout(time);
         countdown(msg)
         socket.emit('countdown res', msg)
+      })
 
+      socket.on('clear countdown', function () {
+        clearTimeout(time);
       })
 
       socket.on('team', function (msg) {
@@ -143,13 +152,42 @@
 
           if (seconds > 0) {
             time = setTimeout(tick, 1000);
+
+
+
           } else {
             if (mins > 1) {
               countdown(mins - 1);
             }
           }
+
+          if (current_minutes == 0 && seconds < 57) {
+
+            var current_sec = seconds;
+            var previous_sec = current_sec + 1;
+
+            $('.textContainer').hide();
+            $('.countdownContainer').hide();
+            $('.count10Container').show();
+            if (previous_sec > current_sec) {
+              $('#count10').html((seconds < 10 ? "0" : "") + String(seconds))
+              $('.count10Container .headline').addClass('animate')
+              setTimeout(function () {
+                $('.count10Container .headline').removeClass('animate')
+
+              }, 999);
+              previous_sec = current_sec;
+            }
+
+
+
+
+
+          }
         }
         tick();
+
+
       }
     });
   </script>
