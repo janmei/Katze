@@ -26,6 +26,12 @@ var honeyPoly = function(x,y){
         this.active = true
     }
 
+    var nope = random(0,100)
+
+    if(nope > 90){
+        this.active = false
+    }
+
     this.draw = function(){
         if(this.active){
             this.scale = this.size * sin(this.s)

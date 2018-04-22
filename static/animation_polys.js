@@ -1,7 +1,7 @@
 var poly_animation = function(){
     background(0)
 
-    grid.draw()
+    // grid.draw()
 
     for(var i = 0; i < polys.length; i++){
         polys[i].draw()

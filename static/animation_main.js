@@ -12,6 +12,9 @@ var currentColor
 var transition
 var drawTransition
 
+// Countdown
+var countdown
+
 // ANIMATION
 var currentAnimation
 
@@ -44,9 +47,13 @@ var setup = function () {
 
     randColor()
 
+    // COUNTDOWN
+
+    countdown = new countdown()
+
     // ANIMATIONS
 
-    currentAnimation = 2
+    currentAnimation = 1
         
     // ANIMATION 01 POLYS
 
@@ -78,6 +85,11 @@ var randColor = function(){
 
 // MAIN
 var draw = function () {
+    // ANIMATION 00 / COUNTDOWN
+    if(currentAnimation == 0){
+        background(0)
+    }
+
     // ANIMATION 01 / COMING UP - COUNTDOWN / POLYS
     if(currentAnimation == 1){
         poly_animation()
@@ -97,6 +109,9 @@ var draw = function () {
     if(drawTransition){
         transition.render()
     }
+
+    // COUNTDOWN
+    countdown.render()
 }
 
 // Transition Controller
@@ -123,7 +138,7 @@ var endTransition = function(){
 }
 
 var Transition = function(){
-    this.speed = 15
+    this.speed = 30
 
     // POSITION
     this.rL = createVector(0, height / 2)
