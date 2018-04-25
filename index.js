@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -12,6 +13,11 @@ app.get('/admin', function (req, res) {
   res.sendFile(__dirname + '/private/index.html');
 });
 
+const PORT = process.env.PORT || 3000;
+
+http.listen(PORT, function () {
+  console.log(`listening on http://localhost:${ PORT }`);
+});
 
 io.on('connection', function (socket) {
 
@@ -59,8 +65,4 @@ io.on('connection', function (socket) {
     io.emit('team', msg)
 
   })
-});
-
-http.listen(80, function () {
-  console.log('listening on http://localhost:80');
 });
