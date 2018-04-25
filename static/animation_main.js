@@ -54,7 +54,7 @@ var setup = function () {
     // ANIMATIONS
 
     currentAnimation = 1
-        
+
     // ANIMATION 01 POLYS
 
     polys = []
@@ -66,10 +66,10 @@ var setup = function () {
 
     // ANIMATION 02 TITLE
     honeyPolys = []
-    for (var i = 0; i < 21; i++) { 
-        for(var j = 0; j < 11; j++){
-            honeyPolys.push(new honeyPoly(i * width / 20, 15 +  j * width / 20))
-        }        
+    for (var i = 0; i < 21; i++) {
+        for (var j = 0; j < 11; j++) {
+            honeyPolys.push(new honeyPoly(i * width / 20, 15 + j * width / 20))
+        }
     }
 
     // ANIMATION 03 PROGRAM
@@ -79,34 +79,34 @@ var setup = function () {
     drawTransition = false
 }
 
-var randColor = function(){
-    currentColor = colors[round(random(0,colors.length))]
+var randColor = function () {
+    currentColor = colors[round(random(0, colors.length))]
 }
 
 // MAIN
 var draw = function () {
     // ANIMATION 00 / COUNTDOWN
-    if(currentAnimation == 0){
+    if (currentAnimation == 0) {
         background(0)
     }
 
     // ANIMATION 01 / COMING UP - COUNTDOWN / POLYS
-    if(currentAnimation == 1){
+    if (currentAnimation == 1) {
         poly_animation()
     }
 
     // ANIMATION 02 / TITLE - INTERACTIVE FUTURE / HONEYCOMB
-    if(currentAnimation == 2){
+    if (currentAnimation == 2) {
         title()
     }
 
     // ANIMATION 03 / PROGRAM / SPINNING
-    if(currentAnimation == 3){
-        
+    if (currentAnimation == 3) {
+
     }
 
     // TRANSITION
-    if(drawTransition){
+    if (drawTransition) {
         transition.render()
     }
 
@@ -114,30 +114,34 @@ var draw = function () {
     countdown.render()
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 // Transition Controller
-var startTransition = function(){
+var startTransition = function () {
 
     // new color    
     randColor()
 
     // stop old animation
-    switch(currentAnimation){
-        case 1: 
+    switch (currentAnimation) {
+        case 1:
             startTransitionPoly()
             break
     }
 
     // start transition overlay
-    drawTransition = true    
+    drawTransition = true
 }
 
-var endTransition = function(){
+var endTransition = function () {
     // switch to new animation
     drawTransition = false
     currentAnimation++
 }
 
-var Transition = function(){
+var Transition = function () {
     this.speed = 30
 
     // POSITION
@@ -148,15 +152,15 @@ var Transition = function(){
     this.rLS = createVector(0, height / 2)
     this.rRS = createVector(0, height / 2)
 
-    this.render = function(){
+    this.render = function () {
         fill(currentColor)
         rect(this.rL.x, this.rL.y, this.rLS.x, this.rLS.y)
         rect(this.rR.x, this.rR.y, this.rRS.x, this.rRS.y)
         this.move()
     }
 
-    this.move = function(){
-        if(this.rLS.x <= width){
+    this.move = function () {
+        if (this.rLS.x <= width) {
             // LEFT
             this.rLS.x += this.speed
 
