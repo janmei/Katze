@@ -158,7 +158,7 @@ nav li a {
   transition: 1s linear;
   /* font-size: 80em */
   /* backface-visibility: hidden; */
-  -webkit-filter: blur(0);
+  filter: blur(0);
 }
 
 .count10Container .headline {

@@ -87,6 +87,8 @@
 
       socket.on('clear countdown', function () {
         clearTimeout(time);
+        $('#minutes').text('')
+        $('#seconds').text('')
       })
 
       socket.on('team', function (msg) {
@@ -159,29 +161,16 @@
             }
           }
 
-          if (current_minutes == 0 && seconds < 11) {
-
-            var current_sec = seconds;
-            var previous_sec = current_sec + 1;
-
-
-
+          if (mins == 1 && seconds < 57) {
+            $('.textContainer').hide();
+            $('.countdownContainer').hide();
+            Countdown.startCountdown();
+            clearTimeout(time);
+            socket.emit('clear countdown');
           }
 
-
         }
-
-        if (mins == 1 && seconds < 55) {
-          $('.textContainer').hide();
-          $('.countdownContainer').hide();
-          Countdown.startCountdown();
-        } else {
-          console.log(mins);
-          console.log(seconds);
-          tick();
-        }
-
-
+        tick()
       }
     });
   </script>

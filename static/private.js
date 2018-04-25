@@ -44,16 +44,10 @@ $(function () {
 
   $('#inHead').bind('input', function () {
     $('#inCount').attr('disabled', true)
-    if ($('#inHead').val() === "") {
-      $('#inCount').attr('disabled', false)
-    }
   });
 
   $('#inCount').bind('input', function () {
     $('#inHead').attr('disabled', true)
-    if ($('#inCount').val() === "") {
-      $('#inHead').attr('disabled', false)
-    }
   });
 
   $('#countdown').submit(function () {
@@ -145,6 +139,14 @@ $(function () {
     $('#time').hide();
     $('#linkTime').removeClass('active')
     $(this).addClass('active')
+  })
+
+  socket.on('clear countdown', function () {
+    clearInterval(time);
+    $('.count').text('')
+    console.log('test');
+
+    // $('#delete-count').hide();
   })
 
   function countdown(minutes) {
