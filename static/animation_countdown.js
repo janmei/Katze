@@ -10,16 +10,16 @@ var countdown = function(){
 
     this.render = function(){
         if(this.rendering){            
+            this.countDown()
             this.decoration()
             textFont('Montserrat')
             textAlign(CENTER)
             textSize(this.textSize)
-            //fill(255)
-            noFill()
-            stroke(255)
-            strokeWeight(10)
-            text(this.currentTime, this.position.x, this.position.y - 20)
-            this.countDown()
+            fill(255)
+            //noFill()
+            //stroke(255)
+            //strokeWeight(10)
+            text(this.currentTime, this.position.x, this.position.y - 100)
             if(this.currentTime <= 0){
                 this.reset()
             }
