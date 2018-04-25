@@ -13,10 +13,9 @@
   <!-- ANIMATIONS -->
   <script language="javascript" src="animation_polys.js"></script>
   <script language="javascript" src="animation_title.js"></script>
-  <script language="javascript" src="animation_program.js"></script>  
+  <script language="javascript" src="animation_program.js"></script>
   <script language="javascript" src="animation_countdown.js"></script>
   <script language="javascript" src="animation_main.js"></script>
-  <script language="javascript" src="anime.min.js"></script>
   <!-- css -->
   <title>Document</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -154,39 +153,33 @@
           if (seconds > 0) {
             time = setTimeout(tick, 1000);
 
-
-
           } else {
             if (mins > 1) {
               countdown(mins - 1);
             }
           }
 
-          if (current_minutes == 0 && seconds < 57) {
+          if (current_minutes == 0 && seconds < 11) {
 
             var current_sec = seconds;
             var previous_sec = current_sec + 1;
 
-            $('.textContainer').hide();
-            $('.countdownContainer').hide();
-            $('.count10Container').show();
-            if (previous_sec > current_sec) {
-              $('#count10').html((seconds < 10 ? "0" : "") + String(seconds))
-              $('.count10Container .headline').addClass('animate')
-              setTimeout(function () {
-                $('.count10Container .headline').removeClass('animate')
-
-              }, 999);
-              previous_sec = current_sec;
-            }
-
-
-
 
 
           }
+
+
         }
-        tick();
+
+        if (mins == 1 && seconds < 55) {
+          $('.textContainer').hide();
+          $('.countdownContainer').hide();
+          Countdown.startCountdown();
+        } else {
+          console.log(mins);
+          console.log(seconds);
+          tick();
+        }
 
 
       }

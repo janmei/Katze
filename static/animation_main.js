@@ -13,7 +13,7 @@ var transition
 var drawTransition
 
 // Countdown
-var countdown
+var Countdown
 
 // ANIMATION
 var currentAnimation
@@ -49,7 +49,7 @@ var setup = function () {
 
     // COUNTDOWN
 
-    countdown = new countdown()
+    Countdown = new countdown()
 
     // ANIMATIONS
 
@@ -111,7 +111,7 @@ var draw = function () {
     }
 
     // COUNTDOWN
-    countdown.render()
+    Countdown.render()
 }
 
 function windowResized() {
