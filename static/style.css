@@ -109,30 +109,36 @@ nav li a {
 .text {
   display: block;
   margin: auto;
-  margin-top: 63vh;
-  font-family: 'Montserrat';
+  margin-top: 59vh;
+  font-family: 'Pier Sans';
   font-size: 2em;
-  position: absolute;
-  width: 100%;
   text-align: center;
   color: white;
+  position: absolute;  
+  margin-left: 20px;
+  padding: 15px;
+  transform: rotate(-2deg);
+  background: rgb(0, 0, 0);
 }
 
 .textContainer {  
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 20%;
 }
 
 .headline {
   margin-top: 48vh;
-  font-family: 'Montserrat';
+  font-family: 'Pier Sans';
   font-size: 8em;
   position: absolute;
   text-align: center;
   color: black;
   padding: 15px;
+  min-width: 50%;
   background: #feca19;
+  text-rendering: optimizeLegibility;
 }
 
 .table-content {
@@ -149,7 +155,7 @@ nav li a {
 .countdownContainer {
   position: absolute;
   color: white;
-  font-family: 'Montserrat';
+  font-family: 'Pier Sans';
   width: 100%;
   margin-left: 60%;
   margin-top: 40vh;
