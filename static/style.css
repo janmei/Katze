@@ -116,21 +116,23 @@ nav li a {
   width: 100%;
   text-align: center;
   color: white;
-  text-shadow: 0px 0px 5px rgb(63, 115, 115);
+}
+
+.textContainer {  
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .headline {
-  display: block;
-  margin: auto;
-  margin-top: 40vh;
+  margin-top: 48vh;
   font-family: 'Montserrat';
   font-size: 8em;
   position: absolute;
-  width: 100%;
-  height: 200vh;
   text-align: center;
-  color: white;
-  text-shadow: 0px 0px 5px rgb(63, 115, 115);
+  color: black;
+  padding: 15px;
+  background: #feca19;
 }
 
 .table-content {
@@ -149,6 +151,8 @@ nav li a {
   color: white;
   font-family: 'Montserrat';
   width: 100%;
+  margin-left: 60%;
+  margin-top: 40vh;
 }
 
 .count10Container .headline.animate {
