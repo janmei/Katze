@@ -44,6 +44,7 @@ body {
   padding: 0 32px;
   margin: 0 auto;
   border-radius: 12px;
+  margin-bottom: 30px;
 }
 
 nav {
@@ -114,14 +115,14 @@ nav li a {
   font-size: 2em;
   text-align: center;
   color: white;
-  position: absolute;  
+  position: absolute;
   margin-left: 20px;
   padding: 15px;
   transform: rotate(-2deg);
   background: rgb(0, 0, 0);
 }
 
-.textContainer {  
+.textContainer {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -159,6 +160,21 @@ nav li a {
   width: 100%;
   margin-left: 60%;
   margin-top: 40vh;
+}
+
+.sponsors {
+  width: 40%;
+  position: absolute;
+  color: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.sponsors img {
+  width: 100%;
+  position: absolute;
 }
 
 .count10Container .headline.animate {

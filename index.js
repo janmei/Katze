@@ -47,9 +47,15 @@ io.on('connection', function (socket) {
   })
 
   socket.on('clear countdown', function () {
-    console.log('clear countdown: ');
+    console.log('clear countdown!');
     io.emit('clear countdown');
   })
+
+  socket.on('clear sub', function () {
+    console.log('clear sub!');
+    io.emit('clear sub');
+  })
+
   socket.on('countdown res', function (msg) {
     console.log('countdown res: ' + msg);
     io.emit('countdown res', msg);
@@ -63,6 +69,12 @@ io.on('connection', function (socket) {
   socket.on('team', function (msg) {
     console.log('team: ' + msg);
     io.emit('team', msg)
+
+  })
+
+  socket.on('sponsor', function () {
+    console.log('sponsor');
+    io.emit('sponsor', )
 
   })
 });

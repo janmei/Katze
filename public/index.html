@@ -31,9 +31,9 @@
   </div>
 
   <!-- Nur für die letzten 10 Sekunden notwendig -->
-  <div class="count10Container">
+  <!-- <div class="count10Container">
     <h1 class="headline" id="count10">10</h1>
-  </div>
+  </div> -->
 
   <div class="countdownContainer">
     <div id="minutes"></div>
@@ -54,10 +54,19 @@
     </table>
   </div>
 
+  <div class="sponsors" id="sponsors">
+    <img src="../img/merck.png" alt="" class="sponsor-img active">
+    <img src="../img/honda.png" alt="" class="sponsor-img ">
+    <img src="../img/stihl.png" alt="" class="sponsor-img ">
+  </div>
+
   <script src="socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="slide.js"></script>
   <script>
     var time;
+    var slideIndex;
+
     $(function () {
 
 
@@ -65,6 +74,8 @@
       socket.on('head text', function (msg) {
         clearTimeout(time);
         $('.table-content').hide();
+        $('.sponsors').hide();
+        $('.textContainer').show();
         $('#outHead').text(msg);
         socket.emit('head res', msg)
         textBack()
@@ -97,17 +108,32 @@
         setInterval(showTeam(msg), 2)
       })
 
+      socket.on('sponsor', function () {
+        $('.table-content').hide();
+        $('.textContainer').hide();
+        $('.sponsors').show();
+        slideIndex = 0;
+        cycleImages();
+      })
+
       function showTeam(msg) {
+        $('.textContainer').show();
+
         $('#outHead').text('');
         $('#outSub').text('');
         $('.table-content').hide()
+        $('.sponsors').hide()
+
         getTeam(msg);
+
       }
 
       socket.on('timeTable', function () {
         $('#outHead').text('');
         $('#outSub').text('');
+        $('.sponsors').hide();
         $('.table-content').show();
+        textBack();
 
       })
 
@@ -116,6 +142,8 @@
           var set = data.groups
           $('#outHead').text(set[team].teamName);
           $('#outSub').text(set[team].members);
+          textBack()
+
         });
       }
 
@@ -150,6 +178,7 @@
         }
       }
       textBack()
+
 
       function countdown(minutes) {
 

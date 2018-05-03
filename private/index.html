@@ -17,7 +17,7 @@
         <p>Text</a>
       </li>
       <li id="linkTime">
-        <p>Zeitplan</a>
+        <p>Medien</a>
       </li>
     </ul>
   </nav>
@@ -62,27 +62,6 @@
               </label>
             </div>
           </div>
-          <div class="set-content col-4">
-            <h1>Einstellungen</h1>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="social" checked>
-              <label class="form-check-label" for="exampleRadios1">
-                Social Media
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="sponsors">
-              <label class="form-check-label" for="exampleRadios2">
-                Sponsoren
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="loop">
-              <label class="form-check-label" for="exampleRadios3">
-                Alles in Schleife
-              </label>
-            </div>
-          </div>
         </div>
       </div>
       <div class="settings">
@@ -118,29 +97,26 @@
   </div>
 
   <div class="content" id="time">
-    <div class="block">
-      <div class="settings">
-        <div class="set-cont">
-          <h1>Zeitplan</h1>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Semster</th>
-                <th scope="col">Gruppe</th>
-                <th scope="col">Team</th>
-                <th scope="col">Team anzeigen</th>
-              </tr>
-            </thead>
-            <tbody id="timeBody">
-            </tbody>
-          </table>
-          <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
-        </div>
+    <div class="row">
+      <div class="settings col-6">
+        <h1>Zeitplan</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Semster</th>
+              <th scope="col">Gruppe</th>
+              <th scope="col">Team</th>
+              <th scope="col">Team anzeigen</th>
+            </tr>
+          </thead>
+          <tbody id="timeBody">
+          </tbody>
+        </table>
+        <button type="submit" class="btn btn-danger" id="timeTable">Alles anzeigen</button>
       </div>
-      <div class="settings">
-        <div class="set-content col-6">
-
-        </div>
+      <div class="settings col-6">
+        <h1>Sponsoren</h1>
+        <button type="submit" class="btn btn-danger" id="sponsors">Sponsoren anzeigen</button>
       </div>
     </div>
   </div>

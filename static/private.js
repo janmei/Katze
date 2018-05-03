@@ -27,6 +27,7 @@ $(function () {
   $('#text-input').submit(function () {
     if ($('#inHead').val() != "") {
       socket.emit('head text', $('#inHead').val());
+      clearSub();
     }
     if ($('#inSub').val() != "") {
       socket.emit('sub text', $('#inSub').val());
@@ -77,7 +78,7 @@ $(function () {
   $('input[name="preset"]').click(function () {
     if ($('#if-preset').prop('checked') === true) {
       $('#inHead').val('interactive future');
-      $('#inSub').val(' ');
+      $('#inSub').val('');
     } else if ($('#break-preset').prop('checked') === true) {
       $('#inHead').val('Pause');
       $('#inSub').val('Gleich geht’s weiter!');
@@ -141,13 +142,21 @@ $(function () {
     $(this).addClass('active')
   })
 
+  $('#sponsors').click(function () {
+    socket.emit('sponsor');
+  })
+
   socket.on('clear countdown', function () {
     clearInterval(time);
     $('.count').text('')
-    console.log('test');
 
     // $('#delete-count').hide();
   })
+
+  function clearSub() {
+    socket.emit('sub text', '');
+    $('#delete-sub').hide();
+  }
 
   function countdown(minutes) {
 
