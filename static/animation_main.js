@@ -36,6 +36,7 @@ var setup = function () {
 
     // Main colors
     colors = [
+        /*
         color(239, 128, 29), // Yellow
         color(254, 202, 25), // Yellow Variation
         color(246, 163, 29), // Orange
@@ -43,6 +44,10 @@ var setup = function () {
         color(63, 115, 115), // Turquoise
         color(247, 180, 170), // Light Red
         color(226, 237, 201) // Light Green
+        */
+        color(163, 64, 64),
+        color(194, 235, 214),
+        color(252, 212, 120)
     ]
 
     randColor()
@@ -61,7 +66,8 @@ var setup = function () {
     grid = new grid()
 
     for (var i = 0; i < 100; i++) {
-        polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
+        // polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
+        polys.push(new poly(width / 2, height / 2, colors[floor(random(0, colors.length))]))
     }
 
     // ANIMATION 02 TITLE

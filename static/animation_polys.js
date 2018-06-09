@@ -10,17 +10,17 @@ var poly_animation = function(){
 
 var poly = function(x,y, c){
     this.position = createVector(x,y)
-    this.scale = random(1, 50)
+    this.scale = 1
     this.size = 1
     this.c = c
-    this.direction = createVector(1, -0.5)
-    // this.direction = createVector(random(-1, 1), random(-1, 1))
+    // this.direction = createVector(1, -0.5)
+    this.direction = createVector(random(-1, 1), random(-1, 1))
     this.speed = 0.1
     
     this.transition = false
 
-    this.scale *= this.size
-    this.speed *= this.scale 
+    // this.scale *= this.size
+    this.speed = random(5, 10)
 
     this.draw = function(){
         if(this.scale > 0){            
@@ -55,12 +55,25 @@ var poly = function(x,y, c){
         this.position.x += this.direction.x * this.speed
         this.position.y += this.direction.y * this.speed
         // Out of bounds
+        /*
         if(this.position.x > width + 50){
-            this.position.x = -50
+            // this.position.x = -50
+            this.position.x = width / 2
+        } else if(this.position.x < 0){
+            this.position.x = width / 2
         }
         if(this.position.y < -50){
-            this.position.y = height + 50
+            // this.position.y = height + 50
+            this.position.y = height / 2
+        } else if(this.position.y > height){
+            this.position.y = height / 2
+        } */
+        if(this.position.x > width + 50 || this.position.x < 0 || this.position.y > height + 50 || this.position.y < 0){
+            this.position.x = width / 2
+            this.position.y = height / 2
+            this.scale = 1
         }
+        this.scale += 0.2
     }
 }
 

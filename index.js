@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
 
   socket.on('sponsor', function () {
     console.log('sponsor');
-    io.emit('sponsor', )
+    io.emit('sponsor', -1)
 
   })
 });

@@ -135,11 +135,13 @@ nav li a {
   font-size: 8em;
   position: absolute;
   text-align: center;
-  color: black;
+  color: white;
   padding: 15px;
   min-width: 50%;
-  background: #feca19;
+  /* background: #feca19; */
+  background: rgba(0, 241, 255, 0.5);
   text-rendering: optimizeLegibility;
+  box-shadow: 0px 0px 200px 20px rgba(0, 241, 255, 0.5);
 }
 
 .table-content {
