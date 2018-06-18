@@ -69,12 +69,20 @@ io.on('connection', function (socket) {
   socket.on('team', function (msg) {
     console.log('team: ' + msg);
     io.emit('team', msg)
-
   })
 
   socket.on('sponsor', function () {
     console.log('sponsor');
     io.emit('sponsor', -1)
-
   })
+
+  socket.on('req current', function () {
+    console.log('req current');
+    io.emit('req current')
+  })
+  socket.on('send current', function (msg) {
+    console.log('send current');
+    io.emit('send current', msg)
+  })
+
 });

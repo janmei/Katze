@@ -27,7 +27,9 @@
   <section class="main_wrapper">
     <!-- <h1 class="text">Hello World Public</h1> -->
     <div class="textContainer">
-      <h1 class="headline" id="outHead"><b>interactive</b> <br> future exhibition</h1>
+      <h1 class="headline" id="outHead">
+        <b>interactive</b>
+        <br> future exhibition</h1>
       <p class="text" id="outSub"></p>
     </div>
 
@@ -61,7 +63,7 @@
       <img src="../img/stihl.png" alt="" class="sponsor-img ">
     </div>
   </section>
-  
+
 
   <script src="socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -69,6 +71,9 @@
   <script>
     var time;
     var slideIndex;
+
+    var seks;
+    var minuten;
 
     $(function () {
 
@@ -81,18 +86,14 @@
         $('.textContainer').show();
         $('#outHead').text(msg);
         socket.emit('head res', msg)
-        textBack()
+        textBg()
 
       });
       socket.on('sub text', function (msg) {
         $('.table-content').hide();
         $('#outSub').text(msg);
         socket.emit('sub res', msg)
-        textBack()
-      });
-
-      socket.on('func test', function (msg) {
-        flyOut(20)
+        textBg()
       });
 
       socket.on('countdown', function (msg) {
@@ -119,6 +120,27 @@
         cycleImages();
       })
 
+      socket.on('req current', function () {
+        var head = $('#outHead').text();
+        var sub = $('#outSub').text();
+        var count = [seks, minuten];
+
+        console.log(head, sub, count);
+        if (typeof seks === 'undefined' || typeof minuten === 'undefined') {
+          socket.emit('send current', {
+            headText: head,
+            subText: sub
+          });
+        } else {
+          socket.emit('send current', {
+            headText: head,
+            subText: sub,
+            sec: count[0],
+            mins: count[1]
+          });
+        }
+      })
+
       function showTeam(msg) {
         $('.textContainer').show();
 
@@ -136,7 +158,7 @@
         $('#outSub').text('');
         $('.sponsors').hide();
         $('.table-content').show();
-        textBack();
+        textBg();
 
       })
 
@@ -145,7 +167,7 @@
           var set = data.groups
           $('#outHead').text(set[team].teamName);
           $('#outSub').text(set[team].members);
-          textBack()
+          textBg()
 
         });
       }
@@ -167,7 +189,7 @@
 
       getTimeTable();
 
-      function textBack() {
+      function textBg() {
         if ($('#outHead').html() != "") {
           $('#outHead').show();
         } else {
@@ -180,7 +202,7 @@
           $('#outSub').hide();
         }
       }
-      textBack()
+      textBg()
 
 
       function countdown(minutes) {
@@ -192,6 +214,8 @@
 
           var current_minutes = mins - 1
           seconds--;
+
+
 
           //$('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
 
@@ -207,14 +231,15 @@
             }
           }
 
-          if (mins == 1 && seconds < 57) {
+          if (mins == 1 && seconds < 11) {
             $('.textContainer').hide();
             $('.countdownContainer').hide();
             Countdown.startCountdown();
             clearTimeout(time);
             socket.emit('clear countdown');
           }
-
+          seks = seconds;
+          minuten = current_minutes + 1;
         }
         tick()
       }

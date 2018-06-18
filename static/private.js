@@ -1,11 +1,14 @@
 var time;
 
-// gets teams from group.json 
 $(function () {
+  var socket = io();
   //Setup
+
+  socket.emit('req current');
   $('#delete-sub').hide();
 
 
+  // gets teams from group.json 
   $.getJSON("../group.json", function (data) {
 
     $.each(data.groups, function (key, val) {
@@ -23,7 +26,6 @@ $(function () {
 
   });
 
-  var socket = io();
   $('#text-input').submit(function () {
     if ($('#inHead').val() != "") {
       socket.emit('head text', $('#inHead').val());
@@ -101,6 +103,14 @@ $(function () {
     }
   })
 
+  socket.on('send current', function (data) {
+    $('.head').text(data.headText);
+    $('.sub').text(data.subText);
+    if (data.mins && data.sec) {
+      countdown(data.mins, data.sec)
+    }
+  })
+
   function isEmpty(el) {
     return !$.trim(el.html())
   }
@@ -150,9 +160,8 @@ $(function () {
     $('#delete-sub').hide();
   }
 
-  function countdown(minutes) {
-
-    var seconds = 60;
+  function countdown(minutes, secs) {
+    var seconds = secs || 60;
     var mins = minutes
 
     function tick() {
