@@ -2,6 +2,12 @@
   Back End   
 */
 
+@font-face {
+  font-family: "Pier Sans";
+  src: url(./fonts/PierSans-Regular.otf);
+  font-weight: normal;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,7 +23,6 @@ body {
   display: flex;
   height: 100vh;
   flex-direction: column;
-  justify-content: space-around;
   padding-top: 20px;
 }
 
@@ -30,11 +35,8 @@ body {
 }
 
 .block {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: block;
   width: 100%;
-  border-radius: 12px;
 }
 
 .settings {
@@ -45,6 +47,10 @@ body {
   margin: 0 auto;
   border-radius: 12px;
   margin-bottom: 30px;
+}
+
+.set-content {
+  margin-bottom: 20px;
 }
 
 nav {
@@ -75,7 +81,7 @@ nav li a {
 }
 
 .slide {
-  padding: 20px;
+  /* padding: 20px; */
   text-align: center;
   display: flex;
   flex-direction: column;

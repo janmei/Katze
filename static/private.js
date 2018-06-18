@@ -16,7 +16,7 @@ $(function () {
       $(rowId).append('<td>' + val.members + '</td>');
       $(
         '<td><button type="submit" class="btn btn-danger" id="team" data-team="' + key +
-        '">Team anzeigen</button></td>'
+        '">Show</button></td>'
       ).appendTo(rowId);
     });
 
@@ -37,18 +37,8 @@ $(function () {
     }
     $('#inHead').val('');
     $('#inSub').val('');
-    $('#inCount').attr('disabled', false)
-    $('#inHead').attr('disabled', false)
 
     return false;
-  });
-
-  $('#inHead').bind('input', function () {
-    $('#inCount').attr('disabled', true)
-  });
-
-  $('#inCount').bind('input', function () {
-    $('#inHead').attr('disabled', true)
   });
 
   $('#countdown').submit(function () {
@@ -79,9 +69,11 @@ $(function () {
     if ($('#if-preset').prop('checked') === true) {
       $('#inHead').val('interactive future');
       $('#inSub').val('');
+      $('#inCount').val('');
     } else if ($('#break-preset').prop('checked') === true) {
       $('#inHead').val('Pause');
       $('#inSub').val('Gleich geht’s weiter!');
+      $('#inCount').val('');
     }
   })
 
