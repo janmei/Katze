@@ -65,9 +65,9 @@ var setup = function () {
     polys = []
     grid = new grid()
 
-    for (var i = 0; i < 100; i++) {
-        // polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
-        polys.push(new poly(width / 2, height / 2, colors[floor(random(0, colors.length))]))
+    for (var i = 0; i < 30; i++) {
+        polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
+        // polys.push(new poly(width / 2, height / 2, colors[floor(random(0, colors.length))]))
     }
 
     // ANIMATION 02 TITLE
