@@ -86,7 +86,7 @@ var setup = function () {
 }
 
 var randColor = function () {
-    currentColor = colors[round(random(0, colors.length))]
+    currentColor = colors[floor(random(0, colors.length))]
 }
 
 // MAIN
@@ -135,6 +135,10 @@ var startTransition = function () {
         case 1:
             startTransitionPoly()
             break
+        case 2:
+            console.log("yo")
+            startTransitionPoly()
+            break
     }
 
     // start transition overlay
@@ -144,7 +148,11 @@ var startTransition = function () {
 var endTransition = function () {
     // switch to new animation
     drawTransition = false
-    currentAnimation++
+    if(currentAnimation == 1){
+        currentAnimation++
+    } else {
+        currentAnimation--
+    }
 }
 
 var Transition = function () {

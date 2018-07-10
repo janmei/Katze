@@ -1,7 +1,7 @@
 var title = function(){
     background(currentColor)
     for(var i = 0; i < honeyPolys.length; i++){
-        honeyPolys[i].draw()
+        // honeyPolys[i].draw()
     }
 }
 
@@ -11,7 +11,7 @@ var honeyPoly = function(x,y){
     this.scale = 0
     this.speed = random(0, 1)
     this.s = 0
-    this.c = colors[round(random(0,2))]
+    this.c = colors[1]
     this.active = false
     this.bounds = createVector(40, 20)
 

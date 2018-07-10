@@ -115,10 +115,15 @@
       socket.on('sponsor', function () {
         $('.table-content').hide();
         $('.textContainer').hide();
+        startTransition();
+        window.setTimeout(showSponsors, 1500);
+      })
+
+      function showSponsors(){
         $('.sponsors').show();
         slideIndex = 0;
         cycleImages();
-      })
+      }
 
       socket.on('req current', function () {
         var head = $('#outHead').text();

@@ -90,8 +90,15 @@ var flyOut = function(speed){
 }
 
 var startTransitionPoly = function(){
-    for(var i = 0; i < polys.length; i++){
-        polys[i].transition = true
+    if(polys[0].transition == false){
+        for(var i = 0; i < polys.length; i++){
+            polys[i].transition = true
+        }
+    } else {
+        for(var i = 0; i < polys.length; i++){
+            polys[i].transition = false
+            polys[i].scale = polys[i].size
+        }
     }
 }
 
