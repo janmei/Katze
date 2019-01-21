@@ -1,0 +1,69 @@
+/* -------------------------------- 
+
+Title: Tabbed Navigation
+Descr: Tabbed secondary navigation
+
+-------------------------------- */
+
+:root {
+  --s-tabs-border-bottom-width: 1px;
+  --s-tabs-selected-item-border-bottom-width: 1px;
+}
+
+.s-tabs {
+  position: relative;
+
+  &::after {
+    // gradient - truncate text
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 0;
+    height: calc(100% - var(--s-tabs-border-bottom-width));
+    width: 2em;
+    background: linear-gradient(90deg, var(--color-bg-a20), var(--color-bg));
+    pointer-events: none;
+  }
+}
+
+.s-tabs__list {
+  display: flex;
+  overflow: auto;
+  -webkit-overflow-scrolling: auto;
+
+  &::after {
+    // border bottom
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: var(--s-tabs-border-bottom-width);
+    left: 0;
+    bottom: 0;
+    background-color: var(--color-contrast-low);
+  }
+
+  li {
+    margin-right: var(--space-sm);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    padding: var(--space-xs);
+    white-space: nowrap;
+    border-bottom: var(--s-tabs-selected-item-border-bottom-width) solid
+      transparent;
+    z-index: 1;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  .s-tabs__item--selected {
+    position: relative;
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+}

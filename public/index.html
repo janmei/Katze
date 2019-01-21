@@ -1,257 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Interactive Future 2018</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Interactive Future 2018</title>
+		<!-- p5 -->
+		<script language="javascript" type="text/javascript" src="p5.min.js"></script>
+		<script language="javascript" src="p5.dom.min.js"></script>
+		<!-- ANIMATIONS -->
+		<script language="javascript" src="animation_polys.js"></script>
+		<script language="javascript" src="animation_title.js"></script>
+		<script language="javascript" src="animation_program.js"></script>
+		<script language="javascript" src="animation_countdown.js"></script>
+		<script language="javascript" src="animation_main.js"></script>
+		<!-- css -->
+		<title>Document</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
 
-  <!-- p5 -->
-  <script language="javascript" type="text/javascript" src="p5.js"></script>
-  <script language="javascript" src="p5.dom.js"></script>
-  <!-- ANIMATIONS -->
-  <script language="javascript" src="animation_polys.js"></script>
-  <script language="javascript" src="animation_title.js"></script>
-  <script language="javascript" src="animation_program.js"></script>
-  <script language="javascript" src="animation_countdown.js"></script>
-  <script language="javascript" src="animation_main.js"></script>
-  <!-- css -->
-  <title>Document</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css" />
+	</head>
 
-  <link rel="stylesheet" href="style.css">
-</head>
+	<body>
+		<section class="main_wrapper">
+			<!-- <h1 class="text">Hello World Public</h1> -->
+			<div class="textContainer">
+				<h1 class="headline" id="outHead">
+					<b>interactive</b> <br />
+					future exhibition
+				</h1>
+				<p class="text" id="outSub"></p>
+			</div>
 
-<body>
-  <section class="main_wrapper">
-    <!-- <h1 class="text">Hello World Public</h1> -->
-    <div class="textContainer">
-      <h1 class="headline" id="outHead">
-        <b>interactive</b>
-        <br> future exhibition</h1>
-      <p class="text" id="outSub"></p>
-    </div>
-
-    <!-- Nur für die letzten 10 Sekunden notwendig -->
-    <!-- <div class="count10Container">
+			<!-- Nur für die letzten 10 Sekunden notwendig -->
+			<!-- <div class="count10Container">
       <h1 class="headline" id="count10">10</h1>
     </div> -->
 
-    <div class="countdownContainer">
-      <div id="minutes"></div>
-      <div id="seconds"></div>
-    </div>
+			<div class="countdownContainer">
+				<div id="minutes"></div>
+				<div id="seconds"></div>
+			</div>
 
-    <div class="table-content">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Semester</th>
-            <th scope="col">Gruppe</th>
-            <th scope="col">Team</th>
-          </tr>
-        </thead>
-        <tbody id="timeBody">
-        </tbody>
-      </table>
-    </div>
+			<div class="table-content">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Semester</th>
+							<th scope="col">Gruppe</th>
+							<th scope="col">Team</th>
+						</tr>
+					</thead>
+					<tbody id="timeBody"></tbody>
+				</table>
+			</div>
 
-    <div class="sponsors" id="sponsors">
-      <img src="../img/merck.png" alt="" class="sponsor-img active">
-      <img src="../img/honda.png" alt="" class="sponsor-img ">
-      <img src="../img/stihl.png" alt="" class="sponsor-img ">
-    </div>
-  </section>
+			<div class="sponsors" id="sponsors">
+				<img src="../img/merck.png" alt="" class="sponsor-img active" />
+				<img src="../img/honda.png" alt="" class="sponsor-img " />
+				<img src="../img/stihl.png" alt="" class="sponsor-img " />
+			</div>
+		</section>
 
+		<script src="socket.io.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="slide.js"></script>
+		<script>
+			var time;
+			var slideIndex;
 
-  <script src="socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="slide.js"></script>
-  <script>
-    var time;
-    var slideIndex;
+			var seks;
+			var minuten;
 
-    var seks;
-    var minuten;
+			$(function() {
+				var socket = io();
+				socket.on('head text', function(msg) {
+					clearTimeout(time);
+					$('.table-content').hide();
+					$('.sponsors').hide();
+					$('.textContainer').show();
+					$('#outHead').text(msg);
+					socket.emit('head res', msg);
+					textBg();
+				});
+				socket.on('sub text', function(msg) {
+					$('.table-content').hide();
+					$('#outSub').text(msg);
+					socket.emit('sub res', msg);
+					textBg();
+				});
 
-    $(function () {
+				socket.on('countdown', function(msg) {
+					clearTimeout(time);
+					countdown(msg);
+					socket.emit('countdown res', msg);
+				});
 
+				socket.on('clear countdown', function() {
+					clearTimeout(time);
+					$('#minutes').text('');
+					$('#seconds').text('');
+				});
 
-      var socket = io();
-      socket.on('head text', function (msg) {
-        clearTimeout(time);
-        $('.table-content').hide();
-        $('.sponsors').hide();
-        $('.textContainer').show();
-        $('#outHead').text(msg);
-        socket.emit('head res', msg)
-        textBg()
+				socket.on('team', function(msg) {
+					setInterval(showTeam(msg), 2);
+				});
 
-      });
-      socket.on('sub text', function (msg) {
-        $('.table-content').hide();
-        $('#outSub').text(msg);
-        socket.emit('sub res', msg)
-        textBg()
-      });
+				socket.on('sponsor', function() {
+					$('.table-content').hide();
+					$('.textContainer').hide();
+					startTransition();
+					window.setTimeout(showSponsors, 1500);
+				});
 
-      socket.on('countdown', function (msg) {
-        clearTimeout(time);
-        countdown(msg)
-        socket.emit('countdown res', msg)
-      })
+				function showSponsors() {
+					$('.sponsors').show();
+					slideIndex = 0;
+					cycleImages();
+				}
 
-      socket.on('clear countdown', function () {
-        clearTimeout(time);
-        $('#minutes').text('')
-        $('#seconds').text('')
-      })
+				socket.on('req current', function() {
+					var head = $('#outHead').text();
+					var sub = $('#outSub').text();
+					var count = [seks, minuten];
 
-      socket.on('team', function (msg) {
-        setInterval(showTeam(msg), 2)
-      })
+					console.log(head, sub, count);
+					if (typeof seks === 'undefined' || typeof minuten === 'undefined') {
+						socket.emit('send current', {
+							headText: head,
+							subText: sub
+						});
+					} else {
+						socket.emit('send current', {
+							headText: head,
+							subText: sub,
+							sec: count[0],
+							mins: count[1]
+						});
+					}
+				});
 
-      socket.on('sponsor', function () {
-        $('.table-content').hide();
-        $('.textContainer').hide();
-        startTransition();
-        window.setTimeout(showSponsors, 1500);
-      })
+				function showTeam(msg) {
+					$('.textContainer').show();
 
-      function showSponsors(){
-        $('.sponsors').show();
-        slideIndex = 0;
-        cycleImages();
-      }
+					$('#outHead').text('');
+					$('#outSub').text('');
+					$('.table-content').hide();
+					$('.sponsors').hide();
 
-      socket.on('req current', function () {
-        var head = $('#outHead').text();
-        var sub = $('#outSub').text();
-        var count = [seks, minuten];
+					getTeam(msg);
+				}
 
-        console.log(head, sub, count);
-        if (typeof seks === 'undefined' || typeof minuten === 'undefined') {
-          socket.emit('send current', {
-            headText: head,
-            subText: sub
-          });
-        } else {
-          socket.emit('send current', {
-            headText: head,
-            subText: sub,
-            sec: count[0],
-            mins: count[1]
-          });
-        }
-      })
+				socket.on('timeTable', function() {
+					$('#outHead').text('');
+					$('#outSub').text('');
+					$('.sponsors').hide();
+					$('.table-content').show();
+					textBg();
+				});
 
-      function showTeam(msg) {
-        $('.textContainer').show();
+				function getTeam(team) {
+					$.getJSON('group.json', function(data) {
+						var set = data.groups;
+						$('#outHead').text(set[team].teamName);
+						$('#outSub').text(set[team].members);
+						textBg();
+					});
+				}
 
-        $('#outHead').text('');
-        $('#outSub').text('');
-        $('.table-content').hide()
-        $('.sponsors').hide()
+				function getTimeTable() {
+					$.getJSON('group.json', function(data) {
+						$.each(data.groups, function(key, val) {
+							var rowId = '#' + key;
+							$('#timeBody').append('<tr id=' + key + '>');
+							$(rowId)
+								.append('<th scope="row">' + val.semester + '</th>')
+								.attr('id', key);
+							$(rowId).append('<td>' + val.teamName + '</td>');
+							$(rowId).append('<td>' + val.members + '</td>');
+						});
+					});
+				}
 
-        getTeam(msg);
+				getTimeTable();
 
-      }
+				function textBg() {
+					if ($('#outHead').html() != '') {
+						$('#outHead').show();
+					} else {
+						$('#outHead').hide();
+					}
 
-      socket.on('timeTable', function () {
-        $('#outHead').text('');
-        $('#outSub').text('');
-        $('.sponsors').hide();
-        $('.table-content').show();
-        textBg();
+					if ($('#outSub').html() != '') {
+						$('#outSub').show();
+					} else {
+						$('#outSub').hide();
+					}
+				}
+				textBg();
 
-      })
+				function countdown(minutes) {
+					var seconds = 60;
+					var mins = minutes;
 
-      function getTeam(team) {
-        $.getJSON("group.json", function (data) {
-          var set = data.groups
-          $('#outHead').text(set[team].teamName);
-          $('#outSub').text(set[team].members);
-          textBg()
+					function tick() {
+						var current_minutes = mins - 1;
+						seconds--;
 
-        });
-      }
+						//$('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
 
-      function getTimeTable() {
-        $.getJSON("group.json", function (data) {
+						$('#minutes').html(current_minutes.toString());
+						$('#seconds').html((seconds < 10 ? '0' : '') + String(seconds));
 
-          $.each(data.groups, function (key, val) {
-            var rowId = '#' + key;
-            $('#timeBody').append('<tr id=' + key + '>')
-            $(rowId).append('<th scope="row">' + val.semester + '</th>').attr('id', key);
-            $(rowId).append('<td>' + val.teamName + '</td>');
-            $(rowId).append('<td>' + val.members + '</td>');
-          });
+						if (seconds > 0) {
+							time = setTimeout(tick, 1000);
+						} else {
+							if (mins > 1) {
+								countdown(mins - 1);
+							}
+						}
 
-
-        });
-      }
-
-      getTimeTable();
-
-      function textBg() {
-        if ($('#outHead').html() != "") {
-          $('#outHead').show();
-        } else {
-          $('#outHead').hide();
-        }
-
-        if ($('#outSub').html() != "") {
-          $('#outSub').show();
-        } else {
-          $('#outSub').hide();
-        }
-      }
-      textBg()
-
-
-      function countdown(minutes) {
-
-        var seconds = 60;
-        var mins = minutes
-
-        function tick() {
-
-          var current_minutes = mins - 1
-          seconds--;
-
-
-
-          //$('#outHead').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
-
-          $('#minutes').html(current_minutes.toString())
-          $('#seconds').html((seconds < 10 ? "0" : "") + String(seconds))
-
-          if (seconds > 0) {
-            time = setTimeout(tick, 1000);
-
-          } else {
-            if (mins > 1) {
-              countdown(mins - 1);
-            }
-          }
-
-          if (mins == 1 && seconds < 11) {
-            $('.textContainer').hide();
-            $('.countdownContainer').hide();
-            Countdown.startCountdown();
-            clearTimeout(time);
-            socket.emit('clear countdown');
-          }
-          seks = seconds;
-          minuten = current_minutes + 1;
-        }
-        tick()
-      }
-
-
-    });
-  </script>
-</body>
-
+						if (mins == 1 && seconds < 11) {
+							$('.textContainer').hide();
+							$('.countdownContainer').hide();
+							Countdown.startCountdown();
+							clearTimeout(time);
+							socket.emit('clear countdown');
+						}
+						seks = seconds;
+						minuten = current_minutes + 1;
+					}
+					tick();
+				}
+			});
+		</script>
+	</body>
 </html>

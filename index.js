@@ -8,81 +8,121 @@ var serveStatic = require('serve-static');
 app.use(express.static('static'));
 app.use(express.static('public'));
 
-
 app.get('/admin', function (req, res) {
-  res.sendFile(__dirname + '/private/index.html');
+	app.use(express.static('private'));
+	res.sendFile(__dirname + '/private/index.html');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 http.listen(PORT, function () {
-  console.log(`listening on http://localhost:${ PORT }`);
+	console.log(`listening on http://localhost:${PORT}`);
 });
 
+// get all custom created rooms
+function findRooms() {
+	var availableRooms = [];
+	var rooms = io.sockets.adapter.rooms;
+	if (rooms) {
+		for (var room in rooms) {
+			if (!rooms[room].sockets.hasOwnProperty(room)) {
+				availableRooms.push(room);
+			}
+		}
+	}
+	return availableRooms;
+}
+
 io.on('connection', function (socket) {
+	/**
+	 * 
+	 * CREATE ROOM
+	 * 
+	 * creates rooms for clients
+	 * 
+	 */
 
-  socket.on('head text', function (msg) {
-    console.log('text: ' + msg);
-    io.emit('head text', msg);
-  });
+	socket.on('create', function (room) {
+		socket.join(room);
+		console.log(room + ' created');
 
-  socket.on('head res', function (msg) {
-    console.log('res: ' + msg);
-    io.emit('head res', msg);
-  });
+		socket.broadcast.emit('update rooms', findRooms());
+	});
 
-  socket.on('sub text', function (msg) {
-    console.log('text: ' + msg);
-    io.emit('sub text', msg);
-  });
 
-  socket.on('sub res', function (msg) {
-    console.log('res: ' + msg);
-    io.emit('sub res', msg);
-  });
+	/**
+	 * 
+	 * INIT EMIT
+	 * 
+	 * gets all current states fom front end 
+	 * 
+	 */
 
-  socket.on('countdown', function (msg) {
-    console.log('countdown: ' + msg);
-    io.emit('countdown', msg);
-  })
+	socket.on('req current', function () {
+		console.log('req current');
+		io.emit('req current');
+	});
 
-  socket.on('clear countdown', function () {
-    console.log('clear countdown!');
-    io.emit('clear countdown');
-  })
+	socket.on('send current', function (msg) {
+		console.log('send current');
+		io.emit('send current', msg);
+	});
 
-  socket.on('clear sub', function () {
-    console.log('clear sub!');
-    io.emit('clear sub');
-  })
 
-  socket.on('countdown res', function (msg) {
-    console.log('countdown res: ' + msg);
-    io.emit('countdown res', msg);
-  })
+	/**
+	 * 
+	 * TEXT EMIT 
+	 * 
+	 * sends all texts from all input fields at once in one emit
+	 * 
+	 */
 
-  socket.on('timeTable', function () {
-    console.log('timeTable');
-    io.emit('timeTable');
-  })
+	socket.on('text', function (data) {
+		io.emit('text', data);
+	})
 
-  socket.on('team', function (msg) {
-    console.log('team: ' + msg);
-    io.emit('team', msg)
-  })
+	socket.on('text response', function (data) {
+		io.emit('text response', data);
+	})
 
-  socket.on('sponsor', function () {
-    console.log('sponsor');
-    io.emit('sponsor', -1)
-  })
 
-  socket.on('req current', function () {
-    console.log('req current');
-    io.emit('req current')
-  })
-  socket.on('send current', function (msg) {
-    console.log('send current');
-    io.emit('send current', msg)
-  })
+	/**
+	 * 
+	 * MEDIA EMIT
+	 * 
+	 * sends which media needs to be shown
+	 * 
+	 */
+
+	socket.on('media', function (data) {
+		console.log('media');
+		io.emit('media', data);
+	});
+
+
+	/**
+	 * 
+	 * COUNTDOWN EMIT
+	 * 
+	 * starts and stops countdown
+	 * sends response to back end if started
+	 * 
+	 */
+
+	socket.on('countdown', function (msg) {
+		console.log('countdown: ' + msg);
+		io.emit('countdown', msg);
+	});
+
+	socket.on('clear countdown', function () {
+		console.log('clear countdown!');
+		io.emit('clear countdown');
+	});
+
+	socket.on('countdown res', function (msg) {
+		console.log('countdown res: ' + msg);
+		io.emit('countdown res', msg);
+	});
+
 
 });

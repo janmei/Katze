@@ -1,0 +1,26 @@
+#wrap {
+	bottom: 0;
+	right: 0;
+	position: fixed;
+	border: 5px solid #fff;
+	border-radius: 10px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+	width: 384px;
+	height: 216px;
+	padding: 0;
+	overflow: hidden;
+	margin: 16px;
+}
+
+#frame {
+	width: 1920px;
+	height: 1080px;
+	border: 1px solid black;
+}
+
+#frame {
+	/* zoom: 0.25; */
+	transform: scale(0.2) translate(-200%, -200%);
+	-moz-transform: scale(0.75);
+	-moz-transform-origin: 0 0;
+}

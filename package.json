@@ -4,6 +4,7 @@
   "description": "Krasse Animationen & Transitionen Zerstörer Experiment",
   "main": "index.js",
   "scripts": {
+    "gulp": "gulp",
     "start": "node index.js"
   },
   "repository": {
@@ -17,7 +18,17 @@
   },
   "homepage": "https://github.com/janmei/Katze#readme",
   "dependencies": {
+    "browser-sync": "^2.26.3",
     "express": "^4.15.2",
     "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.4.3",
+    "gulp": "^4.0.0",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "postcss-calc": "^7.0.1",
+    "postcss-css-variables": "git+https://github.com/CodyHouse/postcss-css-variables"
   }
 }

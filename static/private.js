@@ -1,186 +1,188 @@
 var time;
 
 $(function () {
-  var socket = io();
-  //Setup
+	var socket = io();
+	//Setup
 
-  socket.emit('req current');
-  $('#delete-sub').hide();
+	socket.on('update rooms', function (data) {});
 
+	socket.emit('req current');
+	$('#delete-sub').hide();
 
-  // gets teams from group.json 
-  $.getJSON("../group.json", function (data) {
+	// gets teams from group.json
+	$.getJSON('../group.json', function (data) {
+		$.each(data.groups, function (key, val) {
+			var rowId = '#' + key;
+			$('#timeBody').append('<tr id=' + key + '>');
+			$(rowId)
+				.append('<th scope="row">' + val.semester + '</th>')
+				.attr('id', key);
+			$(rowId).append('<td>' + val.teamName + '</td>');
+			$(rowId).append('<td>' + val.members + '</td>');
+			$(
+				'<td><button type="submit" class="btn btn-danger" id="team" data-team="' +
+				key +
+				'">Show</button></td>'
+			).appendTo(rowId);
+		});
+	});
 
-    $.each(data.groups, function (key, val) {
-      var rowId = '#' + key;
-      $('#timeBody').append('<tr id=' + key + '>')
-      $(rowId).append('<th scope="row">' + val.semester + '</th>').attr('id', key);
-      $(rowId).append('<td>' + val.teamName + '</td>');
-      $(rowId).append('<td>' + val.members + '</td>');
-      $(
-        '<td><button type="submit" class="btn btn-danger" id="team" data-team="' + key +
-        '">Show</button></td>'
-      ).appendTo(rowId);
-    });
+	$('#text-input').submit(function () {
+		if ($('#inHead').val() != '') {
+			socket.emit('head text', $('#inHead').val());
+			clearSub();
+		}
+		if ($('#inSub').val() != '') {
+			socket.emit('sub text', $('#inSub').val());
+		}
+		if ($('#inCount').val() != '') {
+			socket.emit('countdown', $('#inCount').val());
+		}
+		$('#inHead').val('');
+		$('#inSub').val('');
 
+		return false;
+	});
 
-  });
+	$('#countdown').submit(function () {
+		socket.emit('countdown', $('#inCount').val());
+		return false;
+	});
 
-  $('#text-input').submit(function () {
-    if ($('#inHead').val() != "") {
-      socket.emit('head text', $('#inHead').val());
-      clearSub();
-    }
-    if ($('#inSub').val() != "") {
-      socket.emit('sub text', $('#inSub').val());
-    }
-    if ($('#inCount').val() != "") {
-      socket.emit('countdown', $('#inCount').val());
-    }
-    $('#inHead').val('');
-    $('#inSub').val('');
+	$('#timeTable').click(function () {
+		socket.emit('timeTable');
+		return false;
+	});
 
-    return false;
-  });
+	$('body').on('click', '#team', function () {
+		socket.emit('team', $(this).data('team'));
+		return false;
+	});
 
-  $('#countdown').submit(function () {
-    socket.emit('countdown', $('#inCount').val());
-    return false;
-  })
+	$('#delete-all').click(function () {
+		socket.emit('head text', '');
+		socket.emit('sub text', '');
+		socket.emit('clear countdown');
+		$('#delete-head').hide();
+		$('#delete-sub').hide();
+		$('#delete-count').hide();
+	});
 
-  $('#timeTable').click(function () {
-    socket.emit('timeTable');
-    return false;
-  })
+	$('input[name="preset"]').click(function () {
+		if ($('#if-preset').prop('checked') === true) {
+			$('#inHead').val('interactive future');
+			$('#inSub').val('');
+			$('#inCount').val('');
+		} else if ($('#break-preset').prop('checked') === true) {
+			$('#inHead').val('Pause');
+			$('#inSub').val('Gleich geht’s weiter!');
+			$('#inCount').val('');
+		}
+	});
 
-  $('body').on('click', '#team', function () {
-    socket.emit('team', $(this).data('team'));
-    return false;
-  })
+	socket.on('head res', function (msg) {
+		$('.head').text(msg);
 
-  $('#delete-all').click(function () {
-    socket.emit('head text', '');
-    socket.emit('sub text', '');
-    socket.emit('clear countdown');
-    $('#delete-head').hide();
-    $('#delete-sub').hide();
-    $('#delete-count').hide();
-  })
+		if (!isEmpty($('.head'))) {
+			$('#delete-head').show();
+		}
+	});
 
-  $('input[name="preset"]').click(function () {
-    if ($('#if-preset').prop('checked') === true) {
-      $('#inHead').val('interactive future');
-      $('#inSub').val('');
-      $('#inCount').val('');
-    } else if ($('#break-preset').prop('checked') === true) {
-      $('#inHead').val('Pause');
-      $('#inSub').val('Gleich geht’s weiter!');
-      $('#inCount').val('');
-    }
-  })
+	socket.on('sub res', function (msg) {
+		$('.sub').text(msg);
+		if (!isEmpty($('.sub'))) {
+			$('#delete-sub').show();
+		}
+	});
 
-  socket.on('head res', function (msg) {
-    $('.head').text(msg)
+	socket.on('countdown res', function (msg) {
+		clearTimeout(time);
+		countdown(msg);
+		$('.count').text(msg);
+		if (!isEmpty($('.count'))) {
+			$('#delete-count').show();
+		}
+	});
 
-    if (!isEmpty($('.head'))) {
-      $('#delete-head').show();
-    }
-  })
+	socket.on('send current', function (data) {
+		$('.head').text(data.headText);
+		$('.sub').text(data.subText);
+		if (data.mins && data.sec) {
+			countdown(data.mins, data.sec);
+		}
+	});
 
-  socket.on('sub res', function (msg) {
-    $('.sub').text(msg)
-    if (!isEmpty($('.sub'))) {
-      $('#delete-sub').show();
-    }
-  })
+	function isEmpty(el) {
+		return !$.trim(el.html());
+	}
 
-  socket.on('countdown res', function (msg) {
-    clearTimeout(time);
-    countdown(msg)
-    $('.count').text(msg)
-    if (!isEmpty($('.count'))) {
-      $('#delete-count').show();
-    }
-  })
+	$('#delete-head').click(function () {
+		socket.emit('head text', '');
+		$('#delete-head').hide();
+	});
 
-  socket.on('send current', function (data) {
-    $('.head').text(data.headText);
-    $('.sub').text(data.subText);
-    if (data.mins && data.sec) {
-      countdown(data.mins, data.sec)
-    }
-  })
+	$('#delete-sub').click(function () {
+		socket.emit('sub text', '');
+		$('#delete-sub').hide();
+	});
 
-  function isEmpty(el) {
-    return !$.trim(el.html())
-  }
+	$('#delete-count').click(function () {
+		socket.emit('clear countdown', '');
+		$('#delete-count').hide();
+	});
 
-  $('#delete-head').click(function () {
-    socket.emit('head text', '');
-    $('#delete-head').hide();
-  })
+	$('#linkTime').click(function () {
+		$('#time').show();
+		$('#text').hide();
+		$('#linkText').removeClass('active');
+		$(this).addClass('active');
+	});
 
-  $('#delete-sub').click(function () {
-    socket.emit('sub text', '');
-    $('#delete-sub').hide();
-  })
+	$('#linkText').click(function () {
+		$('#text').show();
+		$('#time').hide();
+		$('#linkTime').removeClass('active');
+		$(this).addClass('active');
+	});
 
-  $('#delete-count').click(function () {
-    socket.emit('clear countdown', '');
-    $('#delete-count').hide();
-  })
+	$('#sponsors').click(function () {
+		socket.emit('sponsor');
+	});
 
-  $('#linkTime').click(function () {
-    $('#time').show();
-    $('#text').hide();
-    $('#linkText').removeClass('active')
-    $(this).addClass('active')
-  })
+	socket.on('clear countdown', function () {
+		clearInterval(time);
+		$('.count').text('');
 
-  $('#linkText').click(function () {
-    $('#text').show();
-    $('#time').hide();
-    $('#linkTime').removeClass('active')
-    $(this).addClass('active')
-  })
+		// $('#delete-count').hide();
+	});
 
-  $('#sponsors').click(function () {
-    socket.emit('sponsor');
-  })
+	function clearSub() {
+		socket.emit('sub text', '');
+		$('#delete-sub').hide();
+	}
 
-  socket.on('clear countdown', function () {
-    clearInterval(time);
-    $('.count').text('')
+	function countdown(minutes, secs) {
+		var seconds = secs || 60;
+		var mins = minutes;
 
-    // $('#delete-count').hide();
-  })
+		function tick() {
+			var current_minutes = mins - 1;
+			seconds--;
 
-  function clearSub() {
-    socket.emit('sub text', '');
-    $('#delete-sub').hide();
-  }
-
-  function countdown(minutes, secs) {
-    var seconds = secs || 60;
-    var mins = minutes
-
-    function tick() {
-
-      var current_minutes = mins - 1
-      seconds--;
-
-      $('.count').html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds));
-      if (seconds > 0) {
-        time = setTimeout(tick, 1000);
-      } else {
-        if (mins > 1) {
-          countdown(mins - 1);
-        }
-      }
-    }
-    tick();
-  }
-
-
-
+			$('.count').html(
+				current_minutes.toString() +
+				':' +
+				(seconds < 10 ? '0' : '') +
+				String(seconds)
+			);
+			if (seconds > 0) {
+				time = setTimeout(tick, 1000);
+			} else {
+				if (mins > 1) {
+					countdown(mins - 1);
+				}
+			}
+		}
+		tick();
+	}
 });
