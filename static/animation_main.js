@@ -148,7 +148,7 @@ var startTransition = function () {
 var endTransition = function () {
     // switch to new animation
     drawTransition = false
-    if(currentAnimation == 1){
+    if (currentAnimation == 1) {
         currentAnimation++
     } else {
         currentAnimation--

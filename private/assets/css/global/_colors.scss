@@ -1,4 +1,5 @@
-:root, [data-theme="default"] {
+:root,
+[data-theme="default"] {
   // main
   --color-primary-darker: hsl(220, 75%, 42%);
   --color-primary-dark: hsl(220, 80%, 48%);
@@ -16,7 +17,7 @@
   // black + white
   --color-black: hsl(240, 7%, 12%);
   --color-black-a10: hsla(240, 7%, 12%, 0.1);
-  
+
   --color-white: hsl(0, 0%, 100%);
 
   // feedback

@@ -1,10 +1,11 @@
-:root, body {
+:root,
+body {
   // font family
   --font-primary: sans-serif;
 
   // body font size
   --text-base-size: 1em;
-  
+
   // type scale
   --text-scale-ratio: 1.2;
   --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
@@ -38,7 +39,10 @@ body {
   color: var(--color-contrast-high);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: var(--color-contrast-higher);
   line-height: var(--heading-line-height);
 }
@@ -48,23 +52,28 @@ h1, h2, h3, h4 {
   font-size: var(--text-xxxl);
 }
 
-h1, .text--xxl {
+h1,
+.text--xxl {
   font-size: var(--text-xxl);
 }
 
-h2, .text--xl {
+h2,
+.text--xl {
   font-size: var(--text-xl);
 }
 
-h3, .text--lg {
+h3,
+.text--lg {
   font-size: var(--text-lg);
 }
 
-h4, .text--md {
+h4,
+.text--md {
   font-size: var(--text-md);
 }
 
-.text--sm, small {
+.text--sm,
+small {
   font-size: var(--text-sm);
 }
 
@@ -104,25 +113,37 @@ u {
   --line-height-multiplier: 1;
   --text-vspace-multiplier: 1;
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     line-height: var(--component-heading-line-height);
     margin-bottom: calc(var(--space-xxxs) * var(--text-vspace-multiplier));
   }
 
-  h2, h3, h4 {
+  h2,
+  h3,
+  h4 {
     margin-top: calc(var(--space-sm) * var(--text-vspace-multiplier));
   }
 
-  p, blockquote, ul li, ol li {
+  p,
+  blockquote,
+  ul li,
+  ol li {
     line-height: var(--component-body-line-height);
     color: var(--color-contrast-high);
   }
-  
-  ul, ol, p, blockquote {
+
+  ul,
+  ol,
+  p,
+  blockquote {
     margin-bottom: calc(var(--space-sm) * var(--text-vspace-multiplier));
   }
 
-  ul, ol {
+  ul,
+  ol {
     padding-left: 1em;
   }
 
@@ -133,7 +154,7 @@ u {
   ol {
     list-style-type: decimal;
   }
-  
+
   em {
     font-style: italic;
   }
@@ -149,11 +170,11 @@ u {
     margin: calc(var(--space-lg) * var(--text-vspace-multiplier)) auto;
   }
 
-  > *:first-child {
+  >*:first-child {
     margin-top: 0;
   }
 
-  > *:last-child {
+  >*:last-child {
     margin-bottom: 0;
   }
 }
@@ -176,7 +197,9 @@ u {
 }
 
 @include breakpoint(sm) {
-  .text-component__img--left, .text-component__img--right {
+
+  .text-component__img--left,
+  .text-component__img--right {
     width: 45%;
   }
 
@@ -200,7 +223,8 @@ u {
     margin-left: calc(-1 * var(--space-xxl));
   }
 
-  .text-component__img--left, .text-component__img--right {
+  .text-component__img--left,
+  .text-component__img--right {
     width: 50%;
   }
 

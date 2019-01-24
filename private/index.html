@@ -12,68 +12,89 @@
 </head>
 
 <body>
-	<div class="tabs js-tabs">
-		<ul class="tabs__controls js-tabs__controls" aria-label="Tabs Interface">
-			<li><a href="#tab1Panel1" class="tabs__control--selected">Titel</a></li>
-			<li><a href="#tab1Panel2">Media</a></li>
-		</ul>
+	<div class="grid">
+		<div class="col--md-6">
+			<div id="wrap" class="outer">
+				<iframe id="frame" src="/" frameborder="0" class="inner"></iframe>
+			</div>
+		</div>
+		<div class="col--md-6">
+			<div class="tabs js-tabs">
+				<ul class="tabs__controls js-tabs__controls" aria-label="Tabs Interface">
+					<li><a href="#tab1Panel1" class="tabs__control--selected">Titel</a></li>
+					<li><a href="#tab1Panel2">Media</a></li>
+				</ul>
 
-		<div class="tabs__panels js-tabs__panels">
-			<section id="tab1Panel1" class="tabs__panel tabs__panel--selected js-tabs__panel">
-				<div class="grid grid-gap--xs margin-bottom--md">
-					<div class="margin-bottom--md col--md-6">
-						<fieldset>
-							<legend class="form-legend">Texts</legend>
+				<div class="tabs__panels js-tabs__panels">
+					<section id="tab1Panel1" class="tabs__panel tabs__panel--selected js-tabs__panel">
+						<div class="grid grid-gap--xs margin-bottom--md">
+							<div class="margin-bottom--md col--lg-6">
+								<fieldset>
+									<legend class="form-legend">Texts</legend>
 
-							<div class="margin-bottom--sm">
-								<label class="form-label" for="title">Titel:</label>
-								<input class="form-control" type="text" name="title" id="title" required />
-							</div>
+									<div class="margin-bottom--sm">
+										<label class="form-label" for="title">Titel:</label>
+										<input class="form-control" type="text" name="title" id="title" required />
+									</div>
 
-							<div class="margin-bottom--sm">
-								<label class="form-label" for="sub">Untertitel:</label>
-								<input class="form-control" type="text" name="sub" id="sub" required />
-							</div>
+									<div class="margin-bottom--sm">
+										<label class="form-label" for="sub">Untertitel:</label>
+										<input class="form-control" type="text" name="sub" id="sub" required />
+									</div>
 
-							<div>
-								<label class="form-label" for="textarea">Textarea:</label>
-								<textarea class="form-control" name="textarea" id="textarea"></textarea>
+									<div>
+										<label class="form-label" for="textarea">Textarea:</label>
+										<textarea class="form-control" name="textarea" id="textarea"></textarea>
+									</div>
+								</fieldset>
 							</div>
-						</fieldset>
-					</div>
-					<div class="margin-bottom--md col--md-6">
-						<fieldset>
-							<legend class="form-legend">Presets</legend>
-							<div class="switch">
-								<input class="switch__input" type="checkbox" id="switchCheckbox1">
-								<label aria-hidden="true" class="switch__label" for="switchCheckbox1">On</label>
-								<div aria-hidden="true" class="switch__marker"></div>
+							<div class="margin-bottom--md col--lg-6">
+								<fieldset>
+									<legend class="form-legend">Presets</legend>
+									<div class="switch">
+										<input class="switch__input" type="checkbox" id="switchCheckbox1">
+										<label aria-hidden="true" class="switch__label" for="switchCheckbox1">On</label>
+										<div aria-hidden="true" class="switch__marker"></div>
+									</div>
+								</fieldset>
 							</div>
-						</fieldset>
-					</div>
-					<div><button class="btn btn--primary">Submit</button></div>
+							<div><button class="btn btn--primary">Submit</button></div>
+						</div>
+
+					</section>
+
+					<section id="tab1Panel2" class="tabs__panel js-tabs__panel">
+						<div class="text-component">
+							<h1>Media</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, nobis! Vitae quis minus accusantium qui
+								atque? Officiis sunt exercitationem natus, minus sapiente debitis eum animi porro. Ut cupiditate amet expedita!</p>
+						</div>
+					</section>
 				</div>
-
-			</section>
-
-			<section id="tab1Panel2" class="tabs__panel js-tabs__panel">
-				<div class="text-component">
-					<h1>Media</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, nobis! Vitae quis minus accusantium qui
-						atque? Officiis sunt exercitationem natus, minus sapiente debitis eum animi porro. Ut cupiditate amet expedita!</p>
-				</div>
-			</section>
+			</div>
 		</div>
 	</div>
-	<div id="wrap">
-		<iframe id="frame" src="/" frameborder="0"></iframe>
-	</div>
+
+
 
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/tabs.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="/socket.io.js"></script>
 	<script src="/private.js"></script>
+
+	<script>
+		$(function () {
+			let s = $('#wrap').width() / 1920
+			$('#frame').css('transform', 'scale(' + s + ')')
+			$(window).resize(function () {
+				let s = $('#wrap').width() / 1920
+				console.log(s);
+				$('#frame').css('transform', 'scale(' + s + ')')
+			})
+
+		})
+	</script>
 </body>
 
 </html>
