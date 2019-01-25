@@ -71,92 +71,46 @@
 		var seks;
 		var minuten;
 
+		/**
+		* JavaScript Get URL Parameter
+		*
+		* @param String prop The specific URL parameter you want to retreive the value for
+		* @return String|Object If prop is provided a string value is returned, otherwise an object of all properties is
+		returned
+		*/
+		function getUrlParams(prop) {
+			var params = {};
+			var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
+			var definitions = search.split('&');
+
+			definitions.forEach(function (val, key) {
+				var parts = val.split('=', 2);
+				params[parts[0]] = parts[1];
+			});
+
+			return (prop && prop in params) ? params[prop] : params;
+		}
+
 		$(function () {
-			var socket = io();
-			socket.on('head text', function (msg) {
-				clearTimeout(time);
-				$('.table-content').hide();
-				$('.sponsors').hide();
-				$('.textContainer').show();
-				$('#outHead').text(msg);
-				socket.emit('head res', msg);
-				textBg();
-			});
-			socket.on('sub text', function (msg) {
-				$('.table-content').hide();
-				$('#outSub').text(msg);
-				socket.emit('sub res', msg);
-				textBg();
+			var roomId = getUrlParams('room')
+
+			var socket = io('http://localhost:8000', {
+				// path: '/browser-sync/socket.io',
+				reconnection: false
 			});
 
-			socket.on('countdown', function (msg) {
-				clearTimeout(time);
-				countdown(msg);
-				socket.emit('countdown res', msg);
+
+			// socket.on('connect', function () {
+			// 	socket.emit('create', )
+			// })
+
+			// Reconnects on disconnection
+			socket.on('disconnect', function () {
+				socket.connect();
 			});
 
-			socket.on('clear countdown', function () {
-				clearTimeout(time);
-				$('#minutes').text('');
-				$('#seconds').text('');
-			});
 
-			socket.on('team', function (msg) {
-				setInterval(showTeam(msg), 2);
-			});
 
-			socket.on('sponsor', function () {
-				$('.table-content').hide();
-				$('.textContainer').hide();
-				startTransition();
-				window.setTimeout(showSponsors, 1500);
-			});
-
-			function showSponsors() {
-				$('.sponsors').show();
-				slideIndex = 0;
-				cycleImages();
-			}
-
-			socket.on('req current', function () {
-				var head = $('#outHead').text();
-				var sub = $('#outSub').text();
-				var count = [seks, minuten];
-
-				console.log(head, sub, count);
-				if (typeof seks === 'undefined' || typeof minuten === 'undefined') {
-					socket.emit('send current', {
-						headText: head,
-						subText: sub
-					});
-				} else {
-					socket.emit('send current', {
-						headText: head,
-						subText: sub,
-						sec: count[0],
-						mins: count[1]
-					});
-				}
-			});
-
-			function showTeam(msg) {
-				$('.textContainer').show();
-
-				$('#outHead').text('');
-				$('#outSub').text('');
-				$('.table-content').hide();
-				$('.sponsors').hide();
-
-				getTeam(msg);
-			}
-
-			socket.on('timeTable', function () {
-				$('#outHead').text('');
-				$('#outSub').text('');
-				$('.sponsors').hide();
-				$('.table-content').show();
-				textBg();
-			});
 
 			function getTeam(team) {
 				$.getJSON('group.json', function (data) {

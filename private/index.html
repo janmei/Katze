@@ -15,7 +15,7 @@
 	<div class="grid">
 		<div class="col--md-6">
 			<div id="wrap" class="outer">
-				<iframe id="frame" src="/" frameborder="0" class="inner"></iframe>
+				<iframe id="frame" src="/back" frameborder="0" class="inner"></iframe>
 			</div>
 		</div>
 		<div class="col--md-6">
@@ -29,6 +29,9 @@
 					<section id="tab1Panel1" class="tabs__panel tabs__panel--selected js-tabs__panel">
 						<div class="grid grid-gap--xs margin-bottom--md">
 							<div class="margin-bottom--md col--lg-6">
+
+								<select name="" id="roomSelect">
+								</select>
 								<fieldset>
 									<legend class="form-legend">Texts</legend>
 
@@ -82,19 +85,6 @@
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="/socket.io.js"></script>
 	<script src="/private.js"></script>
-
-	<script>
-		$(function () {
-			let s = $('#wrap').width() / 1920
-			$('#frame').css('transform', 'scale(' + s + ')')
-			$(window).resize(function () {
-				let s = $('#wrap').width() / 1920
-				console.log(s);
-				$('#frame').css('transform', 'scale(' + s + ')')
-			})
-
-		})
-	</script>
 </body>
 
 </html>

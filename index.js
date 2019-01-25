@@ -2,9 +2,12 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {
+	// path: '/browser-sync/socket.io'
+});
 var serveStatic = require('serve-static');
-
+var fs = require('fs')
+var room;
 app.use(express.static('static'));
 app.use(express.static('public'));
 
@@ -12,6 +15,13 @@ app.get('/admin', function (req, res) {
 	app.use(express.static('private'));
 	res.sendFile(__dirname + '/private/index.html');
 });
+
+app.get('/:room', function (req, res) {
+	res.sendFile(__dirname + '/public/index.html');
+	room = req.params.room
+})
+
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -33,7 +43,49 @@ function findRooms() {
 	return availableRooms;
 }
 
+
+var path = require('path'),
+	fs = require('fs');
+
+function fromDir(startPath, filter, callback) {
+
+	//console.log('Starting from dir '+startPath+'/');
+
+	if (!fs.existsSync(startPath)) {
+		console.log("no dir ", startPath);
+		return;
+	}
+
+	var files = fs.readdirSync(startPath);
+	for (var i = 0; i < files.length; i++) {
+		var filename = path.join(files[i]);
+		if (filter.test(filename)) {
+			callback(filename.slice(0, -5));
+		}
+	};
+};
+
+var rooms = ['main', 'second', 'third'];
+
+
 io.on('connection', function (socket) {
+
+	console.log(socket.id +'-------' + room);
+
+	if(room != 'undefined'){
+		socket.join(room)
+	}
+
+	fromDir('rooms/', /\.json$/, function (filename) {
+		// console.log(filename);
+
+	});
+
+	socket.on('disconnect', function () {
+		socket.broadcast.emit('send rooms', findRooms());
+	})
+
+
 	/**
 	 * 
 	 * CREATE ROOM
@@ -46,8 +98,28 @@ io.on('connection', function (socket) {
 		socket.join(room);
 		console.log(room + ' created');
 
-		socket.broadcast.emit('update rooms', findRooms());
+		// socket.broadcast.emit('send rooms', findRooms());
+
+		var content = '[{"text": {"head": "hello world!"}}]';
+		var encoding = "utf8";
+
+		// fs.writeFile('./rooms/' + room + '.json', content, encoding, (err) => {
+		// 	if (err) throw err;
+
+		// 	console.log("The file was succesfully saved!");
+		// });
 	});
+
+	socket.on('get rooms', function () {
+		// socket.emit('send rooms', findRooms());
+		var s = io.sockets.adapter.rooms
+		socket.emit('send rooms', s);
+	})
+
+	socket.on('join', function (room) {
+		socket.join(room)
+
+	})
 
 
 	/**

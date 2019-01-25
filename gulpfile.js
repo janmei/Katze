@@ -33,7 +33,7 @@ gulp.task('nodemon', function (cb) {
 	var called = false;
 	return nodemon({
 			script: 'index.js',
-			ignore: ['gulpfile.js', 'node_modules/']
+			ignore: ['gulpfile.js', 'node_modules/', 'rooms/*.json']
 		})
 		.on('start', function () {
 			if (!called) {
@@ -55,7 +55,8 @@ gulp.task(
 	gulp.series('nodemon', function (done) {
 		browserSync.init({
 			proxy: 'localhost:8000',
-			port: 3000
+			port: 3000,
+			ws: true
 		});
 		done();
 	})

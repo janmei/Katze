@@ -1,13 +1,72 @@
+/**
+ * Data Logic
+ */
+
+
 var time;
+var selectedRoom;
 
 $(function () {
-	var socket = io();
+	var socket = io('http://localhost:8000', {
+		// path: '/browser-sync/socket.io',
+		reconnection: false,
+		forceNew: false
+	});
 	//Setup
 
-	socket.on('update rooms', function (data) {});
+	socket.on('connect', function () {
+		console.log(socket.id);
 
-	socket.emit('req current');
-	$('#delete-sub').hide();
+		socket.emit('get rooms')
+	})
+
+
+	// Reconnects on disconnection
+	socket.on('disconnect', function () {
+		socket.connect();
+	});
+
+
+	socket.on('send rooms', function (data) {
+		console.log(data);
+		listRooms(data)
+	});
+
+
+
+	function joinRoom(room) {
+		socket.emit('join', room)
+	}
+
+
+	function listRooms(data) {
+		var els = [];
+		for (let item of data) {
+			var el = $('<option value="' + item + '">' + item + '</option>')
+			els.push(el)
+		}
+		$('#roomSelect').empty()
+		$('#roomSelect').append(els)
+	}
+
+	$('#roomSelect').change(function (el) {
+		selectedRoom = $('#roomSelect').val()
+		joinRoom(selectedRoom)
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// gets teams from group.json
 	$.getJSON('../group.json', function (data) {
@@ -27,139 +86,11 @@ $(function () {
 		});
 	});
 
-	$('#text-input').submit(function () {
-		if ($('#inHead').val() != '') {
-			socket.emit('head text', $('#inHead').val());
-			clearSub();
-		}
-		if ($('#inSub').val() != '') {
-			socket.emit('sub text', $('#inSub').val());
-		}
-		if ($('#inCount').val() != '') {
-			socket.emit('countdown', $('#inCount').val());
-		}
-		$('#inHead').val('');
-		$('#inSub').val('');
-
-		return false;
-	});
-
-	$('#countdown').submit(function () {
-		socket.emit('countdown', $('#inCount').val());
-		return false;
-	});
-
-	$('#timeTable').click(function () {
-		socket.emit('timeTable');
-		return false;
-	});
-
-	$('body').on('click', '#team', function () {
-		socket.emit('team', $(this).data('team'));
-		return false;
-	});
-
-	$('#delete-all').click(function () {
-		socket.emit('head text', '');
-		socket.emit('sub text', '');
-		socket.emit('clear countdown');
-		$('#delete-head').hide();
-		$('#delete-sub').hide();
-		$('#delete-count').hide();
-	});
-
-	$('input[name="preset"]').click(function () {
-		if ($('#if-preset').prop('checked') === true) {
-			$('#inHead').val('interactive future');
-			$('#inSub').val('');
-			$('#inCount').val('');
-		} else if ($('#break-preset').prop('checked') === true) {
-			$('#inHead').val('Pause');
-			$('#inSub').val('Gleich geht’s weiter!');
-			$('#inCount').val('');
-		}
-	});
-
-	socket.on('head res', function (msg) {
-		$('.head').text(msg);
-
-		if (!isEmpty($('.head'))) {
-			$('#delete-head').show();
-		}
-	});
-
-	socket.on('sub res', function (msg) {
-		$('.sub').text(msg);
-		if (!isEmpty($('.sub'))) {
-			$('#delete-sub').show();
-		}
-	});
-
-	socket.on('countdown res', function (msg) {
-		clearTimeout(time);
-		countdown(msg);
-		$('.count').text(msg);
-		if (!isEmpty($('.count'))) {
-			$('#delete-count').show();
-		}
-	});
-
-	socket.on('send current', function (data) {
-		$('.head').text(data.headText);
-		$('.sub').text(data.subText);
-		if (data.mins && data.sec) {
-			countdown(data.mins, data.sec);
-		}
-	});
 
 	function isEmpty(el) {
 		return !$.trim(el.html());
 	}
 
-	$('#delete-head').click(function () {
-		socket.emit('head text', '');
-		$('#delete-head').hide();
-	});
-
-	$('#delete-sub').click(function () {
-		socket.emit('sub text', '');
-		$('#delete-sub').hide();
-	});
-
-	$('#delete-count').click(function () {
-		socket.emit('clear countdown', '');
-		$('#delete-count').hide();
-	});
-
-	$('#linkTime').click(function () {
-		$('#time').show();
-		$('#text').hide();
-		$('#linkText').removeClass('active');
-		$(this).addClass('active');
-	});
-
-	$('#linkText').click(function () {
-		$('#text').show();
-		$('#time').hide();
-		$('#linkTime').removeClass('active');
-		$(this).addClass('active');
-	});
-
-	$('#sponsors').click(function () {
-		socket.emit('sponsor');
-	});
-
-	socket.on('clear countdown', function () {
-		clearInterval(time);
-		$('.count').text('');
-
-		// $('#delete-count').hide();
-	});
-
-	function clearSub() {
-		socket.emit('sub text', '');
-		$('#delete-sub').hide();
-	}
 
 	function countdown(minutes, secs) {
 		var seconds = secs || 60;
@@ -186,3 +117,18 @@ $(function () {
 		tick();
 	}
 });
+
+
+/**
+ * Layout functions
+ */
+
+$(function () {
+	let s = $('#wrap').width() / 1920
+	$('#frame').css('transform', 'scale(' + s + ')')
+	$(window).resize(function () {
+		let s = $('#wrap').width() / 1920
+		$('#frame').css('transform', 'scale(' + s + ')')
+	})
+
+})
