@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" href="/favicon.ico">
 	<script>
 		document.getElementsByTagName('html')[0].className += ' js';
 		</script>
@@ -31,13 +32,14 @@
 							<div class="margin-bottom--md col--lg-6">
 
 								<select name="" id="roomSelect">
+									<option value="choose">Bitte wählen!</option>
 								</select>
 								<fieldset>
 									<legend class="form-legend">Texts</legend>
 
 									<div class="margin-bottom--sm">
 										<label class="form-label" for="title">Titel:</label>
-										<input class="form-control" type="text" name="title" id="title" required />
+										<input class="form-control" type="text" name="head" id="title" required />
 									</div>
 
 									<div class="margin-bottom--sm">
@@ -61,7 +63,7 @@
 									</div>
 								</fieldset>
 							</div>
-							<div><button class="btn btn--primary">Submit</button></div>
+							<div><button class="btn btn--primary" id="updateTextButton">Submit</button></div>
 						</div>
 
 					</section>

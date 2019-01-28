@@ -5,6 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="shortcut icon" href="/favicon.ico">
 	<title>Interactive Future 2018</title>
 
 	<!-- p5 -->
@@ -24,11 +25,11 @@
 	<section class="main_wrapper">
 		<!-- <h1 class="text">Hello World Public</h1> -->
 		<div class="textContainer">
-			<h1 class="headline" id="outHead">
+			<h1 class="headline" id="head">
 				<b>interactive</b> <br />
 				future exhibition
 			</h1>
-			<p class="text" id="outSub"></p>
+			<p class="text" id="sub"></p>
 		</div>
 
 		<!-- Nur für die letzten 10 Sekunden notwendig -->
@@ -70,29 +71,9 @@
 
 		var seks;
 		var minuten;
-
-		/**
-		* JavaScript Get URL Parameter
-		*
-		* @param String prop The specific URL parameter you want to retreive the value for
-		* @return String|Object If prop is provided a string value is returned, otherwise an object of all properties is
-		returned
-		*/
-		function getUrlParams(prop) {
-			var params = {};
-			var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
-			var definitions = search.split('&');
-
-			definitions.forEach(function (val, key) {
-				var parts = val.split('=', 2);
-				params[parts[0]] = parts[1];
-			});
-
-			return (prop && prop in params) ? params[prop] : params;
-		}
+		var room;
 
 		$(function () {
-			var roomId = getUrlParams('room')
 
 			var socket = io('http://localhost:8000', {
 				// path: '/browser-sync/socket.io',
@@ -100,17 +81,41 @@
 			});
 
 
-			// socket.on('connect', function () {
-			// 	socket.emit('create', )
-			// })
+			socket.on('connect', function () {
+				var pathArray = window.location.pathname.split('/');
+				room = pathArray[1]
+				console.log(room);
+
+				socket.emit('ROOM -> SERVER get data', room)
+			})
 
 			// Reconnects on disconnection
 			socket.on('disconnect', function () {
 				socket.connect();
 			});
 
+			socket.on('SERVER -> ROOM update text', function (data) {
+				let text = JSON.parse(data)
 
+				updateText(text)
+			})
 
+			function updateText(data) {
+				for (var key in data) {
+					// skip loop if the property is from prototype
+					if (!data.hasOwnProperty(key)) continue;
+
+					var obj = data[key];
+					for (var prop in obj) {
+						// skip loop if the property is from prototype
+						if (!obj.hasOwnProperty(prop)) continue;
+
+						// your code
+						console.log(prop + " = " + obj[prop]);
+						$("#" + prop).html(obj[prop])
+					}
+				}
+			}
 
 			function getTeam(team) {
 				$.getJSON('group.json', function (data) {

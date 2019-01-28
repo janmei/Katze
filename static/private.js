@@ -28,11 +28,55 @@ $(function () {
 
 
 	socket.on('send rooms', function (data) {
-		console.log(data);
 		listRooms(data)
 	});
 
+	socket.on('SERVER -> BACK current slide state', function (data) {
+		let text = JSON.parse(data)
+		fillInputs(text)
+	})
 
+
+
+	function fillInputs(data) {
+
+		for (var key in data) {
+			// skip loop if the property is from prototype
+			if (!data.hasOwnProperty(key)) continue;
+
+			var obj = data[key];
+			for (var prop in obj) {
+				// skip loop if the property is from prototype
+				if (!obj.hasOwnProperty(prop)) continue;
+
+				// your code
+				console.log(prop + " = " + obj[prop]);
+				$("input[name='" + prop + "'").val(obj[prop])
+			}
+		}
+	}
+
+	$('#updateTextButton').click(function () {
+		socket.emit('BACK -> SERVER update text', selectedRoom, updateText())
+
+	})
+
+
+
+	function updateText() {
+		let head, sub;
+
+		head = $("input[name='head'").val()
+		sub = $("input[name='sub'").val()
+
+		var data = {
+			"text": {
+				"head": head,
+				"sub": sub
+			}
+		}
+		return JSON.stringify(data)
+	}
 
 	function joinRoom(room) {
 		socket.emit('join', room)
@@ -51,6 +95,9 @@ $(function () {
 
 	$('#roomSelect').change(function (el) {
 		selectedRoom = $('#roomSelect').val()
+		$('#frame').attr('src', '/' + selectedRoom)
+		console.log(selectedRoom);
+
 		joinRoom(selectedRoom)
 	})
 
