@@ -79,3 +79,12 @@ Descr: Custom ON/OFF checkbox toggle
   transition: left var(--switch-animation-duration);
   will-change: left;
 }
+
+.switch-wrap {
+  display: flex;
+  align-items: center;
+
+  .switch-label {
+    margin-left: 8px;
+  }
+}

@@ -1775,6 +1775,15 @@ Descr: Custom ON/OFF checkbox toggle
   will-change: left;
 }
 
+.switch-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.switch-wrap .switch-label {
+  margin-left: 8px;
+}
+
 /* -------------------------------- 
 
 Title: Tabs
@@ -1934,4 +1943,37 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
     padding: 0.75em;
     padding: var(--space-sm);
   }
+}
+
+/* -------------------------------- 
+
+Title: Custom Select Control
+
+-------------------------------- */
+:root {
+  --select-icon-size: 1em;
+  --select-icon-right-margin: var(--space-sm);
+}
+
+.select {
+  position: relative;
+}
+
+.select select {
+  padding-right: 2.5em;
+  padding-right: calc(var(--select-icon-size) + var(--select-icon-right-margin)*2);
+}
+
+.select .icon {
+  width: 1em;
+  width: var(--select-icon-size);
+  height: 1em;
+  height: var(--select-icon-size);
+  position: absolute;
+  right: 0.75em;
+  right: var(--select-icon-right-margin);
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  pointer-events: none;
 }

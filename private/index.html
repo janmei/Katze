@@ -16,7 +16,7 @@
 	<div class="grid">
 		<div class="col--md-6">
 			<div id="wrap" class="outer">
-				<iframe id="frame" src="/back" frameborder="0" class="inner"></iframe>
+				<iframe id="frame" src="/" frameborder="0" class="inner"></iframe>
 			</div>
 		</div>
 		<div class="col--md-6">
@@ -30,10 +30,30 @@
 					<section id="tab1Panel1" class="tabs__panel tabs__panel--selected js-tabs__panel">
 						<div class="grid grid-gap--xs margin-bottom--md">
 							<div class="margin-bottom--md col--lg-6">
-
-								<select name="" id="roomSelect">
-									<option value="choose">Bitte wählen!</option>
-								</select>
+								<div class="margin-bottom--md">
+									<label class="form-label" for="selectThis">Räume:</label>
+									<div class="select">
+										<select class="form-control" name="selectThis" id="roomSelect">
+											<option value="">Bitte Raum wählen</option>
+										</select>
+										<svg class="icon" aria-hidden="true" viewBox="0 0 16 16">
+											<g stroke-width="1" stroke="currentColor">
+												<polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+												 stroke-miterlimit="10" points="15.5,4.5 8,12 0.5,4.5 "></polyline>
+											</g>
+										</svg>
+									</div>
+									<div class="margin-top--sm switch-wrap">
+										<div class="switch">
+											<input class="switch__input" type="checkbox" id="allRooms">
+											<label aria-hidden="true" class="switch__label" for="allRooms">On</label>
+											<div aria-hidden="true" class="switch__marker"></div>
+										</div>
+										<div class="switch-label">
+											<label for="allRooms">Alle Räume!</label>
+										</div>
+									</div>
+								</div>
 								<fieldset>
 									<legend class="form-legend">Texts</legend>
 
