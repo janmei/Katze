@@ -13,6 +13,10 @@
 </head>
 
 <body>
+	<div class="status disconnected" id="status">
+		<div class="status-light" id="statusLight"></div>
+		<p class="connection" id="connection">Disconnected</p>
+	</div>
 	<div class="grid">
 		<div class="col--md-6">
 			<div id="wrap" class="outer">
@@ -59,17 +63,12 @@
 
 									<div class="margin-bottom--sm">
 										<label class="form-label" for="title">Titel:</label>
-										<input class="form-control" type="text" name="head" id="title" required />
+										<input class="form-control" type="text" name="head" id="headInput" required />
 									</div>
 
 									<div class="margin-bottom--sm">
 										<label class="form-label" for="sub">Untertitel:</label>
-										<input class="form-control" type="text" name="sub" id="sub" required />
-									</div>
-
-									<div>
-										<label class="form-label" for="textarea">Textarea:</label>
-										<textarea class="form-control" name="textarea" id="textarea"></textarea>
+										<input class="form-control" type="text" name="sub" id="subInput" required />
 									</div>
 								</fieldset>
 							</div>

@@ -1,0 +1,33 @@
+.status {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-contrast-low);
+  width: 180px;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 16px;
+
+  &.connected {
+    .status-light {
+      background-color: var(--color-success)
+    }
+  }
+
+  &.disconnected {
+    .status-light {
+      background-color: var(--color-error);
+    }
+  }
+
+  .status-light {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border-radius: 50%;
+
+
+
+  }
+
+  .connection {}
+}

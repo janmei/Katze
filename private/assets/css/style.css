@@ -1329,7 +1329,19 @@ u {
   color: var(--color-contrast-medium);
 }
 
-.form-control[disabled], .form-control[readonly] {
+.form-control.changed {
+  outline: none;
+  border-color: hsl(355, 90%, 61%);
+  border-color: var(--color-error);
+}
+
+.form-control.changed:focus {
+  box-shadow: 0 0 0 3px hsla(355, 90%, 61%, 0.2);
+  box-shadow: 0 0 0 3px var(--color-error-a20);
+}
+
+.form-control[disabled],
+.form-control[readonly] {
   cursor: not-allowed;
 }
 
@@ -1399,7 +1411,8 @@ u {
   clip: auto;
 }
 
-.radio-list > *, .checkbox-list > * {
+.radio-list > *,
+.checkbox-list > * {
   position: relative;
   display: flex;
   align-items: baseline;
@@ -1407,11 +1420,13 @@ u {
   margin-bottom: var(--space-xxs);
 }
 
-.radio-list > *:last-of-type, .checkbox-list > *:last-of-type {
+.radio-list > *:last-of-type,
+.checkbox-list > *:last-of-type {
   margin-bottom: 0;
 }
 
-.radio-list label, .checkbox-list label {
+.radio-list label,
+.checkbox-list label {
   line-height: 1.4;
   line-height: var(--body-line-height);
   -webkit-user-select: none;
@@ -1420,20 +1435,25 @@ u {
           user-select: none;
 }
 
-.radio-list input, .checkbox-list input {
+.radio-list input,
+.checkbox-list input {
   vertical-align: top;
   margin-right: 0.25em;
   margin-right: var(--space-xxxs);
   flex-shrink: 0;
 }
 
-.radio-list.radio-list--inline, .radio-list.checkbox-list--inline, .checkbox-list.radio-list--inline, .checkbox-list.checkbox-list--inline {
+.radio-list.radio-list--inline, .radio-list.checkbox-list--inline,
+.checkbox-list.radio-list--inline,
+.checkbox-list.checkbox-list--inline {
   display: flex;
   margin-bottom: -1.25em;
   margin-bottom: calc(-1*var(--space-md));
 }
 
-.radio-list.radio-list--inline > *, .radio-list.checkbox-list--inline > *, .checkbox-list.radio-list--inline > *, .checkbox-list.checkbox-list--inline > * {
+.radio-list.radio-list--inline > *, .radio-list.checkbox-list--inline > *,
+.checkbox-list.radio-list--inline > *,
+.checkbox-list.checkbox-list--inline > * {
   margin: 0 1.25em 1.25em 0;
   margin: 0 var(--space-md) var(--space-md) 0;
 }
@@ -1976,4 +1996,32 @@ Title: Custom Select Control
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   pointer-events: none;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  border: 1px solid hsl(0, 0%, 83%);
+  border: 1px solid var(--color-contrast-low);
+  width: 180px;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 16px;
+}
+
+.status.connected .status-light {
+  background-color: hsl(94, 48%, 56%);
+  background-color: var(--color-success);
+}
+
+.status.disconnected .status-light {
+  background-color: hsl(355, 90%, 61%);
+  background-color: var(--color-error);
+}
+
+.status .status-light {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
 }

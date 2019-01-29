@@ -1,4 +1,5 @@
-.form-control { // basic form element style
+.form-control {
+  // basic form element style
   padding: var(--space-xs) var(--space-sm);
   background: var(--color-bg);
   border: 2px solid var(--color-contrast-low);
@@ -26,9 +27,19 @@
   &:-moz-placeholder {
     color: var(--color-contrast-medium);
   }
+
+  &.changed {
+    outline: none;
+    border-color: var(--color-error);
+
+    &:focus {
+      box-shadow: 0 0 0 3px var(--color-error-a20);
+    }
+  }
 }
 
-.form-control[disabled], .form-control[readonly] {
+.form-control[disabled],
+.form-control[readonly] {
   cursor: not-allowed;
 }
 
@@ -47,7 +58,8 @@
   margin-bottom: var(--space-xxs);
 }
 
-.form-label { // label style
+.form-label {
+  // label style
   display: inline-block;
   font-size: var(--text-sm);
   margin-bottom: var(--space-xxxs);
@@ -83,15 +95,16 @@
 }
 
 // radio and checkbox lists
-.radio-list, .checkbox-list {
-  > * {
+.radio-list,
+.checkbox-list {
+  >* {
     position: relative;
     display: flex;
     align-items: baseline;
     margin-bottom: var(--space-xxs);
   }
 
-  > *:last-of-type {
+  >*:last-of-type {
     margin-bottom: 0;
   }
 
@@ -107,12 +120,13 @@
     flex-shrink: 0;
   }
 
-  &.radio-list--inline, &.checkbox-list--inline {
+  &.radio-list--inline,
+  &.checkbox-list--inline {
     // inline distribution for checkboxes and radio buttons
     display: flex;
     margin-bottom: calc(-1 * var(--space-md));
 
-    > * {
+    >* {
       margin: 0 var(--space-md) var(--space-md) 0;
     }
   }

@@ -9,8 +9,8 @@ var selectedRoom;
 $(function () {
 	var socket = io('http://localhost:8000', {
 		// path: '/browser-sync/socket.io',
-		reconnection: false,
-		forceNew: false
+		// reconnection: false,
+		// forceNew: false
 	});
 	//Setup
 
@@ -18,12 +18,15 @@ $(function () {
 		console.log(socket.id);
 
 		socket.emit('BACK -> SERVER get rooms')
+
+		setStatus(true)
 	})
 
 
 	// Reconnects on disconnection
 	socket.on('disconnect', function () {
-		socket.connect();
+		// socket.connect();
+		setStatus(false)
 	});
 
 
@@ -32,8 +35,10 @@ $(function () {
 	});
 
 	socket.on('SERVER -> BACK current slide state', function (data) {
-		let text = JSON.parse(data)
+		var text = JSON.parse(data)
 		fillInputs(text)
+
+		colorChangeInput(text)
 	})
 
 
@@ -54,6 +59,8 @@ $(function () {
 				$("input[name='" + prop + "'").val(obj[prop])
 			}
 		}
+
+
 	}
 
 	$('#updateTextButton').click(function () {
@@ -63,6 +70,8 @@ $(function () {
 		} else {
 			socket.emit('BACK -> SERVER update text', selectedRoom, updateText())
 		}
+
+		resetInput()
 
 	})
 
@@ -106,6 +115,7 @@ $(function () {
 		console.log(selectedRoom);
 
 		joinRoom(selectedRoom)
+
 	})
 
 	$('#allRooms').change(function () {
@@ -193,3 +203,40 @@ $(function () {
 	})
 
 })
+
+
+/**
+ * Input Color Change
+ */
+
+function colorChangeInput(data) {
+	var prev = data.text;
+	$("#headInput, #subInput").keyup(function (e) {
+		var currentValue = $(this).val();
+		if (currentValue != prev[e.currentTarget.name]) {
+			$(this).addClass('changed')
+		} else {
+			$(this).removeClass('changed')
+
+		}
+	})
+}
+
+function resetInput() {
+	$("#headInput, #subInput").removeClass('changed')
+}
+
+function setStatus(connected) {
+	if (connected) {
+		$('#status').addClass('connected')
+		$('#status').removeClass('disconnected')
+
+		$('#status #connection').html('Connected')
+
+	} else {
+		$('#status').addClass('disconnected')
+		$('#status').removeClass('connected')
+
+		$('#status #connection').html('Disconnected')
+	}
+}
