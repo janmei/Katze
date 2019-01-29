@@ -17,7 +17,7 @@ $(function () {
 	socket.on('connect', function () {
 		console.log(socket.id);
 
-		socket.emit('get rooms')
+		socket.emit('BACK -> SERVER get rooms')
 	})
 
 
@@ -27,7 +27,7 @@ $(function () {
 	});
 
 
-	socket.on('send rooms', function (data) {
+	socket.on('SERVER -> BACK send rooms', function (data) {
 		listRooms(data)
 	});
 
@@ -57,7 +57,12 @@ $(function () {
 	}
 
 	$('#updateTextButton').click(function () {
-		socket.emit('BACK -> SERVER update text', selectedRoom, updateText())
+
+		if ($('#allRooms').is(':checked')) {
+			socket.emit('BACK -> SERVER update all rooms', updateText())
+		} else {
+			socket.emit('BACK -> SERVER update text', selectedRoom, updateText())
+		}
 
 	})
 
@@ -90,6 +95,8 @@ $(function () {
 			els.push(el)
 		}
 		$('#roomSelect').empty()
+
+		$('#roomSelect').append('<option value="">Bitte Raum wählen</option>')
 		$('#roomSelect').append(els)
 	}
 
@@ -101,7 +108,14 @@ $(function () {
 		joinRoom(selectedRoom)
 	})
 
+	$('#allRooms').change(function () {
+		if ($('#allRooms').is(':checked')) {
+			$('#roomSelect').attr('disabled', true)
+		} else {
+			$('#roomSelect').attr('disabled', false)
 
+		}
+	})
 
 
 

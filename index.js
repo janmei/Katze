@@ -50,13 +50,10 @@ var path = require('path'),
 
 io.on('connection', function (socket) {
 
-	console.log(socket.id + '-------' + room);
-
 	if (room == undefined) {
 		return
 	}
 	socket.join(room)
-	console.log(room + ' created');
 
 	socket.broadcast.emit('send rooms', findRooms());
 
@@ -94,23 +91,21 @@ io.on('connection', function (socket) {
 	 * 
 	 */
 
-	socket.on('create', function (room) {
-
-	});
-
-	socket.on('get rooms', function () {
-		socket.emit('send rooms', findRooms());
-
+	socket.on('BACK -> SERVER get rooms', function () {
+		socket.emit('SERVER -> BACK send rooms', findRooms());
 	})
 
 	socket.on('join', function (room) {
 		socket.join(room)
-		console.log(socket.id, 'joined');
+		console.log(socket.id, 'joined', room);
 
 		socket.emit('SERVER -> BACK current slide state', getCurrentSlideState(room))
 	})
 
 	function getCurrentSlideState(roomId) {
+		if (roomId == undefined || roomId === '') {
+			return
+		}
 		var data = fs.readFileSync('./rooms/' + roomId + '.json', encoding, (err, data) => {
 			if (err) throw err;
 			return data;
@@ -130,11 +125,22 @@ io.on('connection', function (socket) {
 	});
 
 	function updateFile(room, data) {
-		fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
-			if (err) throw err;
+		if (Array.isArray(room)) {
+			var rooms = room;
+			for (var room of rooms) {
+				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
+					if (err) throw err;
 
-			console.log("The file was succesfully saved!");
-		});
+					console.log("The file was succesfully saved!");
+				});
+			}
+		} else {
+			fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
+				if (err) throw err;
+
+				console.log("The file was succesfully saved!");
+			});
+		}
 	}
 
 
@@ -178,13 +184,13 @@ io.on('connection', function (socket) {
 		socket.emit('SERVER -> ROOM update text', getCurrentSlideState(room))
 	})
 
-	socket.on('text', function (data) {
-		io.emit('text', data);
+	socket.on('BACK -> SERVER update all rooms', function (data) {
+		let rooms = findRooms()
+		updateFile(rooms, data)
+
+		socket.broadcast.emit('SERVER -> ROOM update text', data)
 	})
 
-	socket.on('text response', function (data) {
-		io.emit('text response', data);
-	})
 
 
 	/**
