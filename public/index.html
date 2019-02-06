@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body id="body">
 	<section class="main_wrapper">
 		<!-- <h1 class="text">Hello World Public</h1> -->
 		<div class="textContainer">
@@ -65,6 +65,7 @@
 	<script src="socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="slide.js"></script>
+	<script src="html2canvas.min.js"></script>
 	<script>
 		var time;
 		var slideIndex;
@@ -72,6 +73,27 @@
 		var seks;
 		var minuten;
 		var room;
+
+		/**
+		* JavaScript Get URL Parameter
+		*
+		* @param String prop The specific URL parameter you want to retreive the value for
+		* @return String|Object If prop is provided a string value is returned, otherwise an object of all properties is
+		returned
+		*/
+
+		function getUrlParams(prop) {
+			var params = {};
+			var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
+			var definitions = search.split('&');
+
+			definitions.forEach(function (val, key) {
+				var parts = val.split('=', 2);
+				params[parts[0]] = parts[1];
+			});
+
+			return (prop && prop in params) ? params[prop] : params;
+		}
 
 		$(function () {
 
@@ -90,6 +112,14 @@
 				$('#sub').attr('data-name', room)
 
 				socket.emit('ROOM -> SERVER get data', room)
+
+				// TODO: switch if iframe is true then capture
+				if (!getUrlParams['frame'] == true) {
+					setInterval(function () {
+						capture()
+					}, 5000)
+				}
+
 			})
 
 			// Reconnects on disconnection
@@ -120,6 +150,17 @@
 					}
 				}
 			}
+
+			function capture() {
+
+				html2canvas(document.body).then(function (canvas) {
+					var img = canvas.toDataURL('image/png')
+					// console.log(img);
+					socket.emit('ROOM -> SERVER send screen', img)
+					// document.body.appendChild('<img src="' + img + '" />')
+				})
+			}
+
 
 			function getTeam(team) {
 				$.getJSON('group.json', function (data) {

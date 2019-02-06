@@ -5,9 +5,12 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http, {
 	// path: '/browser-sync/socket.io'
 });
-var serveStatic = require('serve-static');
-var fs = require('fs')
+var fs = require('fs');
+const Pageres = require('pageres');
+const webshot = require('webshot');
 var room;
+
+// EXPRESS SETTINGS
 app.use(express.static('static'));
 app.use(express.static('public'));
 
@@ -55,10 +58,6 @@ io.on('connection', function (socket) {
 	}
 	socket.join(room)
 
-	// socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
-
-
-
 	/**
 	 * create JSON Files for State Sharing
 	 */
@@ -75,8 +74,6 @@ io.on('connection', function (socket) {
 			console.log("The file was succesfully saved!");
 		});
 	}
-
-
 
 	socket.on('disconnect', function () {
 		socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
@@ -207,6 +204,12 @@ io.on('connection', function (socket) {
 		console.log('media');
 		io.emit('media', data);
 	});
+
+
+	socket.on('ROOM -> SERVER send screen', function (data) {
+		socket.broadcast.emit('SERVER -> BACK send screen', data)
+	})
+
 
 
 	/**

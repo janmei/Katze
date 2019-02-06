@@ -41,6 +41,14 @@ $(function () {
 		colorChangeInput(text)
 	})
 
+	socket.on('SERVER -> BACK send screen', function (buffer) {
+		console.log(buffer);
+
+		$('#img').attr('src', buffer)
+
+	})
+
+
 
 
 	function fillInputs(data) {
@@ -100,7 +108,7 @@ $(function () {
 		var els = [];
 		for (let item of data) {
 			var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item + `"> <div class="frame-wrapper">
-					<object data="/` + item + `" frameborder="0" class="preview-frame"></object> </div> <p id="roomName">` + item + `</p></div>`)
+					<img src="` + item + `" class="preview-frame" /> </div> <p id="roomName">` + item + `</p></div>`)
 			els.push(el)
 		}
 		$('#previews').empty()
@@ -110,7 +118,7 @@ $(function () {
 
 	$('#roomSelect').change(function (el) {
 		selectedRoom = $('#roomSelect').val()
-		$('#frame').attr('src', '/' + selectedRoom)
+		$('#frame').attr('src', '/' + selectedRoom + '?frame=true')
 		console.log(selectedRoom);
 
 		joinRoom(selectedRoom)
