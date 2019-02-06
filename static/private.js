@@ -55,7 +55,7 @@ $(function () {
 				if (!obj.hasOwnProperty(prop)) continue;
 
 				// your code
-				console.log(prop + " = " + obj[prop]);
+				console.log(prop + " = " + obj[prop], "back");
 				$("input[name='" + prop + "'").val(obj[prop])
 			}
 		}
@@ -66,9 +66,9 @@ $(function () {
 	$('#updateTextButton').click(function () {
 
 		if ($('#allRooms').is(':checked')) {
-			socket.emit('BACK -> SERVER update all rooms', updateText())
+			socket.emit('BACK -> SERVER update all rooms', updateTextBack())
 		} else {
-			socket.emit('BACK -> SERVER update text', selectedRoom, updateText())
+			socket.emit('BACK -> SERVER update text', selectedRoom, updateTextBack())
 		}
 
 		resetInput()
@@ -77,7 +77,7 @@ $(function () {
 
 
 
-	function updateText() {
+	function updateTextBack() {
 		let head, sub;
 
 		head = $("input[name='head'").val()
@@ -92,21 +92,20 @@ $(function () {
 		return JSON.stringify(data)
 	}
 
-	function joinRoom(room) {
-		socket.emit('join', room)
-	}
 
 
 	function listRooms(data) {
+		console.log(data);
+
 		var els = [];
 		for (let item of data) {
-			var el = $('<option value="' + item + '">' + item + '</option>')
+			var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item + `"> <div class="frame-wrapper">
+					<object data="/` + item + `" frameborder="0" class="preview-frame"></object> </div> <p id="roomName">` + item + `</p></div>`)
 			els.push(el)
 		}
-		$('#roomSelect').empty()
+		$('#previews').empty()
 
-		$('#roomSelect').append('<option value="">Bitte Raum wählen</option>')
-		$('#roomSelect').append(els)
+		$('#previews').append(els)
 	}
 
 	$('#roomSelect').change(function (el) {
@@ -127,10 +126,18 @@ $(function () {
 		}
 	})
 
+	function chooseScreen(room) {
+		$('#frame').attr('src', '/' + room)
+		console.log(room);
+
+		selectedRoom = room
+		joinRoom(room)
+	}
 
 
-
-
+	function joinRoom(room) {
+		socket.emit('join', room)
+	}
 
 
 
@@ -187,14 +194,12 @@ $(function () {
 		}
 		tick();
 	}
-});
 
 
-/**
- * Layout functions
- */
+	/**
+	 * Layout functions
+	 */
 
-$(function () {
 	let s = $('#wrap').width() / 1920
 	$('#frame').css('transform', 'scale(' + s + ')')
 	$(window).resize(function () {
@@ -202,41 +207,49 @@ $(function () {
 		$('#frame').css('transform', 'scale(' + s + ')')
 	})
 
-})
+	$('#previews').on('click', '#roomPreview', function (e) {
+		$(this).addClass('selected')
+		console.log(e);
 
-
-/**
- * Input Color Change
- */
-
-function colorChangeInput(data) {
-	var prev = data.text;
-	$("#headInput, #subInput").keyup(function (e) {
-		var currentValue = $(this).val();
-		if (currentValue != prev[e.currentTarget.name]) {
-			$(this).addClass('changed')
-		} else {
-			$(this).removeClass('changed')
-
-		}
+		chooseScreen(e.currentTarget.title)
 	})
-}
 
-function resetInput() {
-	$("#headInput, #subInput").removeClass('changed')
-}
 
-function setStatus(connected) {
-	if (connected) {
-		$('#status').addClass('connected')
-		$('#status').removeClass('disconnected')
 
-		$('#status #connection').html('Connected')
+	/**
+	 * Input Color Change
+	 */
 
-	} else {
-		$('#status').addClass('disconnected')
-		$('#status').removeClass('connected')
+	function colorChangeInput(data) {
+		var prev = data.text;
+		$("#headInput, #subInput").keyup(function (e) {
+			var currentValue = $(this).val();
+			if (currentValue != prev[e.currentTarget.name]) {
+				$(this).addClass('changed')
+			} else {
+				$(this).removeClass('changed')
 
-		$('#status #connection').html('Disconnected')
+			}
+		})
 	}
-}
+
+	function resetInput() {
+		$("#headInput, #subInput").removeClass('changed')
+	}
+
+	function setStatus(connected) {
+		if (connected) {
+			$('#status').addClass('connected')
+			$('#status').removeClass('disconnected')
+
+			$('#status #connection').html('Connected')
+
+		} else {
+			$('#status').addClass('disconnected')
+			$('#status').removeClass('connected')
+
+			$('#status #connection').html('Disconnected')
+		}
+	}
+
+});

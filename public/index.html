@@ -86,6 +86,9 @@
 				room = pathArray[1]
 				console.log(room);
 
+				$('#head').attr('data-name', room)
+				$('#sub').attr('data-name', room)
+
 				socket.emit('ROOM -> SERVER get data', room)
 			})
 
@@ -101,6 +104,7 @@
 			})
 
 			function updateText(data) {
+
 				for (var key in data) {
 					// skip loop if the property is from prototype
 					if (!data.hasOwnProperty(key)) continue;
@@ -111,8 +115,8 @@
 						if (!obj.hasOwnProperty(prop)) continue;
 
 						// your code
-						console.log(prop + " = " + obj[prop]);
-						$("#" + prop).html(obj[prop])
+						console.log(prop + " = " + obj[prop], room);
+						$("[data-name='" + room + "']#" + prop).html(obj[prop])
 					}
 				}
 			}

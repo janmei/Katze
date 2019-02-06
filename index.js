@@ -55,7 +55,7 @@ io.on('connection', function (socket) {
 	}
 	socket.join(room)
 
-	socket.broadcast.emit('send rooms', findRooms());
+	// socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
 
 
 
@@ -79,7 +79,7 @@ io.on('connection', function (socket) {
 
 
 	socket.on('disconnect', function () {
-		socket.broadcast.emit('send rooms', findRooms());
+		socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
 	})
 
 
@@ -176,6 +176,8 @@ io.on('connection', function (socket) {
 		console.log(room, data);
 
 		updateFile(room, data)
+
+		console.log(room);
 
 		socket.to(room).emit('SERVER -> ROOM update text', data)
 	})
