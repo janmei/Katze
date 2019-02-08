@@ -19,10 +19,7 @@
   "homepage": "https://github.com/janmei/Katze#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "pageres": "^4.5.1",
-    "screenshot-stream": "^4.2.0",
-    "socket.io": "^2.2.0",
-    "webshot": "^0.18.0"
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",

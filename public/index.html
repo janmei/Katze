@@ -74,25 +74,16 @@
 		var minuten;
 		var room;
 
-		/**
-		* JavaScript Get URL Parameter
-		*
-		* @param String prop The specific URL parameter you want to retreive the value for
-		* @return String|Object If prop is provided a string value is returned, otherwise an object of all properties is
-		returned
-		*/
-
-		function getUrlParams(prop) {
-			var params = {};
-			var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
-			var definitions = search.split('&');
-
-			definitions.forEach(function (val, key) {
-				var parts = val.split('=', 2);
-				params[parts[0]] = parts[1];
-			});
-
-			return (prop && prop in params) ? params[prop] : params;
+		function getQueryVariable(variable) {
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split("=");
+				if (pair[0] == variable) {
+					return pair[1];
+				}
+			}
+			return (false);
 		}
 
 		$(function () {
@@ -114,9 +105,11 @@
 				socket.emit('ROOM -> SERVER get data', room)
 
 				// TODO: switch if iframe is true then capture
-				if (!getUrlParams['frame'] == true) {
+				if (getQueryVariable('frame')) {
+					console.log(getQueryVariable('frame'));
+				} else {
 					setInterval(function () {
-						capture()
+						// capture()
 					}, 5000)
 				}
 
@@ -127,10 +120,16 @@
 				socket.connect();
 			});
 
-			socket.on('SERVER -> ROOM update text', function (data) {
-				let text = JSON.parse(data)
+			socket.on('SERVER -> ROOM update text', function (reqRoom, data) {
+				if (reqRoom == room || reqRoom == "all") {
 
-				updateText(text)
+					let text = JSON.parse(data)
+
+					updateText(text)
+				} else {
+					console.log(reqRoom);
+
+				}
 			})
 
 			function updateText(data) {
@@ -145,21 +144,12 @@
 						if (!obj.hasOwnProperty(prop)) continue;
 
 						// your code
-						console.log(prop + " = " + obj[prop], room);
+						// console.log(prop + " = " + obj[prop], room);
 						$("[data-name='" + room + "']#" + prop).html(obj[prop])
 					}
 				}
 			}
 
-			function capture() {
-
-				html2canvas(document.body).then(function (canvas) {
-					var img = canvas.toDataURL('image/png')
-					// console.log(img);
-					socket.emit('ROOM -> SERVER send screen', img)
-					// document.body.appendChild('<img src="' + img + '" />')
-				})
-			}
 
 
 			function getTeam(team) {

@@ -6,9 +6,12 @@ var io = require('socket.io')(http, {
 	// path: '/browser-sync/socket.io'
 });
 var fs = require('fs');
-const Pageres = require('pageres');
-const webshot = require('webshot');
+
+const capture = require('capture-phantomjs')
+
 var room;
+
+var screens = []
 
 // EXPRESS SETTINGS
 app.use(express.static('static'));
@@ -76,7 +79,7 @@ io.on('connection', function (socket) {
 	}
 
 	socket.on('disconnect', function () {
-		socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
+		// socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
 	})
 
 
@@ -173,21 +176,20 @@ io.on('connection', function (socket) {
 		console.log(room, data);
 
 		updateFile(room, data)
+		socket.to(room).emit('SERVER -> ROOM update text', room, data)
 
-		console.log(room);
 
-		socket.to(room).emit('SERVER -> ROOM update text', data)
 	})
 
 	socket.on('ROOM -> SERVER get data', function (room) {
-		socket.emit('SERVER -> ROOM update text', getCurrentSlideState(room))
+		socket.emit('SERVER -> ROOM update text', room, getCurrentSlideState(room))
 	})
 
 	socket.on('BACK -> SERVER update all rooms', function (data) {
 		let rooms = findRooms()
 		updateFile(rooms, data)
 
-		socket.broadcast.emit('SERVER -> ROOM update text', data)
+		socket.broadcast.emit('SERVER -> ROOM update text', "all", data)
 	})
 
 
@@ -205,10 +207,32 @@ io.on('connection', function (socket) {
 		io.emit('media', data);
 	});
 
-
-	socket.on('ROOM -> SERVER send screen', function (data) {
-		socket.broadcast.emit('SERVER -> BACK send screen', data)
+	socket.on('ROOM -> SERVER send screen', function (data, room) {
+		checkAndAdd(data, room)
 	})
+
+
+
+	function checkAndAdd(data, room) {
+		var id
+		var found = screens.some(function (el, index) {
+			id = index
+			return el.room === room;
+		});
+
+		if (found) {
+			console.log(found);
+
+			screens[id].data = data
+		} else {
+			screens.push({
+				room: room,
+				data: data,
+				created: new Date()
+			});
+		}
+		socket.broadcast.emit('SERVER -> BACK send screen', screens)
+	}
 
 
 

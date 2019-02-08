@@ -163,12 +163,15 @@ nav li a {
 }
 
 .countdownContainer {
-  position: absolute;
+  /* position: absolute; */
   color: white;
   font-family: 'Pier Sans';
   width: 100%;
-  margin-left: 60%;
+  /* margin-left: 60%; */
   margin-top: 40vh;
+  grid-column: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .sponsors {

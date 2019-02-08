@@ -41,12 +41,14 @@ $(function () {
 		colorChangeInput(text)
 	})
 
-	socket.on('SERVER -> BACK send screen', function (buffer) {
-		console.log(buffer);
+	// socket.on('SERVER -> BACK send screen', function (data) {
 
-		$('#img').attr('src', buffer)
+	// 	listRooms(data)
 
-	})
+	// 	// console.log(data);
+
+
+	// })
 
 
 
@@ -63,7 +65,7 @@ $(function () {
 				if (!obj.hasOwnProperty(prop)) continue;
 
 				// your code
-				console.log(prop + " = " + obj[prop], "back");
+				// console.log(prop + " = " + obj[prop], "back");
 				$("input[name='" + prop + "'").val(obj[prop])
 			}
 		}
@@ -76,6 +78,7 @@ $(function () {
 		if ($('#allRooms').is(':checked')) {
 			socket.emit('BACK -> SERVER update all rooms', updateTextBack())
 		} else {
+			selectedRoom
 			socket.emit('BACK -> SERVER update text', selectedRoom, updateTextBack())
 		}
 
@@ -108,7 +111,7 @@ $(function () {
 		var els = [];
 		for (let item of data) {
 			var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item + `"> <div class="frame-wrapper">
-					<img src="` + item + `" class="preview-frame" /> </div> <p id="roomName">` + item + `</p></div>`)
+					<iframe src="` + item + `?frame=true" class="preview-frame" ></iframe> </div> <p id="roomName">` + item + `</p></div>`)
 			els.push(el)
 		}
 		$('#previews').empty()
@@ -116,14 +119,14 @@ $(function () {
 		$('#previews').append(els)
 	}
 
-	$('#roomSelect').change(function (el) {
-		selectedRoom = $('#roomSelect').val()
-		$('#frame').attr('src', '/' + selectedRoom + '?frame=true')
-		console.log(selectedRoom);
+	// $('#roomSelect').change(function (el) {
+	// 	selectedRoom = $('#roomSelect').val()
+	// 	$('#frame').attr('src', '/' + selectedRoom + '?frame=true')
+	// 	console.log(selectedRoom);
 
-		joinRoom(selectedRoom)
+	// 	joinRoom(selectedRoom)
 
-	})
+	// })
 
 	$('#allRooms').change(function () {
 		if ($('#allRooms').is(':checked')) {
@@ -135,7 +138,7 @@ $(function () {
 	})
 
 	function chooseScreen(room) {
-		$('#frame').attr('src', '/' + room)
+		$('#frame').attr('src', '/' + room + '?frame=true')
 		console.log(room);
 
 		selectedRoom = room
