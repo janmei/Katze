@@ -43,6 +43,14 @@
 			margin-bottom: 4px;
 			z-index: -1;
 
+			&.add-room {
+				background-color: var(--color-contrast-low);
+				color: var(--color-contrast-medium);
+				padding: 35px 0;
+				text-align: center;
+				font-weight: 500;
+			}
+
 			.preview-frame {
 				position: relative;
 				width: 1920px;

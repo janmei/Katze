@@ -5,6 +5,7 @@
 
 var time;
 var selectedRoom;
+var availableRooms;
 
 $(function () {
 	var socket = io('http://localhost:8000', {
@@ -41,14 +42,7 @@ $(function () {
 		colorChangeInput(text)
 	})
 
-	// socket.on('SERVER -> BACK send screen', function (data) {
 
-	// 	listRooms(data)
-
-	// 	// console.log(data);
-
-
-	// })
 
 
 
@@ -106,10 +100,21 @@ $(function () {
 
 
 	function listRooms(data) {
-		console.log(data);
+		availableRooms = JSON.parse(data)
+
+		let add = `<div class="preview-wrapper" id="addRoom">
+								<div class="frame-wrapper add-room">
+									+
+								</div>
+							</div>`
+
+		let emptyRoom = `<div class="preview-wrapper" id="emptyRoom">
+											<div class="frame-wrapper add-room" id="roomName">Unbenannt</div>
+											<input class="form-control" type="text" id="roomNameInput"/>
+										</div>`
 
 		var els = [];
-		for (let item of data) {
+		for (let item of availableRooms.rooms) {
 			var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item + `"> <div class="frame-wrapper">
 					<iframe src="` + item + `?frame=true" class="preview-frame" ></iframe> </div> <p id="roomName">` + item + `</p></div>`)
 			els.push(el)
@@ -117,7 +122,14 @@ $(function () {
 		$('#previews').empty()
 
 		$('#previews').append(els)
+		$('#previews').append(add)
+
+		$('#addRoom').on('click', '.frame-wrapper', function () {
+			$(emptyRoom).insertBefore('#addRoom')
+		})
 	}
+
+
 
 	// $('#roomSelect').change(function (el) {
 	// 	selectedRoom = $('#roomSelect').val()
@@ -127,6 +139,8 @@ $(function () {
 	// 	joinRoom(selectedRoom)
 
 	// })
+
+
 
 	$('#allRooms').change(function () {
 		if ($('#allRooms').is(':checked')) {
@@ -155,6 +169,109 @@ $(function () {
 
 
 
+
+
+
+	/**
+	 * MAIN PREVIEW
+	 */
+
+	let h = $('#wrap').height() / 1080
+	$('#frame').css('transform', 'scale(' + h + ')')
+
+	$(window).resize(function () {
+		h = $('#wrap').height() / 1080
+		$('#frame').css('transform', 'scale(' + h + ')')
+	})
+
+
+
+
+	/**
+	 * ROOM PREVIEWS
+	 */
+
+	$('#previews').on('click', '#roomPreview', function (e) {
+		$(this).addClass('selected')
+		console.log(e);
+
+		chooseScreen(e.currentTarget.title)
+	})
+
+
+	$('#previews').on('keyup', '#roomNameInput', function (e) {
+		var inputValue = $(this).val();
+		$('#roomNameInput').siblings('#roomName').text(inputValue)
+
+		if (e.keyCode == 13) {
+			updateRoomList(inputValue)
+			$(this).remove()
+		}
+	})
+
+	function updateRoomList(data) {
+		var currentRooms = availableRooms;
+
+		if (currentRooms.rooms.includes(data)) {
+			var i = currentRooms.rooms.indexOf(data)
+			currentRooms.rooms[i] = data;
+			socket.emit('BACK -> SERVER add room', JSON.stringify(currentRooms))
+		} else {
+			currentRooms.rooms.push(data)
+			socket.emit('BACK -> SERVER add room', JSON.stringify(currentRooms))
+		}
+	}
+
+
+	/**
+	 * Input Color Change
+	 */
+
+	function colorChangeInput(data) {
+		var prev = data.text;
+		$("#headInput, #subInput").keyup(function (e) {
+			var currentValue = $(this).val();
+			if (currentValue != prev[e.currentTarget.name]) {
+				$(this).addClass('changed')
+			} else {
+				$(this).removeClass('changed')
+
+			}
+		})
+	}
+
+	function resetInput() {
+		$("#headInput, #subInput").removeClass('changed')
+	}
+
+
+	/**
+	 * 
+	 * @param {boolean} connected connected or not
+	 */
+	function setStatus(connected) {
+		if (connected) {
+			$('#status').addClass('connected')
+			$('#status').removeClass('disconnected')
+
+			$('#status #connection').html('Connected')
+
+		} else {
+			$('#status').addClass('disconnected')
+			$('#status').removeClass('connected')
+
+			$('#status #connection').html('Disconnected')
+		}
+	}
+
+
+
+
+
+
+	/** 
+	 * OLD SCRIPTS
+	 */
 
 
 	// gets teams from group.json
@@ -204,63 +321,6 @@ $(function () {
 			}
 		}
 		tick();
-	}
-
-
-	/**
-	 * Layout functions
-	 */
-
-	let s = $('#wrap').width() / 1920
-	$('#frame').css('transform', 'scale(' + s + ')')
-	$(window).resize(function () {
-		let s = $('#wrap').width() / 1920
-		$('#frame').css('transform', 'scale(' + s + ')')
-	})
-
-	$('#previews').on('click', '#roomPreview', function (e) {
-		$(this).addClass('selected')
-		console.log(e);
-
-		chooseScreen(e.currentTarget.title)
-	})
-
-
-
-	/**
-	 * Input Color Change
-	 */
-
-	function colorChangeInput(data) {
-		var prev = data.text;
-		$("#headInput, #subInput").keyup(function (e) {
-			var currentValue = $(this).val();
-			if (currentValue != prev[e.currentTarget.name]) {
-				$(this).addClass('changed')
-			} else {
-				$(this).removeClass('changed')
-
-			}
-		})
-	}
-
-	function resetInput() {
-		$("#headInput, #subInput").removeClass('changed')
-	}
-
-	function setStatus(connected) {
-		if (connected) {
-			$('#status').addClass('connected')
-			$('#status').removeClass('disconnected')
-
-			$('#status #connection').html('Connected')
-
-		} else {
-			$('#status').addClass('disconnected')
-			$('#status').removeClass('connected')
-
-			$('#status #connection').html('Disconnected')
-		}
 	}
 
 });

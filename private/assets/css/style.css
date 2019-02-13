@@ -29,7 +29,7 @@ html {
 }
 
 body {
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 1%, 25%);
   background-color: var(--color-bg, white);
 }
 
@@ -82,53 +82,53 @@ img, video, svg {
 
 :root,
 [data-theme="default"] {
-  --color-primary-darker: hsl(220, 75%, 42%);
-  --color-primary-dark: hsl(220, 80%, 48%);
-  --color-primary: hsl(220, 90%, 56%);
-  --color-primary-light: hsl(220, 90%, 63%);
-  --color-primary-lighter: hsl(220, 90%, 92%);
-  --color-primary-a20: hsla(220, 90%, 56%, 0.2);
-  --color-accent-darker: hsl(355, 75%, 48%);
-  --color-accent-dark: hsl(355, 80%, 54%);
-  --color-accent: hsl(355, 90%, 61%);
-  --color-accent-light: hsl(355, 90%, 68%);
-  --color-accent-lighter: hsl(356, 89%, 93%);
-  --color-black: hsl(240, 7%, 12%);
-  --color-black-a10: hsla(240, 7%, 12%, 0.1);
+  --color-primary-darker: hsl(210, 85%, 77%);
+  --color-primary-dark: hsl(210, 85%, 67%);
+  --color-primary: hsl(210, 85%, 57%);
+  --color-primary-light: hsl(210, 85%, 47%);
+  --color-primary-lighter: hsl(210, 85%, 37%);
+  --color-primary-a20: hsla(210, 85%, 57%, 0.20);
+  --color-accent-darker: hsl(4, 86%, 83%);
+  --color-accent-dark: hsl(4, 86%, 73%);
+  --color-accent: hsl(4, 86%, 63%);
+  --color-accent-light: hsl(4, 86%, 53%);
+  --color-accent-lighter: hsl(4, 86%, 43%);
+  --color-black: hsl(240, 8%, 12%);
+  --color-black-a10: hsla(240, 8%, 12%, 0.10);
   --color-white: hsl(0, 0%, 100%);
-  --color-success-darker: hsl(94, 40%, 45%);
-  --color-success-dark: hsl(94, 45%, 50%);
-  --color-success: hsl(94, 48%, 56%);
-  --color-success-light: hsl(94, 48%, 62%);
-  --color-success-lighter: hsl(94, 48%, 92%);
-  --color-success-a20: hsla(94, 48%, 56%, 0.2);
-  --color-error-darker: hsl(355, 75%, 48%);
-  --color-error-dark: hsl(355, 80%, 54%);
-  --color-error: hsl(355, 90%, 61%);
-  --color-error-light: hsl(355, 90%, 68%);
-  --color-error-lighter: hsl(356, 89%, 93%);
-  --color-error-a20: hsla(355, 90%, 61%, 0.2);
-  --color-warning-darker: hsl(46, 90%, 50%);
-  --color-warning-dark: hsl(46, 95%, 55%);
-  --color-warning: hsl(46, 100%, 61%);
-  --color-warning-light: hsl(46, 100%, 68%);
-  --color-warning-lighter: hsl(46, 100%, 91%);
-  --color-warning-a20: hsla(46, 100%, 61%, 0.2);
-  --color-bg: hsl(0, 0%, 100%);
-  --color-contrast-lower: hsl(0, 0%, 95%);
-  --color-contrast-low: hsl(0, 0%, 83%);
-  --color-contrast-medium: hsl(240, 1%, 47%);
-  --color-contrast-high: hsl(255, 4%, 20%);
-  --color-contrast-higher: hsl(240, 7%, 12%);
-  --color-bg-a20: hsla(0, 0%, 100%, 0.2);
-  --color-contrast-a90: hsla(240, 7%, 12%, 0.9);
+  --color-warning-darker: hsl(42, 97%, 93%);
+  --color-warning-dark: hsl(42, 97%, 83%);
+  --color-warning: hsl(42, 97%, 73%);
+  --color-warning-light: hsl(42, 97%, 63%);
+  --color-warning-lighter: hsl(42, 97%, 53%);
+  --color-warning-a20: hsla(42, 97%, 73%, 0.20);
+  --color-success-darker: hsl(147, 50%, 100%);
+  --color-success-dark: hsl(147, 50%, 92%);
+  --color-success: hsl(147, 50%, 84%);
+  --color-success-light: hsl(147, 50%, 74%);
+  --color-success-lighter: hsl(147, 50%, 64%);
+  --color-success-a20: hsla(147, 50%, 84%, 0.20);
+  --color-error-darker: hsl(359, 44%, 65%);
+  --color-error-dark: hsl(359, 44%, 55%);
+  --color-error: hsl(359, 44%, 45%);
+  --color-error-light: hsl(359, 44%, 35%);
+  --color-error-lighter: hsl(359, 44%, 25%);
+  --color-error-a20: hsla(359, 44%, 45%, 0.20);
+  --color-bg: hsl(180, 1%, 25%);
+  --color-bg-a00: hsla(180, 1%, 25%, 0.00);
+  --color-contrast-lower: hsl(180, 1%, 28%);
+  --color-contrast-low: hsl(180, 1%, 36%);
+  --color-contrast-medium: hsl(180, 1%, 64%);
+  --color-contrast-high: hsl(0, 0%, 91%);
+  --color-contrast-higher: hsl(0, 0%, 100%);
+  --color-contrast-higher-a90: hsla(0, 0%, 100%, 0.90);
   --color-border: var(--color-contrast-low);
 }
 
 [data-theme] {
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 1%, 25%);
   background-color: var(--color-bg);
-  color: hsl(255, 4%, 20%);
+  color: hsl(0, 0%, 91%);
   color: var(--color-contrast-high);
 }
 
@@ -851,7 +851,7 @@ body {
   font-size: var(--text-base-size);
   font-family: sans-serif;
   font-family: var(--font-primary);
-  color: hsl(255, 4%, 20%);
+  color: hsl(0, 0%, 91%);
   color: var(--color-contrast-high);
 }
 
@@ -870,7 +870,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: hsl(240, 7%, 12%);
+  color: hsl(0, 0%, 100%);
   color: var(--color-contrast-higher);
   line-height: 1.2;
   line-height: var(--heading-line-height);
@@ -917,12 +917,12 @@ small {
 }
 
 a {
-  color: hsl(220, 90%, 56%);
+  color: hsl(210, 85%, 57%);
   color: var(--color-primary);
 }
 
 mark {
-  background-color: hsl(356, 89%, 93%);
+  background-color: hsl(4, 86%, 43%);
   background-color: var(--color-accent-lighter);
   color: inherit;
 }
@@ -940,7 +940,7 @@ u {
 }
 
 .text--subtle {
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
@@ -974,7 +974,7 @@ u {
 .text-component ol li {
   line-height: 1.4;
   line-height: var(--component-body-line-height);
-  color: hsl(255, 4%, 20%);
+  color: hsl(0, 0%, 91%);
   color: var(--color-contrast-high);
 }
 
@@ -1005,12 +1005,12 @@ u {
 
 .text-component blockquote {
   padding-left: 1em;
-  border-left: 4px solid hsl(0, 0%, 83%);
+  border-left: 4px solid hsl(180, 1%, 36%);
   border-left: 4px solid var(--color-contrast-low);
 }
 
 .text-component hr {
-  background: hsl(0, 0%, 83%);
+  background: hsl(180, 1%, 36%);
   background: var(--color-contrast-low);
   height: 1px;
   margin: 2em auto;
@@ -1039,7 +1039,7 @@ u {
   text-align: center;
   font-size: 0.83333em;
   font-size: var(--text-sm);
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
@@ -1095,7 +1095,7 @@ u {
 
 .icon {
   display: inline-block;
-  color: hsl(240, 7%, 12%);
+  color: hsl(0, 0%, 100%);
   color: var(--color-contrast-higher);
   fill: currentColor;
   height: 1em;
@@ -1197,14 +1197,14 @@ u {
   border-radius: 0.25em;
   font-size: 1em;
   font-size: var(--btn-font-size);
-  color: hsl(220, 90%, 56%);
+  color: hsl(210, 85%, 57%);
   color: var(--color-primary);
   justify-content: center;
   align-items: center;
 }
 
 .btn--primary {
-  background-color: hsl(220, 90%, 56%);
+  background-color: hsl(210, 85%, 57%);
   background-color: var(--color-primary);
   color: hsl(0, 0%, 100%);
   color: var(--color-white);
@@ -1213,26 +1213,26 @@ u {
 }
 
 .btn--primary:hover {
-  background-color: hsl(220, 90%, 63%);
+  background-color: hsl(210, 85%, 47%);
   background-color: var(--color-primary-light);
 }
 
 .btn--subtle {
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 1%, 25%);
   background-color: var(--color-bg);
-  color: hsl(240, 7%, 12%);
+  color: hsl(0, 0%, 100%);
   color: var(--color-contrast-higher);
-  border: 1px solid hsl(0, 0%, 83%);
+  border: 1px solid hsl(180, 1%, 36%);
   border: 1px solid var(--color-contrast-low);
 }
 
 .btn--subtle:hover {
-  background-color: hsl(0, 0%, 95%);
+  background-color: hsl(180, 1%, 28%);
   background-color: var(--color-contrast-lower);
 }
 
 .btn--accent {
-  background-color: hsl(355, 90%, 61%);
+  background-color: hsl(4, 86%, 63%);
   background-color: var(--color-accent);
   color: hsl(0, 0%, 100%);
   color: var(--color-white);
@@ -1241,7 +1241,7 @@ u {
 }
 
 .btn--accent:hover {
-  background-color: hsl(355, 90%, 68%);
+  background-color: hsl(4, 86%, 53%);
   background-color: var(--color-accent-light);
 }
 
@@ -1293,50 +1293,50 @@ u {
 .form-control {
   padding: 0.5em 0.75em;
   padding: var(--space-xs) var(--space-sm);
-  background: hsl(0, 0%, 100%);
+  background: hsl(180, 1%, 25%);
   background: var(--color-bg);
-  border: 2px solid hsl(0, 0%, 83%);
+  border: 2px solid hsl(180, 1%, 36%);
   border: 2px solid var(--color-contrast-low);
   width: 100%;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: hsl(220, 90%, 56%);
+  border-color: hsl(210, 85%, 57%);
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px hsla(220, 90%, 56%, 0.2);
+  box-shadow: 0 0 0 3px hsla(210, 85%, 57%, 0.20);
   box-shadow: 0 0 0 3px var(--color-primary-a20);
 }
 
 .form-control::-webkit-input-placeholder {
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
 .form-control::-moz-placeholder {
   opacity: 1;
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
 .form-control:-ms-input-placeholder {
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
 .form-control:-moz-placeholder {
-  color: hsl(240, 1%, 47%);
+  color: hsl(180, 1%, 64%);
   color: var(--color-contrast-medium);
 }
 
 .form-control.changed {
   outline: none;
-  border-color: hsl(355, 90%, 61%);
+  border-color: hsl(359, 44%, 45%);
   border-color: var(--color-error);
 }
 
 .form-control.changed:focus {
-  box-shadow: 0 0 0 3px hsla(355, 90%, 61%, 0.2);
+  box-shadow: 0 0 0 3px hsla(359, 44%, 45%, 0.20);
   box-shadow: 0 0 0 3px var(--color-error-a20);
 }
 
@@ -1346,17 +1346,17 @@ u {
 }
 
 .form-control[aria-invalid="true"] {
-  border-color: hsl(355, 90%, 61%);
+  border-color: hsl(359, 44%, 45%);
   border-color: var(--color-error);
 }
 
 .form-control[aria-invalid="true"]:focus {
-  box-shadow: 0 0 0 3px hsla(355, 90%, 61%, 0.2);
+  box-shadow: 0 0 0 3px hsla(359, 44%, 45%, 0.20);
   box-shadow: 0 0 0 3px var(--color-error-a20);
 }
 
 .form-legend {
-  color: hsl(240, 7%, 12%);
+  color: hsl(0, 0%, 100%);
   color: var(--color-contrast-higher);
   line-height: 1.2;
   font-size: 1.2em;
@@ -1374,7 +1374,7 @@ u {
 }
 
 .form__msg-error {
-  background-color: hsl(355, 90%, 61%);
+  background-color: hsl(359, 44%, 45%);
   background-color: var(--color-error);
   color: hsl(0, 0%, 100%);
   color: var(--color-white);
@@ -1402,7 +1402,7 @@ u {
   width: 0;
   height: 0;
   border: 8px solid transparent;
-  border-bottom-color: hsl(355, 90%, 61%);
+  border-bottom-color: hsl(359, 44%, 45%);
   border-bottom-color: var(--color-error);
 }
 
@@ -1515,9 +1515,9 @@ Descr: Custom radio and checkbox buttons
   width: var(--checkbox-radio-size);
   height: 1em;
   height: var(--checkbox-radio-size);
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 1%, 25%);
   background-color: var(--color-bg);
-  border: 1px solid hsl(0, 0%, 83%);
+  border: 1px solid hsl(180, 1%, 36%);
   border: 1px solid var(--color-contrast-low);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-right: 0.25em;
@@ -1547,10 +1547,10 @@ Descr: Custom radio and checkbox buttons
 .radio-list--custom input[type="checkbox"]:checked + label::before,
 .checkbox-list--custom input[type="radio"]:checked + label::before,
 .checkbox-list--custom input[type="checkbox"]:checked + label::before {
-  background-color: hsl(220, 90%, 56%);
+  background-color: hsl(210, 85%, 57%);
   background-color: var(--color-primary);
   box-shadow: none;
-  border-color: hsl(220, 90%, 56%);
+  border-color: hsl(210, 85%, 57%);
   border-color: var(--color-primary);
 }
 
@@ -1593,9 +1593,9 @@ Descr: Custom radio and checkbox buttons
 .checkbox-list--custom input[type="checkbox"]:checked:active + label::before,
 .checkbox-list--custom input[type="radio"]:focus + label::before,
 .checkbox-list--custom input[type="checkbox"]:focus + label::before {
-  border-color: hsl(220, 90%, 56%);
+  border-color: hsl(210, 85%, 57%);
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px hsla(220, 90%, 56%, 0.2);
+  box-shadow: 0 0 0 3px hsla(210, 85%, 57%, 0.20);
   box-shadow: 0 0 0 3px var(--color-primary-a20);
 }
 
@@ -1622,7 +1622,7 @@ Descr: Tabbed secondary navigation
   height: calc(100% - 1px);
   height: calc(100% - var(--s-tabs-border-bottom-width));
   width: 2em;
-  background: linear-gradient(90deg, hsla(0, 0%, 100%, 0.2), hsl(0, 0%, 100%));
+  background: linear-gradient(90deg, undefined, hsl(180, 1%, 25%));
   background: linear-gradient(90deg, var(--color-bg-a20), var(--color-bg));
   pointer-events: none;
 }
@@ -1641,7 +1641,7 @@ Descr: Tabbed secondary navigation
   height: var(--s-tabs-border-bottom-width);
   left: 0;
   bottom: 0;
-  background-color: hsl(0, 0%, 83%);
+  background-color: hsl(180, 1%, 36%);
   background-color: var(--color-contrast-low);
 }
 
@@ -1663,15 +1663,15 @@ Descr: Tabbed secondary navigation
 }
 
 .s-tabs__list a:hover {
-  color: hsl(220, 90%, 56%);
+  color: hsl(210, 85%, 57%);
   color: var(--color-primary);
 }
 
 .s-tabs__list .s-tabs__item--selected {
   position: relative;
-  color: hsl(220, 90%, 56%);
+  color: hsl(210, 85%, 57%);
   color: var(--color-primary);
-  border-bottom-color: hsl(220, 90%, 56%);
+  border-bottom-color: hsl(210, 85%, 57%);
   border-bottom-color: var(--color-primary);
 }
 
@@ -1696,7 +1696,7 @@ Descr: Tabbed secondary navigation
 .room-previews {
   width: 100%;
   height: 150px;
-  border-top: 1px solid hsl(240, 1%, 47%);
+  border-top: 1px solid hsl(180, 1%, 64%);
   border-top: 1px solid var(--color-contrast-medium);
   display: flex;
   flex-wrap: wrap;
@@ -1715,7 +1715,7 @@ Descr: Tabbed secondary navigation
 
 .room-previews .preview-wrapper.selected {
   outline: none;
-  box-shadow: 0 0 0 3px hsl(94, 48%, 56%);
+  box-shadow: 0 0 0 3px hsl(147, 50%, 84%);
   box-shadow: 0 0 0 3px var(--color-success);
 }
 
@@ -1724,6 +1724,16 @@ Descr: Tabbed secondary navigation
   width: 159.36px;
   margin-bottom: 4px;
   z-index: -1;
+}
+
+.room-previews .preview-wrapper .frame-wrapper.add-room {
+  background-color: hsl(180, 1%, 36%);
+  background-color: var(--color-contrast-low);
+  color: hsl(180, 1%, 64%);
+  color: var(--color-contrast-medium);
+  padding: 35px 0;
+  text-align: center;
+  font-weight: 500;
 }
 
 .room-previews .preview-wrapper .frame-wrapper .preview-frame {
@@ -1783,7 +1793,7 @@ Descr: Custom ON/OFF checkbox toggle
 }
 
 .switch__input:checked + .switch__label {
-  background-color: hsl(220, 90%, 56%);
+  background-color: hsl(210, 85%, 57%);
   background-color: var(--color-primary);
 }
 
@@ -1794,7 +1804,7 @@ Descr: Custom ON/OFF checkbox toggle
 
 .switch__input:focus + .switch__label,
 .switch__input:active + .switch__label {
-  box-shadow: 0 0 0 3px hsla(220, 90%, 56%, 0.2);
+  box-shadow: 0 0 0 3px hsla(210, 85%, 57%, 0.20);
   box-shadow: 0 0 0 3px var(--color-primary-a20);
 }
 
@@ -1806,7 +1816,7 @@ Descr: Custom ON/OFF checkbox toggle
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background-color: hsl(0, 0%, 83%);
+  background-color: hsl(180, 1%, 36%);
   background-color: var(--color-contrast-low);
   border-radius: inherit;
   z-index: 1;
@@ -1856,13 +1866,13 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
 }
 
 .tabs {
-  border: 2px solid hsl(0, 0%, 83%);
+  border: 2px solid hsl(180, 1%, 36%);
   border: var(--tabs-border-width) solid var(--color-contrast-low);
   padding: 0.75em;
   padding: var(--component-padding);
   border-radius: 0.25em;
   border-radius: var(--tabs-radius);
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 1%, 25%);
   background-color: var(--color-bg);
 }
 
@@ -1881,7 +1891,7 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
 
 .tabs__controls a {
   display: inline-flex;
-  background-color: hsl(0, 0%, 83%);
+  background-color: hsl(180, 1%, 36%);
   background-color: var(--color-contrast-low);
   padding: 0.5em 0.75em;
   padding: var(--space-xs) var(--space-sm);
@@ -1892,7 +1902,7 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
 }
 
 .tabs__controls a:hover {
-  background-color: hsl(0, 0%, 95%);
+  background-color: hsl(180, 1%, 28%);
   background-color: var(--color-contrast-lower);
 }
 
@@ -1906,7 +1916,7 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
 }
 
 .js .tabs__controls .tabs__control--selected {
-  background-color: hsl(220, 90%, 56%);
+  background-color: hsl(210, 85%, 57%);
   background-color: var(--color-primary);
   color: hsl(0, 0%, 100%);
   color: var(--color-white);
@@ -1915,7 +1925,7 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
 }
 
 .js .tabs__controls .tabs__control--selected:hover {
-  background-color: hsl(220, 90%, 63%);
+  background-color: hsl(210, 85%, 47%);
   background-color: var(--color-primary-light);
 }
 
@@ -1965,12 +1975,12 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
     border-radius: var(--tabs-control-radius) var(--tabs-control-radius) 0 0;
   }
   .js .tabs__controls .tabs__control--selected {
-    background-color: hsl(0, 0%, 100%);
+    background-color: hsl(180, 1%, 25%);
     background-color: var(--color-bg);
-    color: hsl(220, 90%, 56%);
+    color: hsl(210, 85%, 57%);
     color: var(--color-primary);
     position: relative;
-    border-color: hsl(0, 0%, 83%);
+    border-color: hsl(180, 1%, 36%);
     border-color: var(--color-contrast-low);
   }
   .js .tabs__controls .tabs__control--selected:hover {
@@ -1985,16 +1995,16 @@ Descr: Tabs are multiple content sections (panels), accessible one at a time usi
     width: 100%;
     height: 2px;
     height: var(--tabs-border-width);
-    background-color: hsl(0, 0%, 100%);
+    background-color: hsl(180, 1%, 25%);
     background-color: var(--color-bg);
     z-index: 1;
   }
   .js .tabs__panels {
-    border: 2px solid hsl(0, 0%, 83%);
+    border: 2px solid hsl(180, 1%, 36%);
     border: var(--tabs-border-width) solid var(--color-contrast-low);
     border-radius: 0 0.25em 0.25em 0.25em;
     border-radius: 0 var(--tabs-radius) var(--tabs-radius) var(--tabs-radius);
-    background-color: hsl(0, 0%, 100%);
+    background-color: hsl(180, 1%, 25%);
     background-color: var(--color-bg);
   }
   .js .tabs__panel {
@@ -2039,7 +2049,7 @@ Title: Custom Select Control
 .status {
   display: flex;
   align-items: center;
-  border: 1px solid hsl(0, 0%, 83%);
+  border: 1px solid hsl(180, 1%, 36%);
   border: 1px solid var(--color-contrast-low);
   width: 180px;
   padding: 8px;
@@ -2048,12 +2058,12 @@ Title: Custom Select Control
 }
 
 .status.connected .status-light {
-  background-color: hsl(94, 48%, 56%);
+  background-color: hsl(147, 50%, 84%);
   background-color: var(--color-success);
 }
 
 .status.disconnected .status-light {
-  background-color: hsl(355, 90%, 61%);
+  background-color: hsl(359, 44%, 45%);
   background-color: var(--color-error);
 }
 

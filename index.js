@@ -6,12 +6,11 @@ var io = require('socket.io')(http, {
 	// path: '/browser-sync/socket.io'
 });
 var fs = require('fs');
-
-const capture = require('capture-phantomjs')
+var encoding = "utf8";
 
 var room;
 
-var screens = []
+var availableRooms
 
 // EXPRESS SETTINGS
 app.use(express.static('static'));
@@ -23,11 +22,26 @@ app.get('/admin', function (req, res) {
 });
 
 app.get('/:room', function (req, res) {
-	res.sendFile(__dirname + '/public/index.html');
 	room = req.params.room
+	availableRooms = JSON.parse(getRooms())
+
+	if (availableRooms.rooms.includes(room)) {
+		res.sendFile(__dirname + '/public/index.html');
+	} else {
+		res.sendFile(__dirname + '/public/empty.html');
+	}
 })
 
 
+
+
+function getRooms() {
+	var data = fs.readFileSync('./rooms/config.json', encoding, (err, data) => {
+		if (err) throw err;
+		return data;
+	})
+	return data;
+}
 
 const PORT = process.env.PORT || 8000;
 
@@ -64,7 +78,6 @@ io.on('connection', function (socket) {
 	/**
 	 * create JSON Files for State Sharing
 	 */
-	var encoding = "utf8";
 
 	if (fs.existsSync('./rooms/' + room + '.json')) {
 		socket.emit('SERVER -> ALL', getCurrentSlideState(room))
@@ -77,6 +90,25 @@ io.on('connection', function (socket) {
 			console.log("The file was succesfully saved!");
 		});
 	}
+
+
+	/**
+	 * Create CONFIG or Emit it
+	 */
+
+	if (fs.existsSync('./rooms/config.json')) {
+		socket.emit('SERVER -> BACK send rooms', getRooms())
+
+	} else {
+		var content = '{"rooms": []}';
+		fs.writeFile('./rooms/config.json', content, encoding, (err) => {
+			if (err) throw err;
+
+			console.log("The file was succesfully saved!");
+		});
+	}
+
+
 
 	socket.on('disconnect', function () {
 		// socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
@@ -92,7 +124,7 @@ io.on('connection', function (socket) {
 	 */
 
 	socket.on('BACK -> SERVER get rooms', function () {
-		socket.emit('SERVER -> BACK send rooms', findRooms());
+		socket.emit('SERVER -> BACK send rooms', getRooms());
 	})
 
 	socket.on('join', function (room) {
@@ -143,6 +175,14 @@ io.on('connection', function (socket) {
 		}
 	}
 
+	socket.on('BACK -> SERVER add room', function (data) {
+
+		fs.writeFile('./rooms/config.json', data, encoding, (err) => {
+			if (err) throw err;
+
+			console.log("The file was succesfully saved!");
+		});
+	})
 
 	/**
 	 * 
@@ -186,7 +226,7 @@ io.on('connection', function (socket) {
 	})
 
 	socket.on('BACK -> SERVER update all rooms', function (data) {
-		let rooms = findRooms()
+		let rooms = getRooms()
 		updateFile(rooms, data)
 
 		socket.broadcast.emit('SERVER -> ROOM update text', "all", data)
@@ -206,34 +246,6 @@ io.on('connection', function (socket) {
 		console.log('media');
 		io.emit('media', data);
 	});
-
-	socket.on('ROOM -> SERVER send screen', function (data, room) {
-		checkAndAdd(data, room)
-	})
-
-
-
-	function checkAndAdd(data, room) {
-		var id
-		var found = screens.some(function (el, index) {
-			id = index
-			return el.room === room;
-		});
-
-		if (found) {
-			console.log(found);
-
-			screens[id].data = data
-		} else {
-			screens.push({
-				room: room,
-				data: data,
-				created: new Date()
-			});
-		}
-		socket.broadcast.emit('SERVER -> BACK send screen', screens)
-	}
-
 
 
 	/**
