@@ -192,6 +192,7 @@ $(function () {
 	 */
 
 	$('#previews').on('click', '#roomPreview', function (e) {
+		$(this).siblings('#roomPreview').removeClass('selected')
 		$(this).addClass('selected')
 		console.log(e);
 
