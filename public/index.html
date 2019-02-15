@@ -88,9 +88,12 @@
 
 		$(function () {
 
+			var frame = getQueryVariable('frame');
+
 			var socket = io('http://localhost:8000', {
 				// path: '/browser-sync/socket.io',
-				reconnection: false
+				reconnection: false,
+				query: 'frame=' + frame,
 			});
 
 
@@ -103,15 +106,6 @@
 				$('#sub').attr('data-name', room)
 
 				socket.emit('ROOM -> SERVER get data', room)
-
-				// TODO: switch if iframe is true then capture
-				if (getQueryVariable('frame')) {
-					console.log(getQueryVariable('frame'));
-				} else {
-					setInterval(function () {
-						// capture()
-					}, 5000)
-				}
 
 			})
 

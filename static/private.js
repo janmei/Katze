@@ -33,6 +33,8 @@ $(function () {
 
 	socket.on('SERVER -> BACK send rooms', function (data) {
 		listRooms(data)
+		console.log('got it');
+
 	});
 
 	socket.on('SERVER -> BACK current slide state', function (data) {
@@ -89,6 +91,7 @@ $(function () {
 		sub = $("input[name='sub'").val()
 
 		var data = {
+			"name": selectedRoom,
 			"text": {
 				"head": head,
 				"sub": sub
@@ -100,7 +103,7 @@ $(function () {
 
 
 	function listRooms(data) {
-		availableRooms = JSON.parse(data)
+		availableRooms = data
 
 		let add = `<div class="preview-wrapper" id="addRoom">
 								<div class="frame-wrapper add-room">
@@ -114,9 +117,20 @@ $(function () {
 										</div>`
 
 		var els = [];
-		for (let item of availableRooms.rooms) {
-			var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item + `"> <div class="frame-wrapper">
-					<iframe src="` + item + `?frame=true" class="preview-frame" ></iframe> </div> <p id="roomName">` + item + `</p></div>`)
+		for (let item of data) {
+			item = JSON.parse(item)
+			if (item.connected) {
+				var el = $(`<div class="preview-wrapper" id="roomPreview">
+											<div class="frame-wrapper">
+												<iframe src="` + item.name + `?frame=true" class="preview-frame" ></iframe> 
+											</div>
+										<p id="roomName">` + item.name + `</p>
+									</div>`)
+			} else {
+				var el = $(`<div class="preview-wrapper" id="emptyRoom">
+											<div class="frame-wrapper add-room" id="roomName">` + item.name + `</div>
+										</div>`)
+			}
 			els.push(el)
 		}
 		$('#previews').empty()
@@ -128,6 +142,7 @@ $(function () {
 			$(emptyRoom).insertBefore('#addRoom')
 		})
 	}
+
 
 
 
@@ -205,22 +220,15 @@ $(function () {
 		$('#roomNameInput').siblings('#roomName').text(inputValue)
 
 		if (e.keyCode == 13) {
-			updateRoomList(inputValue)
+			addRoom(inputValue)
 			$(this).remove()
 		}
 	})
 
-	function updateRoomList(data) {
-		var currentRooms = availableRooms;
+	function addRoom(data) {
 
-		if (currentRooms.rooms.includes(data)) {
-			var i = currentRooms.rooms.indexOf(data)
-			currentRooms.rooms[i] = data;
-			socket.emit('BACK -> SERVER add room', JSON.stringify(currentRooms))
-		} else {
-			currentRooms.rooms.push(data)
-			socket.emit('BACK -> SERVER add room', JSON.stringify(currentRooms))
-		}
+		socket.emit('BACK -> SERVER add room', data)
+
 	}
 
 

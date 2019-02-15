@@ -23,9 +23,10 @@ app.get('/admin', function (req, res) {
 
 app.get('/:room', function (req, res) {
 	room = req.params.room
-	availableRooms = JSON.parse(getRooms())
+	availableRooms = getRooms()
+	// console.log(availableRooms);
 
-	if (availableRooms.rooms.includes(room)) {
+	if (availableRooms.includes(room)) {
 		res.sendFile(__dirname + '/public/index.html');
 	} else {
 		res.sendFile(__dirname + '/public/empty.html');
@@ -36,12 +37,18 @@ app.get('/:room', function (req, res) {
 
 
 function getRooms() {
-	var data = fs.readFileSync('./rooms/config.json', encoding, (err, data) => {
-		if (err) throw err;
-		return data;
-	})
-	return data;
+	var data = fs.readdirSync('./rooms', encoding)
+
+	var list = [];
+	for (var i = 0; i < data.length; i++) {
+		var k = data[i].slice(0, -5)
+		list.push(k)
+	}
+	// console.log(list);
+
+	return list;
 }
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -64,8 +71,7 @@ function findRooms() {
 }
 
 
-var path = require('path'),
-	fs = require('fs');
+var fs = require('fs');
 
 
 io.on('connection', function (socket) {
@@ -74,44 +80,48 @@ io.on('connection', function (socket) {
 		return
 	}
 	socket.join(room)
+	socket.on('connect', function (reason) {
 
-	/**
-	 * create JSON Files for State Sharing
-	 */
+		if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
+			fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
+				if (err) throw err;
 
-	if (fs.existsSync('./rooms/' + room + '.json')) {
-		socket.emit('SERVER -> ALL', getCurrentSlideState(room))
-	} else {
-		var content = '{"text": {"head": "hello world!"}}';
+				data = JSON.parse(data);
+				data.connected = true;
+				data = JSON.stringify(data)
+				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
+					if (err) throw err;
 
-		fs.writeFile('./rooms/' + room + '.json', content, encoding, (err) => {
-			if (err) throw err;
-
-			console.log("The file was succesfully saved!");
-		});
-	}
-
-
-	/**
-	 * Create CONFIG or Emit it
-	 */
-
-	if (fs.existsSync('./rooms/config.json')) {
-		socket.emit('SERVER -> BACK send rooms', getRooms())
-
-	} else {
-		var content = '{"rooms": []}';
-		fs.writeFile('./rooms/config.json', content, encoding, (err) => {
-			if (err) throw err;
-
-			console.log("The file was succesfully saved!");
-		});
-	}
+					// console.log("The file was succesfully saved!");
+					socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
+				});
+			})
+		}
+	})
 
 
+	socket.on('disconnect', function (reason) {
+		console.log(room, reason);
 
-	socket.on('disconnect', function () {
-		// socket.broadcast.emit('SERVER -> BACK send rooms', findRooms());
+
+		if (room == undefined) {
+			return
+		}
+		if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
+			fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
+				if (err) throw err;
+
+				var newData = JSON.parse(data);
+				newData.connected = false;
+				data = JSON.stringify(newData)
+				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
+					if (err) throw err;
+
+					// console.log("The file was succesfully saved!");
+					socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
+				});
+			})
+		}
 	})
 
 
@@ -124,7 +134,7 @@ io.on('connection', function (socket) {
 	 */
 
 	socket.on('BACK -> SERVER get rooms', function () {
-		socket.emit('SERVER -> BACK send rooms', getRooms());
+		socket.emit('SERVER -> BACK send rooms', getRoomsConnectionState());
 	})
 
 	socket.on('join', function (room) {
@@ -133,6 +143,39 @@ io.on('connection', function (socket) {
 
 		socket.emit('SERVER -> BACK current slide state', getCurrentSlideState(room))
 	})
+
+	socket.on('BACK -> SERVER add room', function (room) {
+		/**
+		 * create JSON Files for State Sharing
+		 */
+
+		if (fs.existsSync('./rooms/' + room + '.json')) {
+			socket.emit('SERVER -> ALL', getCurrentSlideState(room))
+		} else {
+			var content = '{"name": "' + room + '", "text": {"head": "interactive </br>future exhibition","sub": "Hallo Welt!"},"connected": false}';
+
+			fs.writeFile('./rooms/' + room + '.json', content, encoding, (err) => {
+				if (err) throw err;
+
+				// console.log("The file was succesfully saved!");
+			});
+		}
+
+
+	})
+
+	fs.watch('./rooms/', (eventType, filename) => {
+		// console.log(`event type is: ${eventType}`);
+		if (filename) {
+			// console.log(`filename provided: ${filename}`);
+			socket.emit('SERVER -> BACK current slide state', getCurrentSlideState(room))
+			// socket.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
+
+		} else {
+			console.log('filename not provided');
+		}
+	});
+
 
 	function getCurrentSlideState(roomId) {
 		if (roomId == undefined || roomId === '') {
@@ -145,16 +188,22 @@ io.on('connection', function (socket) {
 		return data;
 	}
 
-	fs.watch('./rooms/', (eventType, filename) => {
-		console.log(`event type is: ${eventType}`);
-		if (filename) {
-			console.log(`filename provided: ${filename}`);
-			socket.to(room).emit('SERVER -> BACK current slide state', getCurrentSlideState(room))
+	function getRoomsConnectionState() {
+		var data = fs.readdirSync('./rooms', encoding)
 
-		} else {
-			console.log('filename not provided');
+		var list = [];
+		for (var i = 0; i < data.length; i++) {
+			var k = data[i].slice(0, -5)
+			var room = getCurrentSlideState(k)
+			list.push(room)
 		}
-	});
+
+		return list;
+
+
+	}
+
+
 
 	function updateFile(room, data) {
 		if (Array.isArray(room)) {
@@ -163,26 +212,18 @@ io.on('connection', function (socket) {
 				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
 					if (err) throw err;
 
-					console.log("The file was succesfully saved!");
+					// console.log("The file was succesfully saved!");
 				});
 			}
 		} else {
 			fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
 				if (err) throw err;
 
-				console.log("The file was succesfully saved!");
+				// console.log("The file was succesfully saved!");
 			});
 		}
 	}
 
-	socket.on('BACK -> SERVER add room', function (data) {
-
-		fs.writeFile('./rooms/config.json', data, encoding, (err) => {
-			if (err) throw err;
-
-			console.log("The file was succesfully saved!");
-		});
-	})
 
 	/**
 	 * 
@@ -212,8 +253,6 @@ io.on('connection', function (socket) {
 	 */
 
 	socket.on('BACK -> SERVER update text', function (room, data) {
-
-		console.log(room, data);
 
 		updateFile(room, data)
 		socket.to(room).emit('SERVER -> ROOM update text', room, data)

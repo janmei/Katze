@@ -822,7 +822,7 @@ img, video, svg {
 
 :root,
 body {
-  --font-primary: sans-serif;
+  --font-primary: IBM Plex Sans, sans-serif;
   --text-base-size: 1em;
   --text-scale-ratio: 1.2;
   --text-xs: calc(1em/var(--text-scale-ratio)/var(--text-scale-ratio));
@@ -849,10 +849,11 @@ body {
 body {
   font-size: 1em;
   font-size: var(--text-base-size);
-  font-family: sans-serif;
-  font-family: var(--font-primary);
   color: hsl(0, 0%, 91%);
   color: var(--color-contrast-high);
+  font-family: IBM Plex Sans, sans-serif;
+  font-family: var(--font-primary);
+  font-weight: 300;
 }
 
 @supports (--css: variables) {
@@ -874,6 +875,9 @@ h4 {
   color: var(--color-contrast-higher);
   line-height: 1.2;
   line-height: var(--heading-line-height);
+  font-family: IBM Plex Sans, sans-serif;
+  font-family: var(--font-primary);
+  font-weight: 500;
 }
 
 .text--xxxl {

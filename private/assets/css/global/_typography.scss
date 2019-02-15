@@ -1,7 +1,7 @@
 :root,
 body {
   // font family
-  --font-primary: sans-serif;
+  --font-primary: IBM Plex Sans, sans-serif;
 
   // body font size
   --text-base-size: 1em;
@@ -35,8 +35,9 @@ body {
 
 body {
   font-size: var(--text-base-size);
-  font-family: var(--font-primary);
   color: var(--color-contrast-high);
+  font-family: var(--font-primary);
+  font-weight: 300;
 }
 
 h1,
@@ -45,6 +46,8 @@ h3,
 h4 {
   color: var(--color-contrast-higher);
   line-height: var(--heading-line-height);
+  font-family: var(--font-primary);
+  font-weight: 500;
 }
 
 // text size
