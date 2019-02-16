@@ -17,10 +17,8 @@ $(function () {
 
 	socket.on('connect', function () {
 		console.log(socket.id);
-
-		socket.emit('BACK -> SERVER get rooms')
-
 		setStatus(true)
+		socket.emit('BACK -> SERVER get rooms')
 	})
 
 
@@ -33,8 +31,6 @@ $(function () {
 
 	socket.on('SERVER -> BACK send rooms', function (data) {
 		listRooms(data)
-		console.log('got it');
-
 	});
 
 	socket.on('SERVER -> BACK current slide state', function (data) {
@@ -103,7 +99,6 @@ $(function () {
 
 
 	function listRooms(data) {
-		availableRooms = data
 
 		let add = `<div class="preview-wrapper" id="addRoom">
 								<div class="frame-wrapper add-room">
@@ -119,6 +114,8 @@ $(function () {
 		var els = [];
 		for (let item of data) {
 			item = JSON.parse(item)
+			console.log(item);
+
 			if (item.connected) {
 				var el = $(`<div class="preview-wrapper" id="roomPreview">
 											<div class="frame-wrapper">

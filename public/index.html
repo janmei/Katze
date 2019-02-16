@@ -89,24 +89,23 @@
 		$(function () {
 
 			var frame = getQueryVariable('frame');
+			var pathArray = window.location.pathname.split('/');
+			room = pathArray[1]
 
 			var socket = io('http://localhost:8000', {
 				// path: '/browser-sync/socket.io',
 				reconnection: false,
-				query: 'frame=' + frame,
+				query: 'frame=' + frame + '&room=' + room,
 			});
 
 
 			socket.on('connect', function () {
-				var pathArray = window.location.pathname.split('/');
-				room = pathArray[1]
 				console.log(room);
 
 				$('#head').attr('data-name', room)
 				$('#sub').attr('data-name', room)
 
 				socket.emit('ROOM -> SERVER get data', room)
-
 			})
 
 			// Reconnects on disconnection

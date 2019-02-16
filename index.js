@@ -10,8 +10,6 @@ var encoding = "utf8";
 
 var room;
 
-var availableRooms
-
 // EXPRESS SETTINGS
 app.use(express.static('static'));
 app.use(express.static('public'));
@@ -22,15 +20,15 @@ app.get('/admin', function (req, res) {
 });
 
 app.get('/:room', function (req, res) {
-	room = req.params.room
-	availableRooms = getRooms()
+	// room = req.params.room
+	// availableRooms = getRooms()
 	// console.log(availableRooms);
 
-	if (availableRooms.includes(room)) {
-		res.sendFile(__dirname + '/public/index.html');
-	} else {
-		res.sendFile(__dirname + '/public/empty.html');
-	}
+	// if (availableRooms.includes(room)) {
+	res.sendFile(__dirname + '/public/index.html');
+	// } else {
+	// 	res.sendFile(__dirname + '/public/empty.html');
+	// }
 })
 
 
@@ -75,38 +73,31 @@ var fs = require('fs');
 
 
 io.on('connection', function (socket) {
+	room = socket.handshake.query.room
 
 	if (room == undefined) {
 		return
 	}
 	socket.join(room)
-	socket.on('connect', function (reason) {
 
-		if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
-			fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
-				if (err) throw err;
 
-				data = JSON.parse(data);
-				data.connected = true;
-				data = JSON.stringify(data)
-				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
-					if (err) throw err;
+	if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
+		console.log(room, 'connected');
 
-					// console.log("The file was succesfully saved!");
-					socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
-				});
-			})
-		}
-	})
+		fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
+			if (err) throw err;
+
+			data = JSON.parse(data);
+			data.connected = true;
+			data = JSON.stringify(data)
+			fs.writeFileSync('./rooms/' + room + '.json', data, encoding)
+			socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
+		})
+	}
 
 
 	socket.on('disconnect', function (reason) {
-		console.log(room, reason);
-
-
-		if (room == undefined) {
-			return
-		}
+		room = socket.handshake.query.room
 		if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
 			fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
 				if (err) throw err;
@@ -114,12 +105,9 @@ io.on('connection', function (socket) {
 				var newData = JSON.parse(data);
 				newData.connected = false;
 				data = JSON.stringify(newData)
-				fs.writeFile('./rooms/' + room + '.json', data, encoding, (err) => {
-					if (err) throw err;
+				fs.writeFileSync('./rooms/' + room + '.json', data, encoding)
 
-					// console.log("The file was succesfully saved!");
-					socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
-				});
+				socket.broadcast.emit('SERVER -> BACK send rooms', getRoomsConnectionState())
 			})
 		}
 	})
@@ -134,6 +122,8 @@ io.on('connection', function (socket) {
 	 */
 
 	socket.on('BACK -> SERVER get rooms', function () {
+		console.log('get rooms');
+
 		socket.emit('SERVER -> BACK send rooms', getRoomsConnectionState());
 	})
 
