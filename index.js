@@ -120,8 +120,6 @@ io.on('connection', function (socket) {
 	 */
 
 	socket.on('BACK -> SERVER get rooms', function () {
-		console.log('get rooms');
-
 		socket.emit('SERVER -> BACK send rooms', getRoomsConnectionState());
 	})
 
@@ -148,8 +146,15 @@ io.on('connection', function (socket) {
 				// console.log("The file was succesfully saved!");
 			});
 		}
+	})
 
-
+	socket.on('BACK -> SERVER remove room', function (data) {
+		if (fs.existsSync('./rooms/' + data + '.json')) {
+			fs.unlink('rooms/' + data + '.json', (err) => {
+				if (err) throw err;
+				console.log(data + ' was deleted');
+			});
+		}
 	})
 
 	fs.watch('./rooms/', (eventType, filename) => {
@@ -169,11 +174,13 @@ io.on('connection', function (socket) {
 		if (roomId == undefined || roomId === '') {
 			return
 		}
-		var data = fs.readFileSync('./rooms/' + roomId + '.json', encoding, (err, data) => {
-			if (err) throw err;
+		if (fs.existsSync('./rooms/' + roomId + '.json')) {
+			var data = fs.readFileSync('./rooms/' + roomId + '.json', encoding, (err, data) => {
+				if (err) throw err;
+				return data;
+			})
 			return data;
-		})
-		return data;
+		}
 	}
 
 	function getRoomsConnectionState() {

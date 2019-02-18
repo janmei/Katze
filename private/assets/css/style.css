@@ -1720,6 +1720,7 @@ Descr: Tabbed secondary navigation
   height: 89.64px;
   width: 159.36px;
   z-index: 0;
+  position: relative;
 }
 
 .room-previews .preview-wrapper:hover {
@@ -1730,6 +1731,41 @@ Descr: Tabbed secondary navigation
   outline: none;
   box-shadow: 0 0 0 3px hsl(147, 50%, 84%);
   box-shadow: 0 0 0 3px var(--color-success);
+}
+
+.room-previews .preview-wrapper .close {
+  position: absolute;
+  float: right;
+  top: 3px;
+  right: 3px;
+  width: 16px;
+  height: 16px;
+  opacity: 0.3;
+}
+
+.room-previews .preview-wrapper .close:hover {
+  opacity: 1;
+}
+
+.room-previews .preview-wrapper .close:before,
+.room-previews .preview-wrapper .close:after {
+  position: absolute;
+  left: 6px;
+  content: ' ';
+  height: 16px;
+  width: 2px;
+  background-color: hsl(0, 0%, 100%);
+  background-color: var(--color-contrast-higher);
+}
+
+.room-previews .preview-wrapper .close:before {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.room-previews .preview-wrapper .close:after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
 
 .room-previews .preview-wrapper .frame-wrapper {

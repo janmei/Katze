@@ -91,7 +91,8 @@ $(function () {
 			"text": {
 				"head": head,
 				"sub": sub
-			}
+			},
+			connected: true
 		}
 		return JSON.stringify(data)
 	}
@@ -106,7 +107,8 @@ $(function () {
 								</div>
 							</div>`
 
-		let emptyRoom = `<div class="preview-wrapper" id="emptyRoom">
+		let emptyRoom = `<div class="preview-wrapper" id="emptyRoom" title="">
+											<a href="#" class="close" id="closeRoom"></a>
 											<div class="frame-wrapper add-room" id="roomName">Unbenannt</div>
 											<input class="form-control" type="text" id="roomNameInput"/>
 										</div>`
@@ -118,13 +120,15 @@ $(function () {
 
 			if (item.connected) {
 				var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item.name + `">
+											<a href="#" class="close" id="closeRoom"></a>
 											<div class="frame-wrapper">
 												<iframe src="` + item.name + `?frame=true" class="preview-frame" ></iframe> 
 											</div>
 										<p id="roomName">` + item.name + `</p>
 									</div>`)
 			} else {
-				var el = $(`<div class="preview-wrapper" id="emptyRoom">
+				var el = $(`<div class="preview-wrapper" id="emptyRoom" title="` + item.name + `">
+											<a href="#" class="close" id="closeRoom" ></a>
 											<div class="frame-wrapper add-room" id="roomName">` + item.name + `</div>
 										</div>`)
 			}
@@ -138,19 +142,15 @@ $(function () {
 		$('#addRoom').on('click', '.frame-wrapper', function () {
 			$(emptyRoom).insertBefore('#addRoom')
 		})
+
+		$('#previews').on('click', '#closeRoom', function (e) {
+			let roomName = $(this).parent().attr('title')
+			socket.emit('BACK -> SERVER remove room', roomName)
+			$(this).parent().remove()
+		})
 	}
 
 
-
-
-	// $('#roomSelect').change(function (el) {
-	// 	selectedRoom = $('#roomSelect').val()
-	// 	$('#frame').attr('src', '/' + selectedRoom + '?frame=true')
-	// 	console.log(selectedRoom);
-
-	// 	joinRoom(selectedRoom)
-
-	// })
 
 
 
@@ -214,6 +214,7 @@ $(function () {
 	$('#previews').on('keyup', '#roomNameInput', function (e) {
 		var inputValue = $(this).val();
 		$('#roomNameInput').siblings('#roomName').text(inputValue)
+		$('#roomNameInput').parent().attr('title', inputValue)
 
 		if (e.keyCode == 13) {
 			addRoom(inputValue)

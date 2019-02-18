@@ -37,6 +37,7 @@
 		height: 89.64px;
 		width: 159.36px;
 		z-index: 0;
+		position: relative;
 
 		&:hover {
 			cursor: pointer;
@@ -46,6 +47,39 @@
 			outline: none;
 			box-shadow: 0 0 0 3px var(--color-success);
 		}
+
+		.close {
+			position: absolute;
+			float: right;
+			top: 3px;
+			right: 3px;
+			width: 16px;
+			height: 16px;
+			opacity: 0.3;
+		}
+
+		.close:hover {
+			opacity: 1;
+		}
+
+		.close:before,
+		.close:after {
+			position: absolute;
+			left: 6px;
+			content: ' ';
+			height: 16px;
+			width: 2px;
+			background-color: var(--color-contrast-higher);
+		}
+
+		.close:before {
+			transform: rotate(45deg);
+		}
+
+		.close:after {
+			transform: rotate(-45deg);
+		}
+
 
 		.frame-wrapper {
 			height: 89.64px;
