@@ -82,8 +82,6 @@ io.on('connection', function (socket) {
 
 
 	if (fs.existsSync('./rooms/' + room + '.json') && socket.handshake.query.frame == 'false') {
-		console.log(room, 'connected');
-
 		fs.readFile('./rooms/' + room + '.json', encoding, (err, data) => {
 			if (err) throw err;
 

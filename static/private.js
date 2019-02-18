@@ -11,7 +11,8 @@ $(function () {
 	var socket = io('http://localhost:8000', {
 		// path: '/browser-sync/socket.io',
 		// reconnection: false,
-		// forceNew: false
+		// forceNew: false,
+		query: 'room=admin'
 	});
 	//Setup
 
@@ -70,7 +71,6 @@ $(function () {
 		if ($('#allRooms').is(':checked')) {
 			socket.emit('BACK -> SERVER update all rooms', updateTextBack())
 		} else {
-			selectedRoom
 			socket.emit('BACK -> SERVER update text', selectedRoom, updateTextBack())
 		}
 
@@ -117,7 +117,7 @@ $(function () {
 			console.log(item);
 
 			if (item.connected) {
-				var el = $(`<div class="preview-wrapper" id="roomPreview">
+				var el = $(`<div class="preview-wrapper" id="roomPreview" title="` + item.name + `">
 											<div class="frame-wrapper">
 												<iframe src="` + item.name + `?frame=true" class="preview-frame" ></iframe> 
 											</div>
@@ -165,7 +165,6 @@ $(function () {
 
 	function chooseScreen(room) {
 		$('#frame').attr('src', '/' + room + '?frame=true')
-		console.log(room);
 
 		selectedRoom = room
 		joinRoom(room)
