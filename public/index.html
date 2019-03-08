@@ -22,52 +22,52 @@
 </head>
 
 <body id="body">
-	<section class="main_wrapper">
-		<!-- <h1 class="text">Hello World Public</h1> -->
-		<div class="textContainer">
-			<h1 class="headline" id="head">
-				<b>interactive</b> <br />
-				future exhibition
-			</h1>
-			<p class="text" id="sub"></p>
-		</div>
+	<div id="sketchContainer">
+		<section class="main_wrapper">
+			<!-- <h1 class="text">Hello World Public</h1> -->
+			<div class="textContainer">
+				<h1 class="headline" id="head">
+					<b>interactive</b> <br />
+					future exhibition
+				</h1>
+				<p class="text" id="sub"></p>
+			</div>
 
-		<!-- Nur für die letzten 10 Sekunden notwendig -->
-		<!-- <div class="count10Container">
+			<!-- Nur für die letzten 10 Sekunden notwendig -->
+			<!-- <div class="count10Container">
       <h1 class="headline" id="count10">10</h1>
     </div> -->
 
-		<div class="countdownContainer">
-			<div id="minutes"></div>
-			<div id="seconds"></div>
-		</div>
+			<div class="countdownContainer">
+				<div id="minutes"></div>
+				<div id="seconds"></div>
+			</div>
 
-		<div class="table-content">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th scope="col">Semester</th>
-						<th scope="col">Gruppe</th>
-						<th scope="col">Team</th>
-					</tr>
-				</thead>
-				<tbody id="timeBody"></tbody>
-			</table>
-		</div>
+			<div class="table-content">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Semester</th>
+							<th scope="col">Gruppe</th>
+							<th scope="col">Team</th>
+						</tr>
+					</thead>
+					<tbody id="timeBody"></tbody>
+				</table>
+			</div>
 
-		<div class="sponsors" id="sponsors">
-			<img src="../img/merck.png" alt="" class="sponsor-img active" />
-			<img src="../img/honda.png" alt="" class="sponsor-img " />
-			<img src="../img/stihl.png" alt="" class="sponsor-img " />
-		</div>
-	</section>
+			<div class="sponsors" id="sponsors">
+				<img src="../img/merck.png" alt="" class="sponsor-img active" />
+				<img src="../img/honda.png" alt="" class="sponsor-img " />
+				<img src="../img/stihl.png" alt="" class="sponsor-img " />
+			</div>
+		</section>
 
-	<div id="sketchContainer"></div>
+	</div>
 
 	<script src="socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="slide.js"></script>
-	<script src="html2canvas.min.js"></script>
 	<script>
 		var time;
 		var slideIndex;
@@ -141,9 +141,10 @@
 						console.log(prop + " = " + obj[prop]);
 						$("[data-name='" + room + "']#" + prop).html(obj[prop])
 
-						if (prop == "width" || prop == "height") {
+						if (prop == "width") {
 							$('.main_wrapper').css(prop, obj[prop])
 							$('#sketchContainer').css(prop, obj[prop])
+							width = obj[prop]
 						}
 					}
 				}

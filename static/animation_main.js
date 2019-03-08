@@ -27,10 +27,15 @@ var honeyPolys
 
 // ANIMATION 03 PROGRAM
 
+var width, height, canvasDiv;
+
+
 // SETUP
 var setup = function () {
     // Create canvas on whole page
-    var canvas = createCanvas(windowWidth, windowHeight)
+    var canvasDiv = document.getElementById('sketchContainer')
+    width = canvasDiv.offsetWidth
+    var canvas = createCanvas(width, displayHeight)
     canvas.parent('sketchContainer')
 
     noStroke()
@@ -67,7 +72,7 @@ var setup = function () {
     grid = new grid()
 
     for (var i = 0; i < 30; i++) {
-        polys.push(new poly(random(0, windowWidth), random(0, windowHeight), colors[floor(random(0, colors.length))]))
+        polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
         // polys.push(new poly(width / 2, height / 2, colors[floor(random(0, colors.length))]))
     }
 
@@ -96,6 +101,13 @@ var draw = function () {
     if (currentAnimation == 0) {
         background(0)
     }
+    var canvasDiv = document.getElementById('sketchContainer')
+
+
+    if (width != canvasDiv.offsetWidth) {
+
+        resizeCanvas(canvasDiv.offsetWidth, displayHeight)
+    }
 
     // ANIMATION 01 / COMING UP - COUNTDOWN / POLYS
     if (currentAnimation == 1) {
@@ -122,7 +134,7 @@ var draw = function () {
 }
 
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+    resizeCanvas(width, height);
 }
 
 // Transition Controller

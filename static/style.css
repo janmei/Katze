@@ -224,3 +224,7 @@ body {
   font-size: 7em;
   margin-top: 2em;
 }
+
+#sketchContainer {
+  margin: 0 auto;
+}

@@ -89,7 +89,6 @@ $(function () {
     head = $("input[name='head']").val()
     sub = $("input[name='sub']").val()
     width = $("input[name='width']").val()
-    height = $("input[name='height']").val()
 
     var data = {
       name: selectedRoom,
@@ -99,7 +98,6 @@ $(function () {
       },
       size: {
         width: width,
-        height: height
       },
       connected: true
     }
