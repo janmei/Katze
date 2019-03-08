@@ -46,9 +46,6 @@
 									<div class="margin-bottom--sm">
 										<label class="form-label" for="title">Titel:</label>
 										<input class="form-control" type="text" name="head" id="headInput" required />
-									</div>
-
-									<div class="margin-bottom--sm">
 										<label class="form-label" for="sub">Untertitel:</label>
 										<input class="form-control" type="text" name="sub" id="subInput" required />
 									</div>
@@ -69,12 +66,12 @@
 							</div>
 							<div class="margin-bottom--md col--lg-6">
 								<fieldset>
-									<legend class="form-legend">Presets</legend>
-									<div class="switch">
-										<input class="switch__input" type="checkbox" id="switchCheckbox1">
-										<label aria-hidden="true" class="switch__label" for="switchCheckbox1">On</label>
-										<div aria-hidden="true" class="switch__marker"></div>
-									</div>
+									<legend class="form-legend">Settings</legend>
+									<label class="form-label" for="width">Width:</label>
+									<input class="form-control" type="number" name="width" id="widthInput" required />
+									<label class="form-label" for="height">Height:</label>
+									<input class="form-control" type="number" name="height" id="heightInput" required />
+
 								</fieldset>
 							</div>
 							<div><button class="btn btn--primary" id="updateTextButton">Submit</button></div>

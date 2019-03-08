@@ -1679,9 +1679,12 @@ Descr: Tabbed secondary navigation
   border-bottom-color: var(--color-primary);
 }
 
+body {
+  overflow-x: hidden;
+}
+
 #wrap {
   position: relative;
-  /* overflow: hidden; */
   width: 100%;
   margin: 0 17px;
   display: inline-block;
@@ -1690,7 +1693,7 @@ Descr: Tabbed secondary navigation
 #wrap:after {
   padding-top: 56.25%;
   display: block;
-  content: '';
+  content: "";
 }
 
 #wrap #frame {
@@ -1751,7 +1754,7 @@ Descr: Tabbed secondary navigation
 .room-previews .preview-wrapper .close:after {
   position: absolute;
   left: 6px;
-  content: ' ';
+  content: " ";
   height: 16px;
   width: 2px;
   background-color: hsl(0, 0%, 100%);

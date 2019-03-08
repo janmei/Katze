@@ -30,7 +30,8 @@ var honeyPolys
 // SETUP
 var setup = function () {
     // Create canvas on whole page
-    createCanvas(window.innerWidth, window.innerHeight)
+    var canvas = createCanvas(windowWidth, windowHeight)
+    canvas.parent('sketchContainer')
 
     noStroke()
 
@@ -66,7 +67,7 @@ var setup = function () {
     grid = new grid()
 
     for (var i = 0; i < 30; i++) {
-        polys.push(new poly(random(0, width), random(0, height), colors[floor(random(0, colors.length))]))
+        polys.push(new poly(random(0, windowWidth), random(0, windowHeight), colors[floor(random(0, colors.length))]))
         // polys.push(new poly(width / 2, height / 2, colors[floor(random(0, colors.length))]))
     }
 
