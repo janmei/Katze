@@ -27,18 +27,19 @@ var honeyPolys
 
 // ANIMATION 03 PROGRAM
 
-var width, height, canvasDiv;
+var resize;
+var canvasDiv
 
 
 // SETUP
 var setup = function () {
     // Create canvas on whole page
-    var canvasDiv = document.getElementById('sketchContainer')
-    width = canvasDiv.offsetWidth
-    var canvas = createCanvas(width, displayHeight)
+    canvasDiv = document.getElementById('sketchContainer')
+    var canvas = createCanvas(canvasDiv.offsetWidth, displayHeight)
     canvas.parent('sketchContainer')
 
     noStroke()
+    resize = false
 
     // Main colors
     colors = [
@@ -77,12 +78,12 @@ var setup = function () {
     }
 
     // ANIMATION 02 TITLE
-    honeyPolys = []
-    for (var i = 0; i < 21; i++) {
-        for (var j = 0; j < 11; j++) {
-            honeyPolys.push(new honeyPoly(i * width / 20, 15 + j * width / 20))
-        }
-    }
+    // honeyPolys = []
+    // for (var i = 0; i < 21; i++) {
+    //     for (var j = 0; j < 11; j++) {
+    //         honeyPolys.push(new honeyPoly(i * width / 20, 15 + j * width / 20))
+    //     }
+    // }
 
     // ANIMATION 03 PROGRAM
 
@@ -101,12 +102,10 @@ var draw = function () {
     if (currentAnimation == 0) {
         background(0)
     }
-    var canvasDiv = document.getElementById('sketchContainer')
 
-
-    if (width != canvasDiv.offsetWidth) {
-
-        resizeCanvas(canvasDiv.offsetWidth, displayHeight)
+    if (resize) {
+        resize = false;
+        resizeCanvas(canvasDiv.offsetWidth, displayHeight);
     }
 
     // ANIMATION 01 / COMING UP - COUNTDOWN / POLYS
@@ -133,9 +132,9 @@ var draw = function () {
     Countdown.render()
 }
 
-function windowResized() {
-    resizeCanvas(width, height);
-}
+// function windowResized() {
+//     resizeCanvas(width, height);
+// }
 
 // Transition Controller
 var startTransition = function () {

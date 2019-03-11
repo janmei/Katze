@@ -126,6 +126,10 @@
 				}
 			})
 
+			if ($('#sub').val() == "") {
+				$('#sub').hide()
+			}
+
 			function updateText(data) {
 
 				for (var key in data) {
@@ -138,13 +142,13 @@
 						if (!obj.hasOwnProperty(prop)) continue;
 
 						// your code
-						console.log(prop + " = " + obj[prop]);
+						// console.log(prop + " = " + obj[prop]);
 						$("[data-name='" + room + "']#" + prop).html(obj[prop])
 
 						if (prop == "width") {
 							$('.main_wrapper').css(prop, obj[prop])
 							$('#sketchContainer').css(prop, obj[prop])
-							width = obj[prop]
+							resize = true;
 						}
 					}
 				}
