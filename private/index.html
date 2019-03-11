@@ -11,6 +11,7 @@
 	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/style.css" />
 	<title>Backend</title>
+	<script src="assets/js/acolorpicker.js"></script>
 </head>
 
 <body>
@@ -70,6 +71,7 @@
 									<label class="form-label" for="width">Width:</label>
 									<input class="form-control" type="number" name="width" id="widthInput" required />
 								</fieldset>
+								<div class="color-picker"></div>
 							</div>
 							<div><button class="btn btn--primary" id="updateTextButton">Submit</button></div>
 						</div>
@@ -94,7 +96,7 @@
 	<script src="assets/js/tabs.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="/socket.io.js"></script>
-	<script src="/private.js"></script>
+	<script src="assets/js/private.js"></script>
 </body>
 
 </html>
