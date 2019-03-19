@@ -179,4 +179,42 @@ Math.easeInOutQuad = function (t, b, c, d) {
   return -c / 2 * (t * (t - 2) - 1) + b;
 };
 
-AColorPicker.from('div.color-picker');
+var currentColor = document.getElementById('colorInput')
+var rawColor;
+
+let picker = AColorPicker.createPicker('div.color-picker', {
+    showHSL: false,
+    showRGB: false,
+    showHEX: false,
+    palette: ["rgb(99, 39, 39)",
+      "rgb(141, 171, 156)",
+      "rgb(188, 158, 90)",
+      "rgb(0,0,0)"
+    ],
+    color: "rgb(0,0,0)",
+    attachTo: currentColor
+  })
+  .on('change', function (picker, color) {
+    currentColor.style.backgroundColor = color;
+    rawColor = AColorPicker.parseColor(color, "rgb")
+
+  });
+
+currentColor.addEventListener('mouseup', function () {
+  document.getElementById('colorPicker').style.display = "block"
+
+  var specifiedElement = document.getElementById('colorPicker');
+
+  //I'm using "click" but it works with any event
+  document.addEventListener('mousedown', function (event) {
+    var isClickInside = specifiedElement.contains(event.target);
+
+    if (!isClickInside) {
+      document.getElementById('colorPicker').style.display = "none"
+    }
+  });
+})
+
+function colorConv(colorIn, form) {
+  return AColorPicker.parseColor(colorIn, form);
+}

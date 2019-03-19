@@ -138,7 +138,7 @@ io.on('connection', function (socket) {
 		if (fs.existsSync('./rooms/' + room + '.json')) {
 			socket.emit('SERVER -> ALL', getCurrentSlideState(room))
 		} else {
-			var content = '{"name": "' + room + '", "text": {"head": "interactive </br>future exhibition","sub": "Hallo Welt!"},"size": {"width": 1920},"connected": false}';
+			var content = '{"name": "' + room + '", "text": {"head": "interactive </br>future exhibition","sub": "Hallo Welt!"},"settings": {"width": 1920, "connected": false, background: [0,0,0]}}';
 
 			fs.writeFile('./rooms/' + room + '.json', content, encoding, (err) => {
 				if (err) throw err;

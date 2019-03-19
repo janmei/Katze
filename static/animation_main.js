@@ -28,7 +28,9 @@ var honeyPolys
 // ANIMATION 03 PROGRAM
 
 var resize;
-var canvasDiv
+var canvasDiv;
+var bgR, bgG, bgB;
+var backColor
 
 
 // SETUP
@@ -99,8 +101,10 @@ var randColor = function () {
 // MAIN
 var draw = function () {
     // ANIMATION 00 / COUNTDOWN
+
+    backColor = background(bgR, bgG, bgB);
     if (currentAnimation == 0) {
-        background(0)
+        backColor
     }
 
     if (resize) {

@@ -60,7 +60,11 @@ $(function () {
 
         // your code
         // console.log(prop + " = " + obj[prop], "back");
-        $("input[name='" + prop + "'").val(obj[prop])
+        if (prop == "background") {
+          $('#colorInput').css('background-color', colorConv(obj[prop], "hex"))
+        } else {
+          $("input[name='" + prop + "'").val(obj[prop])
+        }
       }
     }
 
@@ -84,11 +88,12 @@ $(function () {
 
 
   function updateTextBack() {
-    let head, sub, width, height;
+    let head, sub, width, color;
 
     head = $("input[name='head']").val()
     sub = $("input[name='sub']").val()
     width = $("input[name='width']").val()
+    color = rawColor;
 
     var data = {
       name: selectedRoom,
@@ -96,10 +101,11 @@ $(function () {
         head: head,
         sub: sub
       },
-      size: {
+      settings: {
         width: width,
+        connected: true,
+        background: color
       },
-      connected: true
     }
     return JSON.stringify(data)
   }
@@ -230,7 +236,7 @@ $(function () {
 
   function colorChangeInput(data) {
     var prevText = data.text;
-    var prevSize = data.size;
+    var prevSize = data.settings;
     $("#headInput, #subInput").keyup(function (e) {
       var currentValue = $(this).val();
       if (currentValue != prevText[e.currentTarget.name]) {
@@ -239,7 +245,7 @@ $(function () {
         $(this).removeClass('changed')
       }
     })
-    $("#widthInput, #heightInput").on('keyup change', function (e) {
+    $("#widthInput, #colorInput").on('keyup change', function (e) {
       var currentValue = $(this).val();
       if (currentValue != prevSize[e.currentTarget.name]) {
         $(this).addClass('changed')
@@ -250,7 +256,7 @@ $(function () {
   }
 
   function resetInput() {
-    $("#headInput, #subInput, #widthInput, #heightInput").removeClass('changed')
+    $("#headInput, #subInput, #widthInput, #colorInput").removeClass('changed')
   }
 
 

@@ -1,29 +1,28 @@
-var poly_animation = function(){
-    background(0)
-
+var poly_animation = function () {
+    backColor
     // grid.draw()
 
-    for(var i = 0; i < polys.length; i++){
+    for (var i = 0; i < polys.length; i++) {
         polys[i].draw()
     }
 }
 
-var poly = function(x,y, c){
-    this.position = createVector(x,y)
+var poly = function (x, y, c) {
+    this.position = createVector(x, y)
     this.scale = random(25, 75)
     this.size = this.scale
     this.c = c
     this.direction = createVector(0, -1)
     // this.direction = createVector(random(-1, 1), random(-1, 1))
     this.speed = 0.1
-    
+
     this.transition = false
 
     // this.scale *= this.size
     this.speed = random(1, 5)
 
-    this.draw = function(){
-        if(this.scale > 0){            
+    this.draw = function () {
+        if (this.scale > 0) {
             // fill(red(this.c), green(this.c), blue(this.c), 0)
             fill(this.c)
             // stroke(255)
@@ -35,14 +34,14 @@ var poly = function(x,y, c){
             vertex(this.position.x - this.scale, this.position.y + this.scale / 2)
             vertex(this.position.x - this.scale, this.position.y - this.scale / 2)
             endShape(CLOSE)
-            
-            if(!this.transition){
+
+            if (!this.transition) {
                 this.move()
             } else {
-                if(this.scale >= 0.2){                
+                if (this.scale >= 0.2) {
                     this.scale -= this.scale / 10
                 } else {
-                    if(this.scale > 0){
+                    if (this.scale > 0) {
                         this.scale = 0
                     }
                 }
@@ -50,7 +49,7 @@ var poly = function(x,y, c){
         }
     }
 
-    this.move = function(){
+    this.move = function () {
         // Move
         this.position.x += this.direction.x * this.speed
         this.position.y += this.direction.y * this.speed
@@ -75,43 +74,43 @@ var poly = function(x,y, c){
             this.scale = 1
         }
         */
-       if(this.position.y <= -100){
-           this.position.y = height + 100
-           this.scale = this.size
-       }
+        if (this.position.y <= -100) {
+            this.position.y = height + 100
+            this.scale = this.size
+        }
         // this.scale += 0.2
     }
 }
 
-var flyOut = function(speed){
-    for(var i = 0; i < polys.length; i++){
+var flyOut = function (speed) {
+    for (var i = 0; i < polys.length; i++) {
         polys[i].speed = speed
     }
 }
 
-var startTransitionPoly = function(){
-    if(polys[0].transition == false){
-        for(var i = 0; i < polys.length; i++){
+var startTransitionPoly = function () {
+    if (polys[0].transition == false) {
+        for (var i = 0; i < polys.length; i++) {
             polys[i].transition = true
         }
     } else {
-        for(var i = 0; i < polys.length; i++){
+        for (var i = 0; i < polys.length; i++) {
             polys[i].transition = false
             polys[i].scale = polys[i].size
         }
     }
 }
 
-var grid = function(){
+var grid = function () {
     this.position = createVector(width / 2, height / 2)
     this.scale = width / 50 * 10
 
-    this.draw = function(){
-        for(var i = 0; i < width / 50; i++){
-            for(var j = 0; j < height / 50; j++){
+    this.draw = function () {
+        for (var i = 0; i < width / 50; i++) {
+            for (var j = 0; j < height / 50; j++) {
                 noStroke()
                 fill(255, 255, 255, 40)
-                ellipse(i * 50, j *  50, 2, 2)   
+                ellipse(i * 50, j * 50, 2, 2)
             }
         }
     }

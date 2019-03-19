@@ -149,6 +149,10 @@
 							$('.main_wrapper').css(prop, obj[prop])
 							$('#sketchContainer').css(prop, obj[prop])
 							resize = true;
+						} else if (prop == "background") {
+							bgR = obj[prop][0]
+							bgG = obj[prop][1]
+							bgB = obj[prop][2]
 						}
 					}
 				}
